@@ -24,7 +24,7 @@ public class VentanaInicio extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				new VentanaLogin();
 				
 			}
 		});
@@ -49,7 +49,7 @@ public class VentanaInicio extends JFrame {
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle("Inicio");
-		this.setSize(800, 600);
+		this.setSize(400, 300);
 		this.setVisible(true);
 	}
 	
