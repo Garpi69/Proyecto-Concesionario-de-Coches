@@ -32,9 +32,15 @@ public class VentanaLogin extends JFrame {
 		
 		this.add(panelLogin, BorderLayout.CENTER);
 		
+		JPanel panelBotones = new JPanel();
+		
 		botonAceptar = new JButton("Aceptar");
 		botonCancelar = new JButton("Cancelar");
 		botonVerContraseña = new JButton("Ver Contraseña");
+		
+		panelBotones.add(botonAceptar);
+		panelBotones.add(botonCancelar);
+		panelBotones.add(botonVerContraseña);
 		
 		botonAceptar.addActionListener(new ActionListener() {
 			
@@ -66,12 +72,6 @@ public class VentanaLogin extends JFrame {
 				
 			}
 		});
-		
-		JPanel panelBotones = new JPanel();
-		
-		panelBotones.add(botonAceptar);
-		panelBotones.add(botonCancelar);
-		panelBotones.add(botonVerContraseña);
 		
 		this.add(panelBotones, BorderLayout.SOUTH);
 		
