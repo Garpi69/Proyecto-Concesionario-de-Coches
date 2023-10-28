@@ -12,7 +12,7 @@ public class VentanaLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	protected JTextField textoLogin;
-	protected JTextField textoPassword;
+	protected JPasswordField textoPassword;
 	protected JButton botonAceptar;
 	protected JButton botonCancelar;
 	
@@ -22,7 +22,7 @@ public class VentanaLogin extends JFrame {
 		panelLogin.setLayout(new GridLayout(2, 2));
 		
 		textoLogin = new JTextField(20);
-		textoPassword = new JTextField(20);
+		textoPassword = new JPasswordField(20);
 		
 		panelLogin.add(new JLabel("Login"));
 		panelLogin.add(textoLogin);
