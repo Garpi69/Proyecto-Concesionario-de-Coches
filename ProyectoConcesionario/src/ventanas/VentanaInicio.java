@@ -45,7 +45,16 @@ public class VentanaInicio extends JFrame {
 		panelBotones.add(botonLogin);
 		panelBotones.add(botonSignUp);
 		
-		this.add(panelBotones, BorderLayout.CENTER);
+		this.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        this.add(botonLogin, gbc);
+
+        gbc.gridy = 1;
+        this.add(botonSignUp, gbc);
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle("Inicio");
