@@ -13,6 +13,7 @@ public class VentanaLogin extends JFrame {
 	
 	protected JTextField textoLogin;
 	protected JPasswordField textoPassword;
+	protected JButton botonVerContraseña;
 	protected JButton botonAceptar;
 	protected JButton botonCancelar;
 	
@@ -33,6 +34,7 @@ public class VentanaLogin extends JFrame {
 		
 		botonAceptar = new JButton("Aceptar");
 		botonCancelar = new JButton("Cancelar");
+		botonVerContraseña = new JButton("Ver Contraseña");
 		
 		botonAceptar.addActionListener(new ActionListener() {
 			
@@ -52,10 +54,24 @@ public class VentanaLogin extends JFrame {
 			}
 		});
 		
+		botonVerContraseña.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (textoPassword.getEchoChar() == 0) {
+					textoPassword.setEchoChar('*');
+				} else {
+					textoPassword.setEchoChar((char) 0);
+				}
+				
+			}
+		});
+		
 		JPanel panelBotones = new JPanel();
 		
 		panelBotones.add(botonAceptar);
 		panelBotones.add(botonCancelar);
+		panelBotones.add(botonVerContraseña);
 		
 		this.add(panelBotones, BorderLayout.SOUTH);
 		
