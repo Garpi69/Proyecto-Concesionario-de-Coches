@@ -58,7 +58,9 @@ public class VentanaInicio extends JFrame {
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle("Inicio");
-		this.setSize(400, 300);
+		this.setSize(700, 700);
+		
+        this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	

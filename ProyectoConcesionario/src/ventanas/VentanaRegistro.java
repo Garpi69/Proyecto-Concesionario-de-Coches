@@ -6,11 +6,13 @@ import java.time.LocalDate;
 
 import javax.swing.*;
 
+
 public class VentanaRegistro extends JFrame{
 
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 	
 	protected JTextField textoUsuario;

@@ -46,7 +46,10 @@ public class VentanaLogin extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				//tenemos q a;adir lo del login se esta registrado
+				new VentanaMenu();
+                dispose();
+                
 				
 			}
 		});
