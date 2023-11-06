@@ -2,7 +2,10 @@ package ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -27,8 +30,25 @@ public class VentanaMenu extends JFrame{
 	protected JButton botonClientes ;
 	
 	public VentanaMenu(){
-		JPanel panelMenu = new JPanel();
-		panelMenu.setLayout(new GridLayout(4,2));
+		
+		 JPanel contentPanel = new JPanel();
+	        contentPanel.setLayout(new BorderLayout());
+
+	      
+	        JPanel titlePanel = new JPanel();
+	        titlePanel.setLayout(new FlowLayout());
+
+	       
+	        JLabel TituloLabel = new JLabel("Concesionario");
+	        TituloLabel.setFont(new Font("Arial", Font.BOLD, 24)); 
+	        titlePanel.add(TituloLabel);
+
+	     
+	        contentPanel.add(titlePanel, BorderLayout.NORTH);
+
+	     
+	        JPanel buttonPanel = new JPanel();
+	        buttonPanel.setLayout(new FlowLayout());
 		
 		botonInventario = new JButton("Inventario");
 		botonInforme = new JButton("Informe");
@@ -37,13 +57,15 @@ public class VentanaMenu extends JFrame{
 		botonVenderVehiculo = new JButton("Vender Vehiculo");
 		botonClientes = new JButton("Clientes");
 		
-		panelMenu.add(botonInventario);
-		panelMenu.add(botonInforme);
-		panelMenu.add(botonCalendario);
-		panelMenu.add(botonComprarVehiculo);
-		panelMenu.add(botonVenderVehiculo);
-		panelMenu.add(botonClientes);
+		buttonPanel.add(botonInventario);
+		buttonPanel.add(botonInforme);
+		buttonPanel.add(botonCalendario);
+		buttonPanel.add(botonComprarVehiculo);
+		buttonPanel.add(botonVenderVehiculo);
+		buttonPanel.add(botonClientes);
 		
+		contentPanel.add(buttonPanel,BorderLayout.CENTER);
+		add(contentPanel);
 		botonInventario.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			dispose();
@@ -58,6 +80,7 @@ public class VentanaMenu extends JFrame{
 		});
 		botonCalendario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				new CalendarVentana();
 				dispose();
 				
 			}
@@ -70,7 +93,7 @@ public class VentanaMenu extends JFrame{
 		botonVenderVehiculo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				
+			
 			}
 		});
 		botonClientes.addActionListener(new ActionListener() {
@@ -80,17 +103,12 @@ public class VentanaMenu extends JFrame{
 			}
 		});
 		
-		
-		
-		
-		this.add(panelMenu,BorderLayout.SOUTH);
-		
-		
+	
         this.setVisible(true);
 		
 		this.setTitle("Menu");
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.pack(); 
+		this.setSize(800, 600);
 		this.setVisible(true); 
 		this.setLocationRelativeTo(null);
 		
