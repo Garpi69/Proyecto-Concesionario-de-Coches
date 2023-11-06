@@ -2,6 +2,10 @@ package ventanas;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import javax.swing.*;
 
 public class VentanaLogin extends JFrame {
@@ -46,10 +50,7 @@ public class VentanaLogin extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//tenemos q a;adir lo del login se esta registrado
-				new VentanaMenu();
-                dispose();
-                
+				Autenticacion();
 				
 			}
 		});
@@ -82,6 +83,46 @@ public class VentanaLogin extends JFrame {
 		this.setTitle("Login");
 		this.pack();
 		this.setVisible(true);
+		  this.setLocationRelativeTo(null);
 		
-	}
+	
+}
+public void Autenticacion() {
+  
+    String usuarioIngresado = textoLogin.getText();
+    String contrasenaIngresada = new String(textoPassword.getPassword());
+
+   
+    String rutaCompleta = System.getProperty("user.dir") + "/src/usuarios.txt";
+
+    try {
+        
+        BufferedReader lector = new BufferedReader(new FileReader(rutaCompleta));
+
+        String linea;
+        boolean usuarioAutenticado = false;
+
+        while ((linea = lector.readLine()) != null) {
+            String[] datosUsuario = linea.split(","); 
+
+            if ( usuarioIngresado.equals(datosUsuario[0]) && contrasenaIngresada.equals(datosUsuario[1])) {
+                usuarioAutenticado = true;
+                break;
+            }
+        }
+
+        lector.close();
+
+        if (usuarioAutenticado) {
+            new VentanaMenu();
+            dispose(); 
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecto", "Error ", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al autenticar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
 }

@@ -2,6 +2,10 @@ package ventanas;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 
 import javax.swing.*;
@@ -76,7 +80,7 @@ public class VentanaRegistro extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				guardarPersonaEnArchivo();
 			}
 		});
 		
@@ -94,6 +98,48 @@ public class VentanaRegistro extends JFrame{
 		this.setTitle("Registro");
 		this.pack();
 		this.setVisible(true);
+		  this.setLocationRelativeTo(null);
 	}
 	
+
+	public void guardarPersonaEnArchivo() {
+	   
+	    String nombreUsuario = textoUsuario.getText();
+	    String contrasena = textoPassword.getText();
+	    String email = textoEmail.getText();
+	    String dni = textoDni.getText();
+	    String nombre = textoNombre.getText();
+	    String apellidos = textoApellidos.getText();
+	    String numTarjeta = textoNumTarjeta.getText();
+	    
+	    String datosPersona = nombreUsuario + "," + contrasena + "," + email + "," + dni + "," + nombre + "," + apellidos + "," + numTarjeta;
+
+	    
+	    String rutaProyecto = System.getProperty("user.dir");
+
+	    String rutaCompleta = rutaProyecto + "usuario.txt";
+
+	    try {
+	       
+	        File archivo = new File(rutaCompleta);
+	        FileWriter escritor = new FileWriter(archivo, true); 
+
+	        
+	        BufferedWriter escritorBuffer = new BufferedWriter(escritor);
+
+	        
+	        escritorBuffer.write(datosPersona);
+	        escritorBuffer.newLine(); 
+
+	        
+	        escritorBuffer.close();
+
+	       
+	        JOptionPane.showMessageDialog(null,"Informacion Guardada","Guardado", JOptionPane.PLAIN_MESSAGE);
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        JOptionPane.showMessageDialog(this, "Error al guardar los datos  " , "Error", JOptionPane.ERROR_MESSAGE);
+	    }
+	}
 }
