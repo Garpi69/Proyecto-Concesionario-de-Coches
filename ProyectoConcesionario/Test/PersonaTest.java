@@ -9,7 +9,7 @@
 	public class PersonaTest {
 
 	    @Test
-	    public void testGetPersona()  {
+	    public void GetTestPersona()  {
 	  
 
 	       

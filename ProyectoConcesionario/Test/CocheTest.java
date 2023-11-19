@@ -12,7 +12,7 @@ import clases.Color;
 public class CocheTest {
 
     @Test
-    public void testCocheConstructor() throws ParseException {
+    public void getTestCocheConstructor()  {
         Date matriculacion = new Date(System.currentTimeMillis());
 
         Coche coche = new Coche("Toyota", "cora", Color.AZUL, "Sedan", 350, 6, 25000, 400, matriculacion, "Gasolina");

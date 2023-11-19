@@ -11,7 +11,7 @@ import clases.Moto;
 public class MotoTest {
 
     @Test
-    public void testMotoConstructor() throws ParseException {
+    public void getMotoConstructor() {
         Date matriculacion = new Date(System.currentTimeMillis());
 
         Moto moto = new Moto("Honda", "CBR", Color.ROJO, "Deportiva", 150, 1, 12000, 300, matriculacion, 200, true);
