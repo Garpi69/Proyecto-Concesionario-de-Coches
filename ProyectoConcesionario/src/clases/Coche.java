@@ -22,5 +22,13 @@ public class Coche extends Vehiculo {
 		this.combustible = c.combustible;
 	}
 
+	public String getCombustible() {
+		return combustible;
+	}
+
+	public void setCombustible(String combustible) {
+		this.combustible = combustible;
+	}
+
 	
 } 
