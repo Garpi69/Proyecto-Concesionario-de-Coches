@@ -11,12 +11,13 @@ public class VehiculoTest {
 
     @Test
     public void testGetVehiculo() {
-        Color color = Color.AZUL;
-        // Use the current time in milliseconds for the matriculation date
+      
+       
         Date matriculacion = new Date(System.currentTimeMillis());
-        Vehiculo v = new Vehiculo("Toyota", "yaris", color, "Gasolina", 7, 5, 15000, 30000, matriculacion);
+        Color color = Color.AZUL;
+        Vehiculo v = new Vehiculo("Toyota", "cora", color, "Gasolina", 7, 5, 15000, 30000, matriculacion);
         assertEquals("Toyota", v.getMarca());
-        assertEquals("yaris", v.getModelo());
+        assertEquals("cora", v.getModelo());
         assertEquals(color, v.getColor());
         assertEquals("Gasolina", v.getTipo());
         assertEquals(7, v.getPotencia());
