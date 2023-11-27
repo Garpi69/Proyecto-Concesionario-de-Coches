@@ -7,25 +7,33 @@ public class Moto extends Vehiculo {
 
 	protected int peso;
 	protected boolean baul;
-	
-	public Moto(String marca, String modelo, Color color, String tipo, int potencia, int numPlazas, int precio, int cuota, Date matriculacion, int peso, boolean baul) {
-		super(marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion);
+	public int idVehiculo;
+	public Moto(int idVehiculo,String combustible, String marca, String modelo, String color, String tipo, int potencia, int numPlazas, int precio, int cuota, Date matriculacion, int peso, boolean baul) {
+		super(idVehiculo,combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion);
 		this.peso = peso;
 		this.baul = baul;
 	}
 
 	public Moto() {
-		super("", "", null, "", 0, 0, 0, 0, null);
+		super(0,"","", "", null, "", 0, 0, 0, 0, null);
 		this.peso = 0;
 		this.baul = false;
 	}
 	
 	public Moto(Moto m) {
-		super(m.marca, m.modelo, m.color, m.tipo, m.potencia, m.numPlazas, m.precio, m.cuota, m.matriculacion);
+		super(m.idVehiculo,m.combustible,m.marca, m.modelo, m.color, m.tipo, m.potencia, m.numPlazas, m.precio, m.cuota, m.matriculacion);
 		this.peso = m.peso;
 		this.baul = m.baul;
 	}
 	
+	public int getIdVehiculo() {
+		return idVehiculo;
+	}
+
+	public void setIdVehiculo(int idVehiculo) {
+		this.idVehiculo = idVehiculo;
+	}
+
 	public int getPeso() {
 		return peso;
 	}

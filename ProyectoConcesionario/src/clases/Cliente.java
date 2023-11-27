@@ -8,18 +8,18 @@ public class Cliente extends Persona {
 	private long numTarjeta;
 
 	public Cliente(String login, String contra, String email, String dni, String nombre, String apellidos,
-			Date fechaNacimiento, long numTarjeta) {
-		super(login, contra, email, dni, nombre, apellidos, fechaNacimiento);
+			 long numTarjeta) {
+		super(login, contra, email, dni, nombre, apellidos);
 		this.numTarjeta = numTarjeta;
 	}
 
 	public Cliente() {
-		super("", "", "", "", "", "", null);
+		super("", "", "", "", "", "");
 		this.numTarjeta = 0000000000000000;
 	}
 
 	public Cliente(Cliente c) {
-		super(c.login, c.contra, c.email, c.dni, c.nombre, c.apellidos, c.fechaNacimiento);
+		super(c.login, c.contra, c.email, c.dni, c.nombre, c.apellidos);
 		this.numTarjeta = c.numTarjeta;
 	}
 

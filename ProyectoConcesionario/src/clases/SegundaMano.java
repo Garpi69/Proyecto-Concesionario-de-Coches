@@ -2,6 +2,7 @@ package clases;
 
 public interface SegundaMano {
 	
-	public void numKilometros(int km);
+	public void kilometraje(int km);
+
 
 }

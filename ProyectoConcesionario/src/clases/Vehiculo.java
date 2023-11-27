@@ -4,21 +4,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Vehiculo {
-
+	protected int idVehiculo;
+	protected String combustible;
 	protected String marca;
 	protected String modelo;
-	protected Color color;
+	protected String color;
 	protected String tipo;
 	protected int potencia;
 	protected int numPlazas;
 	protected int precio;
 	protected int cuota;
 	protected Date matriculacion;
+	
 	public static SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
 
-	public Vehiculo(String marca, String modelo, Color color, String tipo, int potencia, int numPlazas, int precio, int cuota, Date matriculacion) {
+	public Vehiculo(int idVehiculo,String combustible, String marca, String modelo, String color, String tipo, int potencia, int numPlazas, int precio, int cuota, Date matriculacion) {
 		super();
+		this.idVehiculo = idVehiculo;
+		this.combustible = combustible;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.color = color;
@@ -32,9 +36,11 @@ public class Vehiculo {
 	
 	public Vehiculo() {
 		super();
+		this.idVehiculo = 0;
+		this.combustible ="";
 		this.marca = "";
 		this.modelo = "";
-		this.color = null;
+		this.color = "";
 		this.tipo = "";
 		this.potencia = 0;
 		this.numPlazas = 0;
@@ -45,6 +51,8 @@ public class Vehiculo {
 
 	public Vehiculo(Vehiculo v) {
 		super();
+		this.idVehiculo = v.idVehiculo;
+		this.combustible = v.combustible;
 		this.marca = v.marca;
 		this.modelo = v.modelo;
 		this.color = v.color;
@@ -56,6 +64,22 @@ public class Vehiculo {
 		this.matriculacion = v.matriculacion;
 	}
 		
+	public int getIdVehiculo() {
+		return idVehiculo;
+	}
+
+	public void setIdVehiculo(int idVehiculo) {
+		this.idVehiculo = idVehiculo;
+	}
+
+	public String getCombustible() {
+		return combustible;
+	}
+
+	public void setCombustible(String combustible) {
+		this.combustible = combustible;
+	}
+
 	public String getMarca() {
 		return marca;
 	}
@@ -72,11 +96,11 @@ public class Vehiculo {
 		this.modelo = modelo;
 	}
 
-	public Color getColor() {
+	public String getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 
@@ -128,47 +152,7 @@ public class Vehiculo {
 		Vehiculo.df = df;
 	}
 
-	public void setColorString(String string) {
-		switch (string) {
-		case "negro":
-			Color colorN = Color.NEGRO;
-			setColor(colorN);
-			break;
-		case "gris":
-			Color colorG = Color.GRIS;
-			setColor(colorG);
-			break;
-		case "blanco":
-			Color colorB = Color.BLANCO;
-			setColor(colorB);
-			break;
-		case "rojo":
-			Color colorR = Color.ROJO;
-			setColor(colorR);
-			break;
-		case "azul":
-			Color colorA = Color.AZUL;
-			setColor(colorA);
-			break;
-		case "verde":
-			Color colorV = Color.VERDE;
-			setColor(colorV);
-			break;
-		case "dorado":
-			Color colorD = Color.DORADO;
-			setColor(colorD);
-			break;
-		case "marron":
-			Color colorM = Color.MARRON;
-			setColor(colorM);
-		default:
-			break;  
-		}
-	}	
-
-	public String getColorString() {
-		return color.toString().toLowerCase();
-	}
+	
 
 	public int getPrecio() {
 		return precio;
@@ -177,6 +161,11 @@ public class Vehiculo {
 	public void setPrecio(int precio) {
 		this.precio = precio;
 	}
-
+	public void setidVehiculo (int idVehiculo) {
+		this.idVehiculo=idVehiculo;
+	}
+	public int getidVehiculo ( ) {
+		return idVehiculo;
+	}
 
 }

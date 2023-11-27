@@ -6,19 +6,21 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.swing.*;
+import clases.Cliente;
 
 
-public class VentanaRegistro extends JFrame{
+public class VentanaRegistroCliente extends JFrame{
 
 	/**
 	 * 
 	 */
 	
 	private static final long serialVersionUID = 1L;
-	
+	private DAO dao = new DAO();
 	protected JTextField textoUsuario;
 	protected JTextField textoPassword;
 	protected JTextField textoRepetirPassword;
@@ -26,13 +28,13 @@ public class VentanaRegistro extends JFrame{
 	protected JTextField textoDni;
 	protected JTextField textoNombre;
 	protected JTextField textoApellidos;
-	protected LocalDate textofecha;
+
 	protected JTextField textoNumTarjeta;
 	
 	protected JButton botonSignUp;
 	protected JButton botonCancelar;
 	
-	public VentanaRegistro() {
+	public VentanaRegistroCliente() {
 		
 		JPanel panelSignUp = new JPanel();
 		panelSignUp.setLayout(new GridLayout(9, 2));
@@ -60,7 +62,8 @@ public class VentanaRegistro extends JFrame{
 		panelSignUp.add(textoNombre);
 		panelSignUp.add(new JLabel("Apellidos:"));
 		panelSignUp.add(textoApellidos);
-		panelSignUp.add(new JLabel("Fecha de nacimiento:"));
+		
+		
 		//fecha;
 		panelSignUp.add(new JLabel("Número de tarjeta:"));
 		panelSignUp.add(textoNumTarjeta);
@@ -80,7 +83,14 @@ public class VentanaRegistro extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				guardarPersonaEnArchivo();
+				try {
+					guardarPersonaEnArchivo();
+					new VentanaLoginCliente();
+					
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null,"ERROR","No se ha podido guardar el usuario", JOptionPane.PLAIN_MESSAGE);
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -102,7 +112,7 @@ public class VentanaRegistro extends JFrame{
 	}
 	
 
-	public void guardarPersonaEnArchivo() {
+	public void guardarPersonaEnArchivo() throws SQLException {
 	   
 	    String nombreUsuario = textoUsuario.getText();
 	    String contrasena = textoPassword.getText();
@@ -110,36 +120,13 @@ public class VentanaRegistro extends JFrame{
 	    String dni = textoDni.getText();
 	    String nombre = textoNombre.getText();
 	    String apellidos = textoApellidos.getText();
-	    String numTarjeta = textoNumTarjeta.getText();
-	    
-	    String datosPersona = nombreUsuario + "," + contrasena + "," + email + "," + dni + "," + nombre + "," + apellidos + "," + numTarjeta;
-
-	    
-	    String rutaProyecto = System.getProperty("user.dir");
-
-	    String rutaCompleta = rutaProyecto + "usuario.txt";
-
-	    try {
-	       
-	        File archivo = new File(rutaCompleta);
-	        FileWriter escritor = new FileWriter(archivo, true); 
-
-	        
-	        BufferedWriter escritorBuffer = new BufferedWriter(escritor);
-
-	        
-	        escritorBuffer.write(datosPersona);
-	        escritorBuffer.newLine(); 
-
-	        
-	        escritorBuffer.close();
-
-	       
-	        JOptionPane.showMessageDialog(null,"Informacion Guardada","Guardado", JOptionPane.PLAIN_MESSAGE);
-
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        JOptionPane.showMessageDialog(this, "Error al guardar los datos  " , "Error", JOptionPane.ERROR_MESSAGE);
-	    }
+	    long numTarjeta = Integer.parseInt(textoNumTarjeta.getText());
+	   
+	    Cliente cliente = new Cliente(nombreUsuario,contrasena,email,dni,nombre,apellidos,numTarjeta);
+	  
+	    dao.agregarCliente(cliente);
+		
+      
+		JOptionPane.showMessageDialog(null,"Informacion Guardada","Guardado", JOptionPane.PLAIN_MESSAGE);
 	}
 }

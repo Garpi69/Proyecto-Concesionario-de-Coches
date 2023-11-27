@@ -10,21 +10,21 @@ public class Trabajador extends Persona{
 
 	public Trabajador(String login, String contra, String email, String dni, String nombre, String apellidos,
 			Date fechaNacimiento, int sueldo, boolean esAdmin, String puesto) {
-		super(login, contra, email, dni, nombre, apellidos, fechaNacimiento);
+		super(login, contra, email, dni, nombre, apellidos);
 		this.sueldo = sueldo;
 		this.esAdmin = esAdmin;
 		this.puesto = puesto;
 	}
 
 	public Trabajador() {
-		super("", "", "", "", "", "", null);
+		super("", "", "", "", "", "");
 		this.sueldo = 0;
 		this.esAdmin = false;
 		this.puesto = "";
 	}
 
 	public Trabajador(Trabajador t) {
-		super(t.login, t.contra, t.email, t.dni, t.nombre, t.apellidos, t.fechaNacimiento);
+		super(t.login, t.contra, t.email, t.dni, t.nombre, t.apellidos);
 		this.sueldo = t.sueldo;
 		this.esAdmin = t.esAdmin;
 		this.puesto = t.puesto;

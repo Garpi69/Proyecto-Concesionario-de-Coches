@@ -5,10 +5,11 @@ import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
-public class VentanaLogin extends JFrame {
+public class VentanaLoginCliente extends JFrame {
 
 	/**
 	 * 
@@ -21,7 +22,7 @@ public class VentanaLogin extends JFrame {
 	protected JButton botonAceptar;
 	protected JButton botonCancelar;
 	
-	public VentanaLogin() {
+	public VentanaLoginCliente() {
 		
 		JPanel panelLogin = new JPanel();
 		panelLogin.setLayout(new GridLayout(2, 2));
@@ -92,37 +93,17 @@ public void Autenticacion() {
     String usuarioIngresado = textoLogin.getText();
     String contrasenaIngresada = new String(textoPassword.getPassword());
 
-   
-    String rutaCompleta = System.getProperty("user.dir") + "/src/usuarios.txt";
-
+    DAO dao = new DAO();
     try {
-        
-        BufferedReader lector = new BufferedReader(new FileReader(rutaCompleta));
-
-        String linea;
-        boolean usuarioAutenticado = false;
-
-        while ((linea = lector.readLine()) != null) {
-            String[] datosUsuario = linea.split(","); 
-
-            if ( usuarioIngresado.equals(datosUsuario[0]) && contrasenaIngresada.equals(datosUsuario[1])) {
-                usuarioAutenticado = true;
-                break;
-            }
-        }
-
-        lector.close();
-
-        if (usuarioAutenticado) {
-            new VentanaMenu();
-            dispose(); 
-        } else {
-            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecto", "Error ", JOptionPane.ERROR_MESSAGE);
-        }
-
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al autenticar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+		if (dao.comprobarCredencialesCliente(usuarioIngresado, contrasenaIngresada)) {
+			new VentanaMenuCliente();
+		}
+		else {
+			JOptionPane.showMessageDialog(null,"ERROR","Usuario y/o contraseña no reconocidos", JOptionPane.PLAIN_MESSAGE);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 }
 }
