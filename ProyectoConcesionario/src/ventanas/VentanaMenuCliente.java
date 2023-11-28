@@ -13,15 +13,15 @@ public class VentanaMenuCliente extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 1));
+        panel.setLayout(new GridLayout(2, 1, 10, 10)); // Agregado: Espaciado entre componentes
 
         JButton comprarButton = new JButton("Comprar");
         comprarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new VentanaMenuClienteCompraVehiculo();
-                JOptionPane.showMessageDialog(null, "Has seleccionado Comprar");
-                // Puedes abrir la ventana de compra aquí
+               
+              
             }
         });
         panel.add(comprarButton);
@@ -31,15 +31,21 @@ public class VentanaMenuCliente extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new VentanaMenuClienteVendeVehiculo();
-                JOptionPane.showMessageDialog(null, "Has seleccionado Vender");
-                // Puedes abrir la ventana de venta aquí
+              
+                
             }
         });
         panel.add(venderButton);
 
-        add(panel);
+        // Agregado: Espaciado entre panel y ventana
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Agregado: Borde
+
+        wrapperPanel.add(panel, BorderLayout.CENTER);
+        add(wrapperPanel);
     }
 
-   
+    public static void main(String[] args) {
+        new VentanaMenuCliente().setVisible(true);
+    }
 }
-

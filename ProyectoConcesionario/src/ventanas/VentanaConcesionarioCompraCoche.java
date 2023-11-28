@@ -1,46 +1,41 @@
 package ventanas;
+
 import javax.swing.*;
+import java.awt.*;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import clases.Cliente;
 import clases.Coche;
-import clases.Color;
 
-import java.awt.*;
-import java.sql.SQLException;
+
+
 
 
 public class VentanaConcesionarioCompraCoche extends JFrame {
-    private JTextField idField,combustibleField, marcaField, modeloField, colorField, tipoField, potenciaField, numPlazasField, precioField, cuotaField, matriculacionField, kilometrajeField;
+    private JTextField idField, combustibleField, marcaField, modeloField, colorField, tipoField, potenciaField, numPlazasField, precioField, cuotaField, matriculacionField, kilometrajeField;
     private JButton agregarButton;
 
     public void agregarCocheForm(Cliente cliente) {
-    	DAO dao = new DAO();
-    	try {
-			dao.conectar();
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(this, "No se ha podido conectar con la base de datos");
-			e.printStackTrace();
-		}
+        DAO dao = new DAO();
+
         setTitle("Agregar Coche");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
+        setSize(400, 400);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(11, 2));
+        panel.setLayout(new GridLayout(13, 2));
 
         panel.add(new JLabel("ID Vehículo:"));
         idField = new JTextField();
         panel.add(idField);
-        
+
         panel.add(new JLabel("Combustible:"));
         combustibleField = new JTextField();
         panel.add(combustibleField);
 
-        
         panel.add(new JLabel("Marca:"));
         marcaField = new JTextField();
         panel.add(marcaField);
@@ -76,65 +71,64 @@ public class VentanaConcesionarioCompraCoche extends JFrame {
         panel.add(new JLabel("Matriculación (YYYY-MM-DD):"));
         matriculacionField = new JTextField();
         panel.add(matriculacionField);
-        
+
         panel.add(new JLabel("Kilometraje:"));
-     	kilometrajeField = new JTextField();
+        kilometrajeField = new JTextField();
         panel.add(kilometrajeField);
-        
 
         agregarButton = new JButton("Agregar");
-       
-	
+        panel.add(agregarButton);
+        add(panel);
+        setVisible(true);
+        agregarButton.addActionListener(e -> {
+            Coche coche = obtenerDatosCoche();
+            if (coche != null) {
+                try {
+                    dao.agregarCocheCompradoPorConcesionario(coche, cliente);
+                    JOptionPane.showMessageDialog(this, "Coche agregado exitosamente");
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, "Error al agregar el coche a la base de datos");
+                    ex.printStackTrace();
+                }
+            }
+        });
 
-       
     
+       
+    }
 
-  
-        int idVehiculo = Integer.parseInt(idField.getText());
+    private Coche obtenerDatosCoche() {
+        int idVehiculo, potencia, numPlazas, precio, cuota, kilometraje;
+
+        try {
+            idVehiculo = Integer.parseInt(idField.getText());
+            potencia = Integer.parseInt(potenciaField.getText());
+            numPlazas = Integer.parseInt(numPlazasField.getText());
+            precio = Integer.parseInt(precioField.getText());
+            cuota = Integer.parseInt(cuotaField.getText());
+            kilometraje = Integer.parseInt(kilometrajeField.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Valores numéricos inválidos");
+            return null;
+        }
+
         String marca = marcaField.getText();
         String modelo = modeloField.getText();
         String color = colorField.getText();
         String tipo = tipoField.getText();
-        int potencia = Integer.parseInt(potenciaField.getText());
-        int numPlazas = Integer.parseInt(numPlazasField.getText());
-        int precio = Integer.parseInt(precioField.getText());
-        int cuota = Integer.parseInt(cuotaField.getText());
-        String matriculacionStr = matriculacionField.getText();
-        int kilometraje = Integer.parseInt(kilometrajeField.getText());
         String combustible = combustibleField.getText();
+        String matriculacionStr = matriculacionField.getText();
 
-        // Convertir la cadena a tipo Date utilizando SimpleDateFormat
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date matriculacion= null;
+        Date matriculacion;
         try {
-          matriculacion = dateFormat.parse(matriculacionStr);
-        } catch (ParseException e) {
+            matriculacion = dateFormat.parse(matriculacionStr);
+        } catch (ParseException ex) {
             JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Utiliza el formato YYYY-MM-DD");
-            return; // Salir del método si hay un error en el formato de fecha
+            return null;
         }
 
-        // Crear el objeto Coche con los datos ingresados
-        Coche coche = new Coche(idVehiculo,combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion);
-    	agregarButton.addActionListener(e -> {
-			try {
-				dao.conectar();
-				dao.agregarCocheCompradoPorConcesionario(coche, cliente);
-				dao.desconectar();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				JOptionPane.showMessageDialog(this, "Error, intentelo otra vez");
-				e1.printStackTrace();
-			}
-		});
-    	 add(panel);
-        // Aquí puedes usar el objeto coche según sea necesario (enviar a un DAO, almacenar en una lista, etc.)
-        System.out.println("Nuevo coche añadido");
-        try {
-			dao.desconectar();
-		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(this, "No se ha podido desconectar de la base de datos");
-			e1.printStackTrace();
-		}
-}
-    
+        return new Coche(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion);
+    }
+   
 }

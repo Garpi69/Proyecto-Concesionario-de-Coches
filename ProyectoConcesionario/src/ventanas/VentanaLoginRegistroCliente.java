@@ -1,14 +1,5 @@
 package ventanas;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.SQLException;
-
-import javax.swing.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,37 +9,57 @@ public class VentanaLoginRegistroCliente extends JFrame {
     public VentanaLoginRegistroCliente() {
         setTitle("Login o Registro");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 200);
+        setSize(350, 250);
         setLocationRelativeTo(null);
-        DAO dao = new DAO();
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 1));
+        setResizable(false);
+        setLayout(new BorderLayout());
+
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(240, 240, 240));
+
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.insets = new Insets(10, 10, 10, 10);
 
         JButton loginButton = new JButton("Iniciar Sesión");
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new VentanaLoginCliente();
-                JOptionPane.showMessageDialog(null, "Has seleccionado Iniciar Sesión");
-                // Aquí puedes abrir la ventana de inicio de sesión
-            }
-        });
-        panel.add(loginButton);
+        estilizarBoton(loginButton);
+        loginButton.addActionListener(e -> new VentanaLoginCliente());
+        panel.add(loginButton, constraints);
 
+        constraints.gridy = 1;
         JButton registroButton = new JButton("Registrarse");
-        registroButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para el registro
-                new VentanaRegistroCliente();
-            	JOptionPane.showMessageDialog(null, "Has seleccionado Registrarse");
-                // Aquí puedes abrir la ventana de registro
-            }
-        });
-        panel.add(registroButton);
+        estilizarBoton(registroButton);
+        registroButton.addActionListener(e -> new VentanaRegistroCliente());
+        panel.add(registroButton, constraints);
 
-        add(panel);
+        add(panel, BorderLayout.CENTER);
+        setVisible(true);
     }
 
-  
+    private void estilizarBoton(JButton button) {
+        button.setBackground(new Color(50, 150, 250));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setFont(new Font("Arial", Font.BOLD, 16));
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setPreferredSize(new Dimension(250, 50));
+        button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setContentAreaFilled(false);
+        button.setOpaque(true);
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(70, 170, 255));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(50, 150, 250));
+            }
+        });
+    }
+
+   
 }
