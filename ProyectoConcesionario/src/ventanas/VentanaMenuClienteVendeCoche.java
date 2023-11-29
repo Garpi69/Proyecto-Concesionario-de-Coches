@@ -15,6 +15,9 @@ import clases.CocheSegundaMano;
 
 public class VentanaMenuClienteVendeCoche extends JFrame {
 	DAO dao = new DAO();
+	 protected JTextField idField, dniField, combustibleField, marcaField, modeloField, colorField, tipoField, potenciaField, numPlazasField, precioField, kilometrajeField, matriculacionField;
+	    protected JButton enviarButton;
+
     public VentanaMenuClienteVendeCoche() {
         setTitle("Datos del Coche");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,70 +25,50 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(12, 2));
+        panel.setLayout(new GridLayout(13, 2, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel idLabel = new JLabel("ID Vehículo:");
-        JTextField idField = new JTextField();
-        panel.add(idLabel);
+        idField = new JTextField();
+        dniField = new JTextField();
+        combustibleField = new JTextField();
+        marcaField = new JTextField();
+        modeloField = new JTextField();
+        colorField = new JTextField();
+        tipoField = new JTextField();
+        potenciaField = new JTextField();
+        numPlazasField = new JTextField();
+        precioField = new JTextField();
+        kilometrajeField = new JTextField();
+        matriculacionField = new JTextField();
+
+        panel.add(new JLabel("ID Vehículo:"));
         panel.add(idField);
-        
-        JLabel dniClienteField= new JLabel("Introduzca su DNI:");
-        JTextField dniField = new JTextField();
-        panel.add(dniClienteField);
+        panel.add(new JLabel("DNI del Cliente:"));
         panel.add(dniField);
-
-
-        JLabel combustibleLabel = new JLabel("Combustible:");
-        JTextField combustibleField = new JTextField();
-        panel.add(combustibleLabel);
+        panel.add(new JLabel("Combustible:"));
         panel.add(combustibleField);
-
-        JLabel marcaLabel = new JLabel("Marca:");
-        JTextField marcaField = new JTextField();
-        panel.add(marcaLabel);
+        panel.add(new JLabel("Marca:"));
         panel.add(marcaField);
-
-        JLabel modeloLabel = new JLabel("Modelo:");
-        JTextField modeloField = new JTextField();
-        panel.add(modeloLabel);
+        panel.add(new JLabel("Modelo:"));
         panel.add(modeloField);
-
-        JLabel colorLabel = new JLabel("Color:");
-        JTextField colorField = new JTextField();
-        panel.add(colorLabel);
+        panel.add(new JLabel("Color:"));
         panel.add(colorField);
-
-        JLabel tipoLabel = new JLabel("Tipo:");
-        JTextField tipoField = new JTextField();
-        panel.add(tipoLabel);
+        panel.add(new JLabel("Tipo:"));
         panel.add(tipoField);
-
-        JLabel potenciaLabel = new JLabel("Potencia:");
-        JTextField potenciaField = new JTextField();
-        panel.add(potenciaLabel);
+        panel.add(new JLabel("Potencia:"));
         panel.add(potenciaField);
-
-        JLabel numPlazasLabel = new JLabel("Número de Plazas:");
-        JTextField numPlazasField = new JTextField();
-        panel.add(numPlazasLabel);
+        panel.add(new JLabel("Número de Plazas:"));
         panel.add(numPlazasField);
-
-        JLabel precioLabel = new JLabel("Precio:");
-        JTextField precioField = new JTextField();
-        panel.add(precioLabel);
+        panel.add(new JLabel("Precio:"));
         panel.add(precioField);
-
-
-        JLabel kilometrajeLabel = new JLabel("Kilometraje:");
-        JTextField kilometrajeField = new JTextField();
-        panel.add(kilometrajeLabel);
+        panel.add(new JLabel("Kilometraje:"));
         panel.add(kilometrajeField);
-        
-        JLabel matriculacionLabel = new JLabel("Fecha de Matriculación (dd/MM/yyyy):");
-        JTextField matriculacionField = new JTextField();
-        panel.add(matriculacionLabel);
+        panel.add(new JLabel("Fecha de Matriculación (dd/MM/yyyy):"));
         panel.add(matriculacionField);
 
+        enviarButton = new JButton("Enviar");
+        panel.add(new JLabel());
+        panel.add(enviarButton);
         JButton enviarButton = new JButton("Enviar");
         enviarButton.addActionListener(new ActionListener() {
             @Override
@@ -125,6 +108,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
         panel.add(enviarButton);
 
         add(panel);
+        setVisible(true);
     }
 
   

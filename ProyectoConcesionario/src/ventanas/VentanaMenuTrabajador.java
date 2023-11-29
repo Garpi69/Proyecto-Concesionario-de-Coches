@@ -72,20 +72,20 @@ public class VentanaMenuTrabajador extends JFrame{
 			VentanaInventario ventana = new VentanaInventario();
 			ventana.cargarInventario();
 			
-			dispose();
+			
 			
 		}
 	});
 		botonInforme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				
 				
 			}
 		});
 		botonCalendario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				dispose();
+				
 				
 			}
 		});botonComprarVehiculo.addActionListener(new ActionListener() {
@@ -95,14 +95,15 @@ public class VentanaMenuTrabajador extends JFrame{
 		            compraVehiculo.abrirVentanaAgregarVehiculo();
 		        });
 			
-				dispose();
+				
 				
 			}
 		});
 		botonVenderVehiculo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//ABRIR VENTANA PARA ELEGIR QUE VEHICULO SE HA VENDIDO (COCHE, MOTO, COCHE2MANO,MOTO2MANO)
-				
+				VentanaConcesionarioVendeVehiculo ventana = new VentanaConcesionarioVendeVehiculo();
+				ventana.abrirVentanaAgregarVehiculo();
 				//PEDIR ID VEHICULO VENDIDO Y DATOS CLIENTE (SUPONIENDO QUE NO TIENE CUENTA) USAR OBTENERCLIENTE
 				//ELIMINAR DE LA TABLA COCHE/MOTO/COCHESEGUNDAMANO/MOTOSEGUNDAMANO Y AÑADIR A VENTAS
 			
@@ -125,5 +126,8 @@ public class VentanaMenuTrabajador extends JFrame{
 		this.setLocationRelativeTo(null);
 		
 	
+	}
+	public static void main (String[] args) {
+		new VentanaMenuTrabajador();
 	}
 }

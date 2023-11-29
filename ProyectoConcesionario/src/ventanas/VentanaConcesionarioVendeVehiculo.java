@@ -6,12 +6,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class VentanaConcesionarioCompraVehiculo {
+public class VentanaConcesionarioVendeVehiculo {
 
     DAO dao = new DAO();
 
     public void abrirVentanaAgregarVehiculo() {
-        JFrame ventanaAgregarVehiculo = new JFrame("Agregar Vehículo");
+        JFrame ventanaAgregarVehiculo = new JFrame("Agregar Venta de Vehículo");
         ventanaAgregarVehiculo.setSize(300, 200);
         ventanaAgregarVehiculo.setLocationRelativeTo(null);
         ventanaAgregarVehiculo.setLayout(new GridLayout(4, 1));
@@ -32,12 +32,8 @@ public class VentanaConcesionarioCompraVehiculo {
                 VentanaRegistroCliente ventanaRegistroCliente = new VentanaRegistroCliente();
                 Cliente cliente = ventanaRegistroCliente.crearObjetoCliente();
                 if (cliente != null) {
-                   
-                    // Después de obtener los datos del cliente, abre la ventana para agregar el coche
-                    VentanaConcesionarioCompraCoche ventana = new VentanaConcesionarioCompraCoche();
-                    ventana.agregarCocheForm(cliente);
-                    JOptionPane.showMessageDialog(null, "Datos del cliente registrados exitosamente");
-                    // La ventana "VentanaConcesionarioCompraCoche" debería manejar la lógica para agregar el coche
+                  
+                    	//CODIGO PARA ELEGIR EL COCHE QUE SE HA VENDIDO
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al registrar los datos del cliente");
                 }

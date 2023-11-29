@@ -31,6 +31,7 @@ public class VentanaClienteCompraMotoSegundaMano extends JFrame {
         panel.add(comprarButton, BorderLayout.SOUTH);
 
         add(panel);
+        setVisible(true);
         cargarDatosDesdeDB();
     }
 

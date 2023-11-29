@@ -36,7 +36,8 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         JButton comprarMotoButton = new JButton("Comprar Moto");
         estilizarBoton(comprarMotoButton);
         comprarMotoButton.addActionListener(e -> {
-            new VentanaClienteCompraMoto();
+            
+        	new VentanaClienteCompraMoto();
             JOptionPane.showMessageDialog(null, "Has seleccionado Comprar Moto");
         });
         panel.add(comprarMotoButton);
@@ -44,11 +45,11 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         JButton comprarMotoSegundaManoButton = new JButton("Comprar Moto Segunda Mano");
         estilizarBoton(comprarMotoSegundaManoButton);
         comprarMotoSegundaManoButton.addActionListener(e -> {
-            new VentanaClienteCompraMotoSegundaMano();
-            JOptionPane.showMessageDialog(null, "Has seleccionado Comprar Moto Segunda Mano");
+             new VentanaClienteCompraMotoSegundaMano();
+            		
         });
         panel.add(comprarMotoSegundaManoButton);
-
+        setVisible(true);
         add(panel);
         getContentPane().setBackground(Color.WHITE);
     }

@@ -137,7 +137,7 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
             }
         });
         panel.add(enviarButton);
-
+        setVisible(true);
         add(panel);
     }
 
