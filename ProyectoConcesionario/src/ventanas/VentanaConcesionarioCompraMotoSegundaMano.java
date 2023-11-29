@@ -30,7 +30,7 @@ public class VentanaConcesionarioCompraMotoSegundaMano extends JFrame {
     private JTextField kilometrajeField;
     private JButton agregarButton;
     DAO dao = new DAO();
-    public VentanaConcesionarioCompraMotoSegundaMano() {
+    public VentanaConcesionarioCompraMotoSegundaMano(Cliente cliente) {
         setTitle("Agregar Moto de Segunda Mano");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 450);
@@ -95,9 +95,9 @@ public class VentanaConcesionarioCompraMotoSegundaMano extends JFrame {
         panel.add(kilometrajeField);
 
         agregarButton = new JButton("Agregar Moto de Segunda Mano");
-        
+        agregarMotoSegundaMano(cliente);
         panel.add(agregarButton);
-
+        setVisible(true);
         add(panel);
     }
 

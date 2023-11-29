@@ -19,7 +19,12 @@ public class VentanaConcesionarioCompraCoche extends JFrame {
 
     public void agregarCocheForm(Cliente cliente) {
         DAO dao = new DAO();
-
+        try {
+			dao.conectar();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, "No se ha podido conectar con la base de datos");
+			e.printStackTrace();
+		}
         setTitle("Agregar Coche");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 400);

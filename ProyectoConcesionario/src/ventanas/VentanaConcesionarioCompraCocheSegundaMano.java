@@ -13,7 +13,7 @@ import java.awt.*;
 import java.sql.SQLException;
 
 
-public class VentanaConcesionarioCompraCohceSegundaMano extends JFrame {
+public class VentanaConcesionarioCompraCocheSegundaMano extends JFrame {
     private JTextField idField, marcaField, combustibleField, modeloField, colorField, tipoField, potenciaField, numPlazasField, precioField, cuotaField, matriculacionField, kilometrajeField;
     private JButton agregarButton;
 
