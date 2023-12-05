@@ -31,7 +31,7 @@ public class VentanaMenuTrabajador extends JFrame{
 	protected JButton botonClientes ;
 	
 	public VentanaMenuTrabajador(){
-		
+		setVisible(true);
 		 JPanel contentPanel = new JPanel();
 	        contentPanel.setLayout(new BorderLayout());
 
@@ -122,12 +122,10 @@ public class VentanaMenuTrabajador extends JFrame{
 		this.setTitle("Menu");
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setSize(800, 600);
-		this.setVisible(true); 
+		setVisible(true); 
 		this.setLocationRelativeTo(null);
 		
 	
 	}
-	public static void main (String[] args) {
-		new VentanaMenuTrabajador();
-	}
+	
 }

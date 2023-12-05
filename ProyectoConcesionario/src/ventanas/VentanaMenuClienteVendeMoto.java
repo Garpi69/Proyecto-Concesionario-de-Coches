@@ -119,9 +119,10 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
 
                     int peso = Integer.parseInt(pesoField.getText());
                     boolean baul = Boolean.parseBoolean(baulField.getText());
-                    MotoSegundaMano moto = new MotoSegundaMano(idVehiculo,combustible,marca,modelo,color,tipo,potencia,numPlazas,precio,cuota,matriculacion,kilometraje,baul,peso);
                     String dniCliente = dniField.getText();
                     Cliente cliente = dao.obtenerClientePorDNI(dniCliente);
+                    MotoSegundaMano moto = new MotoSegundaMano(idVehiculo,combustible,marca,modelo,color,tipo,potencia,numPlazas,precio,cuota,matriculacion,kilometraje,baul,peso);
+
                     dao.agregarMotoVendidaPorCliente(moto,cliente);
                     JOptionPane.showMessageDialog(null, "Datos de la moto recibidos correctamente");
 

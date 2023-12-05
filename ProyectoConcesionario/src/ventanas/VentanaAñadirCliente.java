@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 
 import clases.Cliente;
 
@@ -13,7 +15,7 @@ public class VentanaAñadirCliente extends JFrame {
     protected JTextField textoUsuario, textoEmail, textoDni, textoNombre, textoApellidos, textoNumTarjeta;
     protected JPasswordField textoPassword, textoRepetirPassword;
     protected JButton botonSignUp, botonCancelar;
-
+    protected JSpinner fechaNacimientoSpinner ;
     public Cliente VentanaAñadirCliente() {
         setTitle("Registro");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -23,7 +25,9 @@ public class VentanaAñadirCliente extends JFrame {
         JPanel panelSignUp = new JPanel();
         panelSignUp.setLayout(new GridLayout(9, 2, 10, 10));
         panelSignUp.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
+        fechaNacimientoSpinner = new JSpinner(new SpinnerDateModel());
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(fechaNacimientoSpinner, "dd/MM/yyyy");
+        fechaNacimientoSpinner.setEditor(dateEditor);
         textoUsuario = new JTextField();
         textoPassword = new JPasswordField();
         textoRepetirPassword = new JPasswordField();
@@ -49,8 +53,11 @@ public class VentanaAñadirCliente extends JFrame {
         panelSignUp.add(textoApellidos);
         panelSignUp.add(new JLabel("Número de tarjeta:"));
         panelSignUp.add(textoNumTarjeta);
-
+        
+        panelSignUp.add(new JLabel("Fecha de nacimiento:"));
+        panelSignUp.add(fechaNacimientoSpinner);
         this.add(panelSignUp, BorderLayout.CENTER);
+
 
         JPanel panelBotones = new JPanel();
         panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
@@ -95,8 +102,16 @@ public class VentanaAñadirCliente extends JFrame {
          String nombre = textoNombre.getText();
          String apellidos = textoApellidos.getText();
          long numTarjeta = Long.parseLong(textoNumTarjeta.getText());
-
-         Cliente cliente = new Cliente(nombreUsuario, contrasena, email, dni, nombre, apellidos, numTarjeta);
+         String format ="dd/mm/yyyy";
+         String fechaNacimientoString = dao.dateToString((Date) fechaNacimientoSpinner.getValue(),format);
+         Date fechaNacimiento = null;
+ 		try {
+ 			fechaNacimiento = dao.stringToDate(fechaNacimientoString,dao.format);
+ 		} catch (ParseException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+         Cliente cliente = new Cliente(nombreUsuario, contrasena, email, dni, nombre, apellidos,fechaNacimiento, numTarjeta);
          return cliente;
     }
     	

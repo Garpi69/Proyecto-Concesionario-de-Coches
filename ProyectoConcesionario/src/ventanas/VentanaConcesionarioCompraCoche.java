@@ -89,7 +89,7 @@ public class VentanaConcesionarioCompraCoche extends JFrame {
             Coche coche = obtenerDatosCoche();
             if (coche != null) {
                 try {
-                    dao.agregarCocheCompradoPorConcesionario(coche, cliente);
+                    dao.agregarCocheCompradoPorConcesionario(coche);
                     JOptionPane.showMessageDialog(this, "Coche agregado exitosamente");
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(this, "Error al agregar el coche a la base de datos");

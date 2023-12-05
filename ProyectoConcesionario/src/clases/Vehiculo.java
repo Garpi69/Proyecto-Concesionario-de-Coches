@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Vehiculo {
 	protected int idVehiculo;
+
 	protected String combustible;
 	protected String marca;
 	protected String modelo;
@@ -22,6 +23,7 @@ public class Vehiculo {
 	public Vehiculo(int idVehiculo,String combustible, String marca, String modelo, String color, String tipo, int potencia, int numPlazas, int precio, int cuota, Date matriculacion) {
 		super();
 		this.idVehiculo = idVehiculo;
+		
 		this.combustible = combustible;
 		this.marca = marca;
 		this.modelo = modelo;
@@ -37,6 +39,7 @@ public class Vehiculo {
 	public Vehiculo() {
 		super();
 		this.idVehiculo = 0;
+		
 		this.combustible ="";
 		this.marca = "";
 		this.modelo = "";
@@ -168,4 +171,6 @@ public class Vehiculo {
 		return idVehiculo;
 	}
 
+	
+	
 }

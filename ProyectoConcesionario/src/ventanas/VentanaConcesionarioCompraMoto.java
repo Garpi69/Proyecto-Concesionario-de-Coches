@@ -119,7 +119,7 @@ public class VentanaConcesionarioCompraMoto extends JFrame {
                 	 
                      try {
                     	 dao.conectar();
-                         dao.agregarMotoCompradaPorConcesionario(moto,cliente);
+                         dao.agregarMotoCompradaPorConcesionario(moto);
 						dao.desconectar();
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block

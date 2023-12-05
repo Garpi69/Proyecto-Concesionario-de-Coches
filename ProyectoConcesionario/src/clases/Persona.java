@@ -1,6 +1,5 @@
 package clases;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,10 +11,35 @@ public class Persona {
 	protected String dni;
 	protected String nombre;
 	protected String apellidos;
+	protected Date fechaNacimiento;
 	
+	public String getContra() {
+		return contra;
+	}
+
+	public void setContra(String contra) {
+		this.contra = contra;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
 	public static SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-	public Persona(String login, String contra, String email, String dni, String nombre, String apellidos
+	public Persona(String login, String contra, String email, String dni, String nombre, String apellidos,Date fechaNacimiento
 		) {
 		super();
 		this.login = login;
@@ -24,6 +48,7 @@ public class Persona {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
+		this.fechaNacimiento = fechaNacimiento;
 		
 	}
 
@@ -35,6 +60,7 @@ public class Persona {
 		this.dni = "";
 		this.nombre = "";
 		this.apellidos = "";
+		this.fechaNacimiento=null;
 		
 	}
 
@@ -46,6 +72,7 @@ public class Persona {
 		this.dni = p.dni;
 		this.nombre = p.nombre;
 		this.apellidos = p.apellidos;
+		this.fechaNacimiento=p.fechaNacimiento;
 		
 	}
 

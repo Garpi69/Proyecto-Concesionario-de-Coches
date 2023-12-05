@@ -69,20 +69,29 @@ public class VentanaLoginTrabajador extends JFrame {
 
         this.add(panelBotones, BorderLayout.SOUTH);
 
-        this.setVisible(true);
+        setVisible(true);
     }
 
     public void Autenticacion() {
         String usuarioIngresado = textoLogin.getText();
         String contrasenaIngresada = new String(textoPassword.getPassword());
-
+        System.out.println("Correcto");
         DAO dao = new DAO();
+       
+        boolean correcto = false;
         try {
-            if (dao.comprobarCredencialesTrabajador(usuarioIngresado, contrasenaIngresada)) {
-                new VentanaMenuTrabajador();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+			correcto = dao.comprobarCredencialesTrabajador(usuarioIngresado, contrasenaIngresada);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        if (correcto) {
+        	VentanaMenuTrabajador ventana = new VentanaMenuTrabajador();
+        	ventana.setVisible(true);
+        	ventana.setLocationRelativeTo(null);
+        }else {
+        	JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos",
+                    "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
         }
     }
 

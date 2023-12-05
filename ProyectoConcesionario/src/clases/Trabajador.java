@@ -10,21 +10,21 @@ public class Trabajador extends Persona{
 
 	public Trabajador(String login, String contra, String email, String dni, String nombre, String apellidos,
 			Date fechaNacimiento, int sueldo, boolean esAdmin, String puesto) {
-		super(login, contra, email, dni, nombre, apellidos);
+		super(login, contra, email, dni, nombre, apellidos,fechaNacimiento);
 		this.sueldo = sueldo;
 		this.esAdmin = esAdmin;
 		this.puesto = puesto;
 	}
 
 	public Trabajador() {
-		super("", "", "", "", "", "");
+		super("", "", "", "", "", "",null);
 		this.sueldo = 0;
 		this.esAdmin = false;
 		this.puesto = "";
 	}
 
 	public Trabajador(Trabajador t) {
-		super(t.login, t.contra, t.email, t.dni, t.nombre, t.apellidos);
+		super(t.login, t.contra, t.email, t.dni, t.nombre, t.apellidos,t.fechaNacimiento);
 		this.sueldo = t.sueldo;
 		this.esAdmin = t.esAdmin;
 		this.puesto = t.puesto;
@@ -64,6 +64,8 @@ public class Trabajador extends Persona{
 		}
 		return nombre + " " + apellidos + " con dni " + dni + " " + admin + " administrador y posee un sueldo de " + sueldo + "como" + puesto;
 	}
+
+	
 
 
 }
