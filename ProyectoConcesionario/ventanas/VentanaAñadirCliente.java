@@ -1,12 +1,23 @@
 package ventanas;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
+import javax.swing.WindowConstants;
 
 import clases.Cliente;
 
@@ -18,7 +29,7 @@ public class VentanaAñadirCliente extends JFrame {
     protected JSpinner fechaNacimientoSpinner ;
     public Cliente VentanaAñadirCliente() {
         setTitle("Registro");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 
@@ -53,7 +64,7 @@ public class VentanaAñadirCliente extends JFrame {
         panelSignUp.add(textoApellidos);
         panelSignUp.add(new JLabel("Número de tarjeta:"));
         panelSignUp.add(textoNumTarjeta);
-        
+
         panelSignUp.add(new JLabel("Fecha de nacimiento:"));
         panelSignUp.add(fechaNacimientoSpinner);
         this.add(panelSignUp, BorderLayout.CENTER);
@@ -73,7 +84,7 @@ public class VentanaAñadirCliente extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Cliente cliente = crearObjetoCliente();
-               
+
 
 				JOptionPane.showMessageDialog(null, "Informacion Guardada", "Guardado", JOptionPane.PLAIN_MESSAGE);
 				dispose();
@@ -88,11 +99,11 @@ public class VentanaAñadirCliente extends JFrame {
         });
 
         this.add(panelBotones, BorderLayout.SOUTH);
-       
+
         this.setVisible(true);
 		return cliente;
-		
-		
+
+
     }
     public Cliente crearObjetoCliente() {
     	 String nombreUsuario = textoUsuario.getText();
@@ -114,9 +125,9 @@ public class VentanaAñadirCliente extends JFrame {
          Cliente cliente = new Cliente(nombreUsuario, contrasena, email, dni, nombre, apellidos,fechaNacimiento, numTarjeta);
          return cliente;
     }
-    	
-    
-   
 
-    
+
+
+
+
 }

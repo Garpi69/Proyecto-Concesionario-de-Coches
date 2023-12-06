@@ -12,7 +12,7 @@ public class Persona {
 	protected String nombre;
 	protected String apellidos;
 	protected Date fechaNacimiento;
-	
+
 	public String getContra() {
 		return contra;
 	}
@@ -49,7 +49,7 @@ public class Persona {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.fechaNacimiento = fechaNacimiento;
-		
+
 	}
 
 	public Persona() {
@@ -61,7 +61,7 @@ public class Persona {
 		this.nombre = "";
 		this.apellidos = "";
 		this.fechaNacimiento=null;
-		
+
 	}
 
 	public Persona(Persona p) {
@@ -73,7 +73,7 @@ public class Persona {
 		this.nombre = p.nombre;
 		this.apellidos = p.apellidos;
 		this.fechaNacimiento=p.fechaNacimiento;
-		
+
 	}
 
 	public String getLogin() {
@@ -124,7 +124,7 @@ public class Persona {
 		this.apellidos = apellidos;
 	}
 
-	
 
-	
+
+
 }

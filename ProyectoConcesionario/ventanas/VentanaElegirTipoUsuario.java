@@ -1,14 +1,25 @@
 package ventanas;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 public class VentanaElegirTipoUsuario extends JFrame {
     public VentanaElegirTipoUsuario() {
         setTitle("Elegir Tipo de Usuario");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(350, 250);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -51,11 +62,13 @@ public class VentanaElegirTipoUsuario extends JFrame {
         button.setContentAreaFilled(false);
         button.setOpaque(true);
         button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+            @Override
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(new Color(70, 170, 255));
             }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            @Override
+			public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(new Color(50, 150, 250));
             }
         });

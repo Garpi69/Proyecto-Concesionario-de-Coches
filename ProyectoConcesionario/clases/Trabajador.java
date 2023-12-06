@@ -53,7 +53,7 @@ public class Trabajador extends Persona{
 	public void setPuesto(String puesto) {
 		this.puesto = puesto;
 	}
-	
+
 	@Override
 	public String toString() {
 		String admin;
@@ -65,7 +65,7 @@ public class Trabajador extends Persona{
 		return nombre + " " + apellidos + " con dni " + dni + " " + admin + " administrador y posee un sueldo de " + sueldo + "como" + puesto;
 	}
 
-	
+
 
 
 }

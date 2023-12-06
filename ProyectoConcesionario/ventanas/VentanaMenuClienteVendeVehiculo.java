@@ -1,14 +1,24 @@
 package ventanas;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 public class VentanaMenuClienteVendeVehiculo extends JFrame {
     public VentanaMenuClienteVendeVehiculo() {
         setTitle("Menú Cliente - Venta de Vehículo");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(500, 600);
         setLocationRelativeTo(null);
 
@@ -54,11 +64,13 @@ public class VentanaMenuClienteVendeVehiculo extends JFrame {
         button.setOpaque(true);
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+            @Override
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(Color.decode("#6573C3"));
             }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            @Override
+			public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(Color.decode("#3F51B5"));
             }
         });

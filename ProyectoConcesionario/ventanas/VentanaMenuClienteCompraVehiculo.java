@@ -1,14 +1,22 @@
 package ventanas;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 public class VentanaMenuClienteCompraVehiculo extends JFrame {
     public VentanaMenuClienteCompraVehiculo() {
         setTitle("Menú Cliente - Compra de Vehículo");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(500, 600);
         setLocationRelativeTo(null);
 
@@ -36,7 +44,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         JButton comprarMotoButton = new JButton("Comprar Moto");
         estilizarBoton(comprarMotoButton);
         comprarMotoButton.addActionListener(e -> {
-            
+
         	new VentanaClienteCompraMoto();
             JOptionPane.showMessageDialog(null, "Has seleccionado Comprar Moto");
         });
@@ -46,7 +54,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         estilizarBoton(comprarMotoSegundaManoButton);
         comprarMotoSegundaManoButton.addActionListener(e -> {
              new VentanaClienteCompraMotoSegundaMano();
-            		
+
         });
         panel.add(comprarMotoSegundaManoButton);
         setVisible(true);
@@ -65,16 +73,18 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         button.setOpaque(true);
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+            @Override
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(Color.decode("#6573C3"));
             }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            @Override
+			public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(Color.decode("#3F51B5"));
             }
         });
     }
 
-    
-    
+
+
 }

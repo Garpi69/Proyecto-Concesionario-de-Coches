@@ -4,9 +4,9 @@ import java.util.Date;
 
 
 public class Coche extends Vehiculo {
-	
-	
-	
+
+
+
 
 	public Coche() {
 		super();
@@ -24,14 +24,14 @@ public class Coche extends Vehiculo {
 		// TODO Auto-generated constructor stub
 	}
 
-	
 
-	
-	
-	
-	
 
-	
 
-	
-} 
+
+
+
+
+
+
+
+}

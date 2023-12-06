@@ -1,20 +1,29 @@
 package ventanas;
-import javax.swing.*;
-import java.awt.*;
-import java.util.Calendar;
-import java.util.Date;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Date;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
+import javax.swing.WindowConstants;
 
 import clases.Cliente;
 
 public class VentanaRegistroCliente extends JFrame {
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private DAO dao = new DAO();
@@ -24,7 +33,7 @@ public class VentanaRegistroCliente extends JFrame {
     protected JSpinner fechaNacimientoSpinner ;
     public VentanaRegistroCliente() {
         setTitle("Registro");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 
@@ -60,7 +69,7 @@ public class VentanaRegistroCliente extends JFrame {
         panelSignUp.add(textoApellidos);
         panelSignUp.add(new JLabel("Número de tarjeta:"));
         panelSignUp.add(textoNumTarjeta);
-        
+
         panelSignUp.add(new JLabel("Fecha de nacimiento:"));
         panelSignUp.add(fechaNacimientoSpinner);
         this.add(panelSignUp, BorderLayout.CENTER);
@@ -73,13 +82,13 @@ public class VentanaRegistroCliente extends JFrame {
 
         panelBotones.add(botonSignUp);
         panelBotones.add(botonCancelar);
-        
+
         botonSignUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                	
-                	 
+
+
                 	Cliente cliente = crearObjetoCliente();
                     dao.agregarCliente(cliente);
 
@@ -101,7 +110,7 @@ public class VentanaRegistroCliente extends JFrame {
         });
 
         this.add(panelBotones, BorderLayout.SOUTH);
-        
+
         this.setVisible(true);
     }
     public Cliente crearObjetoCliente() {
@@ -124,9 +133,9 @@ public class VentanaRegistroCliente extends JFrame {
          Cliente cliente = new Cliente(nombreUsuario, contrasena, email, dni, nombre, apellidos,fechaNacimiento, numTarjeta);
          return cliente;
     }
-    	
-    
-   
 
-    
+
+
+
+
 }

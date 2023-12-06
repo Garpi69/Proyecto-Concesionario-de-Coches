@@ -11,7 +11,7 @@ public class MotoSegundaMano extends Moto implements SegundaMano{
 
 	private int kilometraje;
 
-	
+
 
 	public MotoSegundaMano() {
 		super();
@@ -33,12 +33,13 @@ public class MotoSegundaMano extends Moto implements SegundaMano{
 		return kilometraje;
 	}
 
-	
+
+	@Override
 	public void kilometraje(int km) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
-	
+
+
+
 }

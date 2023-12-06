@@ -1,10 +1,14 @@
 package ventanas;
 
-import javax.swing.*;
-import clases.Cliente;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import clases.Cliente;
 
 public class VentanaConcesionarioVendeVehiculo {
 
@@ -22,17 +26,17 @@ public class VentanaConcesionarioVendeVehiculo {
         JButton motoSegundaManoButton = new JButton("Moto Segunda Mano");
         //Cliente cliente = new Cliente();
      // ...
-        
+
         cocheNuevoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Acciones al presionar "Coche Nuevo"
                 JOptionPane.showMessageDialog(null, "Añade los datos del cliente");
-             
+
                 VentanaRegistroCliente ventanaRegistroCliente = new VentanaRegistroCliente();
                 Cliente cliente = ventanaRegistroCliente.crearObjetoCliente();
                 if (cliente != null) {
-                  
+
                     	//CODIGO PARA ELEGIR EL COCHE QUE SE HA VENDIDO
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al registrar los datos del cliente");
@@ -41,7 +45,7 @@ public class VentanaConcesionarioVendeVehiculo {
         });
 
         // ...
-       
+
 
         cocheSegundaManoButton.addActionListener(new ActionListener() {
             @Override
@@ -75,7 +79,7 @@ public class VentanaConcesionarioVendeVehiculo {
             	VentanaRegistroCliente ventanaRegistroCliente = new VentanaRegistroCliente();
                 Cliente cliente = ventanaRegistroCliente.crearObjetoCliente();
                 VentanaConcesionarioCompraMotoSegundaMano ventana = new VentanaConcesionarioCompraMotoSegundaMano(cliente);
-                
+
                 // PEDIR DATOS MOTO Y AÑADIR A TABLA BD MOTOSEGUNDAMANO
             }
         });
@@ -87,5 +91,5 @@ public class VentanaConcesionarioVendeVehiculo {
 
         ventanaAgregarVehiculo.setVisible(true);
     }
-    
+
 }

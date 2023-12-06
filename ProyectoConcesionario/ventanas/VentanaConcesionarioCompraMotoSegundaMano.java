@@ -1,14 +1,19 @@
 package ventanas;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import clases.Cliente;
 import clases.MotoSegundaMano;
@@ -32,7 +37,7 @@ public class VentanaConcesionarioCompraMotoSegundaMano extends JFrame {
     DAO dao = new DAO();
     public VentanaConcesionarioCompraMotoSegundaMano(Cliente cliente) {
         setTitle("Agregar Moto de Segunda Mano");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(400, 450);
         setLocationRelativeTo(null);
 
@@ -122,11 +127,11 @@ public class VentanaConcesionarioCompraMotoSegundaMano extends JFrame {
             agregarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    
+
                 	try {
-                		
+
                     	dao.agregarMotoSegundaManoCompradaPorConcesionario(motoSegundaMano, cliente);
-                		
+
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -134,7 +139,7 @@ public class VentanaConcesionarioCompraMotoSegundaMano extends JFrame {
                 }
             });
             // Conexión a la base de datos SQLite
-            
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Ingresa valores numéricos válidos.");
         } catch (Exception ex) {
@@ -142,6 +147,6 @@ public class VentanaConcesionarioCompraMotoSegundaMano extends JFrame {
         }
     }
 
-    
-    
+
+
 }

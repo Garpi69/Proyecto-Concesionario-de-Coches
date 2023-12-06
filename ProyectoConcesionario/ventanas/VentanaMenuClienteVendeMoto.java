@@ -1,7 +1,5 @@
 package ventanas;
-import javax.swing.*;
-
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -9,13 +7,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
 import clases.Cliente;
 import clases.MotoSegundaMano;
 public class VentanaMenuClienteVendeMoto extends JFrame {
 	private DAO dao = new DAO();
     public VentanaMenuClienteVendeMoto() {
         setTitle("Datos de la Moto");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 
@@ -61,7 +67,7 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
         JTextField numPlazasField = new JTextField();
         panel.add(numPlazasLabel);
         panel.add(numPlazasField);
-       
+
         JLabel dniClienteField= new JLabel("Introduzca su DNI:");
         JTextField dniField = new JTextField();
         panel.add(dniClienteField);
@@ -71,12 +77,12 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
         JTextField precioField = new JTextField();
         panel.add(precioLabel);
         panel.add(precioField);
-        
+
         JLabel kilometrajeLabel = new JLabel("Kilometraje:");
         JTextField kilometrajeField = new JTextField();
         panel.add(kilometrajeLabel);
         panel.add(kilometrajeField);
-        
+
         JLabel cuotaLabel = new JLabel("Cuota:");
         JTextField cuotaField = new JTextField();
         panel.add(cuotaLabel);
@@ -126,7 +132,7 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
                     dao.agregarMotoVendidaPorCliente(moto,cliente);
                     JOptionPane.showMessageDialog(null, "Datos de la moto recibidos correctamente");
 
-                   
+
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Error: Ingresa valores numéricos válidos");
                 } catch (ParseException ex) {
@@ -142,5 +148,5 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
         add(panel);
     }
 
-   
+
 }

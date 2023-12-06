@@ -1,11 +1,19 @@
 package ventanas;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
 import clases.Cliente;
 import clases.Coche;
 
@@ -26,7 +34,7 @@ public class VentanaConcesionarioCompraCoche extends JFrame {
 			e.printStackTrace();
 		}
         setTitle("Agregar Coche");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 
@@ -98,8 +106,8 @@ public class VentanaConcesionarioCompraCoche extends JFrame {
             }
         });
 
-    
-       
+
+
     }
 
     private Coche obtenerDatosCoche() {
@@ -135,5 +143,5 @@ public class VentanaConcesionarioCompraCoche extends JFrame {
 
         return new Coche(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion);
     }
-   
+
 }

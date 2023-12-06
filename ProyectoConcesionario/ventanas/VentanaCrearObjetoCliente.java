@@ -1,12 +1,19 @@
 package ventanas;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
 import clases.Cliente;
 public class VentanaCrearObjetoCliente extends JFrame {
     private JTextField loginField;
@@ -20,7 +27,7 @@ public class VentanaCrearObjetoCliente extends JFrame {
 
     public VentanaCrearObjetoCliente() {
         setTitle("Datos del Cliente");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 
@@ -90,16 +97,16 @@ public class VentanaCrearObjetoCliente extends JFrame {
 			e.printStackTrace();
 		}
 
-       
+
         Cliente cliente = new Cliente(login, contra, email, dni, nombre, apellidos,fechaNacimiento ,numTarjeta);
 		return cliente;
 
-       
+
     }
 
-   
 
-    
-   
+
+
+
 }
 

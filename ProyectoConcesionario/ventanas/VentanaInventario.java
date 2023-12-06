@@ -1,8 +1,6 @@
 package ventanas;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.awt.FlowLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,14 +9,25 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+
 public class VentanaInventario extends JFrame {
-	
+
 	private JTable inventarioTable;
     private DefaultTableModel tableModel;
     private DAO dao = new DAO();
     public VentanaInventario() {
         setTitle("Inventario de Vehículos");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
         JPanel filterPanel = new JPanel();
@@ -44,7 +53,7 @@ public class VentanaInventario extends JFrame {
         setVisible(true);
         add(scrollPane);
         cargarInventario();
-        
+
     }
 
    public void cargarInventario() {
@@ -97,8 +106,8 @@ public class VentanaInventario extends JFrame {
 				e.printStackTrace();
 			}
             int kilometraje =0;
-           
-           
+
+
             try {
                kilometraje = resultSet.getInt("kilometraje");
             } catch (SQLException e) {
@@ -129,7 +138,7 @@ public class VentanaInventario extends JFrame {
             	while (resultSet.next()) {
             	    int id = resultSet.getInt("idVehiculo");
             	    String combustible = resultSet.getString("combustible");
-            	    
+
             	    String tipo = resultSet.getString("tipo");
             	    int potencia = resultSet.getInt("potencia");
             	    int numPlazas = resultSet.getInt("plazas");

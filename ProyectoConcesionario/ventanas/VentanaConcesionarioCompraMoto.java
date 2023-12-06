@@ -1,13 +1,18 @@
 package ventanas;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import clases.Cliente;
 import clases.Moto;
@@ -30,7 +35,7 @@ public class VentanaConcesionarioCompraMoto extends JFrame {
     DAO dao = new DAO();
     public VentanaConcesionarioCompraMoto() {
         setTitle("Agregar Moto Nueva");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 
@@ -68,7 +73,7 @@ public class VentanaConcesionarioCompraMoto extends JFrame {
         panel.add(new JLabel("Precio:"));
         precioField = new JTextField();
         panel.add(precioField);
-        
+
         panel.add(new JLabel("Combustible:"));
         combustibleField = new JTextField();
         panel.add(combustibleField);
@@ -116,7 +121,7 @@ public class VentanaConcesionarioCompraMoto extends JFrame {
             agregarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                	 
+
                      try {
                     	 dao.conectar();
                          dao.agregarMotoCompradaPorConcesionario(moto);
@@ -127,8 +132,8 @@ public class VentanaConcesionarioCompraMoto extends JFrame {
 					}
                 }
             });
-          
-           
+
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Ingresa valores numéricos válidos.");
         } catch (Exception ex) {
@@ -136,6 +141,6 @@ public class VentanaConcesionarioCompraMoto extends JFrame {
         }
     }
 
-   
+
     }
 

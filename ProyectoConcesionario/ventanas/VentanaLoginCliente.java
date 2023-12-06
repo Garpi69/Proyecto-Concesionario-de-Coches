@@ -1,10 +1,20 @@
 package ventanas;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 public class VentanaLoginCliente extends JFrame {
     protected JTextField textoLogin;
@@ -13,7 +23,7 @@ public class VentanaLoginCliente extends JFrame {
 
     public VentanaLoginCliente() {
         setTitle("Login");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(350, 200);
         setLocationRelativeTo(null);
 
@@ -89,5 +99,5 @@ public class VentanaLoginCliente extends JFrame {
         }
     }
 
-   
+
 }

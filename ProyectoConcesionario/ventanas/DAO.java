@@ -17,13 +17,13 @@ import clases.MotoSegundaMano;
 import clases.Trabajador;
 
 public class DAO {
-	
-	
-    
-	
+
+
+
+
     protected final String url = "jdbc:sqlite:/Users/jonmendizabal/ProyectoProgram/Proyecto-Concesionario-de-Coches-master/basedatos/baseDeDatos.sqlite";
     Connection conn;
-    
+
     public void conectar() throws SQLException {
     	try {
 			Class.forName("org.sqlite.JDBC");
@@ -52,10 +52,10 @@ public class DAO {
 	        return dateFormat.parse(dateString);
 	    }
 
-    
-   
-  
-       
+
+
+
+
     public Cliente obtenerClientePorDNI(String dniCliente) {
         Connection conn = null;
         PreparedStatement preparedStatement = null;
@@ -71,17 +71,17 @@ public class DAO {
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-            
+
                 String login = resultSet.getString("login");
                 String contraseña = resultSet.getString("contra");
                 String email = resultSet.getString("email");
                 String dni = resultSet.getString("dni");
                 String nombre = resultSet.getString("nombre");
-                
+
                 String apellidos = resultSet.getString("apellidos");
                 java.util.Date fechaNacimiento = stringToDate(resultSet.getString("fechaNacimiento"),format);
                 long numTarjeta = resultSet.getLong("numTarjeta");
-               
+
                 // Construir el objeto Cliente
                 cliente = new Cliente(login, contraseña, email,dni, nombre, apellidos,fechaNacimiento,numTarjeta);
             }
@@ -131,7 +131,7 @@ public class DAO {
 	public void agregarCliente(Cliente cliente) throws SQLException {
 		conectar();
         PreparedStatement preparedStatement = null;
-        
+
 
         try {
         	String string = "";
@@ -143,13 +143,13 @@ public class DAO {
             preparedStatement.setString(4, cliente.getdNI());
             preparedStatement.setString(5, cliente.getNombre());
             preparedStatement.setString(6, cliente.getApellidos());
-           
+
             preparedStatement.setLong(7, cliente.getNumTarjeta());
 
             int filasAfectadas = preparedStatement.executeUpdate();
 
             if (filasAfectadas > 0) {
-                
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -173,7 +173,7 @@ public class DAO {
         boolean credencialesCorrectas = false;
 
         try {
-           
+
             String query = "SELECT * FROM trabajador WHERE login = ? AND contra = ?";
             preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, usuarioIngresado);
@@ -212,7 +212,7 @@ public class DAO {
         boolean credencialesCorrectas = false;
 
         try {
-           
+
             String query = "SELECT * FROM cliente WHERE login = ? AND contra = ?";
             preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, usuarioIngresado);
@@ -220,10 +220,10 @@ public class DAO {
 
             resultSet = preparedStatement.executeQuery();
 
-            
-                
+
+
             credencialesCorrectas = resultSet.next();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -258,11 +258,11 @@ public class DAO {
             pstmt.setInt(8, coche.getPrecio());
             pstmt.setInt(9, coche.getCuota());
             pstmt.setDate(10, (Date) coche.getMatriculacion());
-           
-     
+
+
             pstmt.executeUpdate();
             System.out.println("Coche agregado a la base de datos");
-          
+
         }
         desconectar();
     }
@@ -282,7 +282,7 @@ public class DAO {
 	            pstmt.setDate(10, (Date)  moto.getMatriculacion());
 	            pstmt.setInt(11, moto.getPeso());
 	            pstmt.setBoolean(12, moto.isBaul());
-	           
+
 	            pstmt.executeUpdate();
 	            System.out.println("Moto agregada a la base de datos");
 	        }
@@ -305,10 +305,10 @@ public class DAO {
             pstmt.setDate(11, (Date) cocheSegundaMano.getMatriculacion());
             pstmt.setInt(12, cocheSegundaMano.getKilometraje());
             pstmt.setString(13, cliente.getdNI());
-          
+
             pstmt.executeUpdate();
             System.out.println("Coche agregado a la base de datos");
-          
+
         }
         desconectar();
     }
@@ -361,7 +361,7 @@ public class DAO {
 
 		            preparedStatement.executeUpdate();
 
-		            
+
 		        } catch (SQLException e) {
 		            e.printStackTrace();
 		        } finally {
@@ -377,20 +377,20 @@ public class DAO {
 		            }
 		        }
 
-		        
+
 		    }
 
 	public void agregarMotoVendidaPorCliente(MotoSegundaMano motoSegundaMano, Cliente cliente) throws SQLException {
 		conectar();
 	 	 PreparedStatement preparedStatement = null;
-	       
+
 
 	        try {
 	            String string = "";
 	            String query = "INSERT INTO ofertasMotos(idVehiculo, dniCliente, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,peso,potencia, kilometraje) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 	            preparedStatement = conn.prepareStatement(query);
 	            preparedStatement.setInt(1, motoSegundaMano.getIdVehiculo());
-	          
+
 	            preparedStatement.setString(2, cliente.getdNI());
 	            preparedStatement.setString(3, motoSegundaMano.getCombustible());
 	            preparedStatement.setString(4, motoSegundaMano.getMarca());
@@ -405,11 +405,11 @@ public class DAO {
 	            preparedStatement.setInt(13, motoSegundaMano.getPeso());
 	            preparedStatement.setInt(14, motoSegundaMano.getPotencia());
 	            preparedStatement.setInt(15, motoSegundaMano.getKilometraje());
-	            
+
 
 	            preparedStatement.executeUpdate();
 
-	            
+
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        } finally {
@@ -425,10 +425,10 @@ public class DAO {
 	            }
 	        }
 
-	        
+
 	    }
-	
+
 	}
 
 
-	
+

@@ -5,14 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Prueba {
-	
+
 	private Persona cliente;
 	private Vehiculo vehiculo;
 	private Date fechaInicio;
 	private Date fechaFin;
 	public static SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	private String ciudad;
-	
+
 	public Prueba(Persona cliente, Vehiculo vehiculo, Date fechaInicio, Date fechaFin, String ciudad) {
 		super();
 		this.cliente = cliente;
@@ -83,15 +83,15 @@ public class Prueba {
 	public void setFechaInicioString (String fechaInicio) throws ParseException {
 		this.fechaInicio = df.parse(fechaInicio);
 	}
-	
+
 	public String getFechaInicioString() {
 		return df.format(fechaInicio);
 	}
-	
+
 	public void setfechaFinString (String fechaFin) throws ParseException {
 		this.fechaFin = df.parse(fechaFin);
 	}
-	
+
 	public String getfechaFinString() {
 		return df.format(fechaFin);
 	}

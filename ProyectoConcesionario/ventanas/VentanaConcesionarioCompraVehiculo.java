@@ -1,10 +1,14 @@
 package ventanas;
 
-import javax.swing.*;
-import clases.Cliente;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import clases.Cliente;
 
 public class VentanaConcesionarioCompraVehiculo {
 
@@ -22,17 +26,17 @@ public class VentanaConcesionarioCompraVehiculo {
         JButton motoSegundaManoButton = new JButton("Moto Segunda Mano");
         //Cliente cliente = new Cliente();
      // ...
-        
+
         cocheNuevoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Acciones al presionar "Coche Nuevo"
                 JOptionPane.showMessageDialog(null, "Añade los datos del cliente");
-             
+
                 VentanaRegistroCliente ventanaRegistroCliente = new VentanaRegistroCliente();
                 Cliente cliente = ventanaRegistroCliente.crearObjetoCliente();
                 if (cliente != null) {
-                   
+
                     // Después de obtener los datos del cliente, abre la ventana para agregar el coche
                     VentanaConcesionarioCompraCoche ventana = new VentanaConcesionarioCompraCoche();
                     ventana.agregarCocheForm(cliente);
@@ -45,7 +49,7 @@ public class VentanaConcesionarioCompraVehiculo {
         });
 
         // ...
-       
+
 
         cocheSegundaManoButton.addActionListener(new ActionListener() {
             @Override
@@ -79,7 +83,7 @@ public class VentanaConcesionarioCompraVehiculo {
             	VentanaRegistroCliente ventanaRegistroCliente = new VentanaRegistroCliente();
                 Cliente cliente = ventanaRegistroCliente.crearObjetoCliente();
                 VentanaConcesionarioCompraMotoSegundaMano ventana = new VentanaConcesionarioCompraMotoSegundaMano(cliente);
-                
+
                 // PEDIR DATOS MOTO Y AÑADIR A TABLA BD MOTOSEGUNDAMANO
             }
         });
@@ -91,5 +95,5 @@ public class VentanaConcesionarioCompraVehiculo {
 
         ventanaAgregarVehiculo.setVisible(true);
     }
-    
+
 }

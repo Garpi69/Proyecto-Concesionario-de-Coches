@@ -1,14 +1,20 @@
 package ventanas;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 public class VentanaMenuCliente extends JFrame {
     public VentanaMenuCliente() {
         setTitle("Compra o Venta");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(300, 200);
         setLocationRelativeTo(null);
 
@@ -20,8 +26,8 @@ public class VentanaMenuCliente extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new VentanaMenuClienteCompraVehiculo();
-               
-              
+
+
             }
         });
         panel.add(comprarButton);
@@ -31,8 +37,8 @@ public class VentanaMenuCliente extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new VentanaMenuClienteVendeVehiculo();
-              
-                
+
+
             }
         });
         panel.add(venderButton);
@@ -47,8 +53,8 @@ public class VentanaMenuCliente extends JFrame {
     }
     public static void main(String[] args) {
 		 new VentanaMenuCliente();
-		
+
 	}
 
-   
+
 }

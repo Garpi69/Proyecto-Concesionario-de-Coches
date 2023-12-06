@@ -3,9 +3,9 @@ package clases;
 import java.util.Date;
 
 public class CocheSegundaMano extends Coche implements SegundaMano {
-	
-	
-	
+
+
+
 	private int kilometraje;
 
 
@@ -18,7 +18,7 @@ public class CocheSegundaMano extends Coche implements SegundaMano {
 
 
 
-	
+
 
 
 
@@ -50,20 +50,20 @@ public class CocheSegundaMano extends Coche implements SegundaMano {
 		this.kilometraje = kilometraje;
 	}
 
-	
-	
-	
+
+
+
 	public int getKilometraje() {
 		return kilometraje;
 	}
 
-	
+
 
 
 	@Override
 	public void kilometraje(int km) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

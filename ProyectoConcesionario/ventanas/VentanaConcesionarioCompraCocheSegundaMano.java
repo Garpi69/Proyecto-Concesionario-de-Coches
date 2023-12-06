@@ -1,16 +1,20 @@
 package ventanas;
-import javax.swing.*;
+import java.awt.GridLayout;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import clases.Cliente;
-import clases.Coche;
-import clases.CocheSegundaMano;
-import clases.Color;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
-import java.awt.*;
-import java.sql.SQLException;
+import clases.Cliente;
+import clases.CocheSegundaMano;
 
 
 public class VentanaConcesionarioCompraCocheSegundaMano extends JFrame {
@@ -26,7 +30,7 @@ public class VentanaConcesionarioCompraCocheSegundaMano extends JFrame {
 			e.printStackTrace();
 		}
         setTitle("Agregar Coche");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(400, 300);
         setLocationRelativeTo(null);
 
@@ -40,12 +44,12 @@ public class VentanaConcesionarioCompraCocheSegundaMano extends JFrame {
         panel.add(new JLabel("Marca:"));
         marcaField = new JTextField();
         panel.add(marcaField);
-        
+
 
         panel.add(new JLabel("Combustible:"));
         combustibleField = new JTextField();
         panel.add( combustibleField);
-        
+
         panel.add(new JLabel("Modelo:"));
         modeloField = new JTextField();
         panel.add(modeloField);
@@ -77,20 +81,20 @@ public class VentanaConcesionarioCompraCocheSegundaMano extends JFrame {
         panel.add(new JLabel("Matriculación (YYYY-MM-DD):"));
         matriculacionField = new JTextField();
         panel.add(matriculacionField);
-        
+
         panel.add(new JLabel("Kilometraje"));
         kilometrajeField = new JTextField();
         panel.add(kilometrajeField);
-       
+
 
         agregarButton = new JButton("Agregar");
-       
-	
 
-       
-    
 
-  
+
+
+
+
+
         int idVehiculo = Integer.parseInt(idField.getText());
         String marca = marcaField.getText();
         String modelo = modeloField.getText();
@@ -137,5 +141,5 @@ public class VentanaConcesionarioCompraCocheSegundaMano extends JFrame {
 			e1.printStackTrace();
 		}
 }
-    
+
 }

@@ -16,14 +16,14 @@ public class Vehiculo {
 	protected int precio;
 	protected int cuota;
 	protected Date matriculacion;
-	
+
 	public static SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
 
 	public Vehiculo(int idVehiculo,String combustible, String marca, String modelo, String color, String tipo, int potencia, int numPlazas, int precio, int cuota, Date matriculacion) {
 		super();
 		this.idVehiculo = idVehiculo;
-		
+
 		this.combustible = combustible;
 		this.marca = marca;
 		this.modelo = modelo;
@@ -35,11 +35,11 @@ public class Vehiculo {
 		this.cuota = cuota;
 		this.matriculacion = matriculacion;
 	}
-	
+
 	public Vehiculo() {
 		super();
 		this.idVehiculo = 0;
-		
+
 		this.combustible ="";
 		this.marca = "";
 		this.modelo = "";
@@ -66,7 +66,7 @@ public class Vehiculo {
 		this.cuota = v.cuota;
 		this.matriculacion = v.matriculacion;
 	}
-		
+
 	public int getIdVehiculo() {
 		return idVehiculo;
 	}
@@ -155,7 +155,7 @@ public class Vehiculo {
 		Vehiculo.df = df;
 	}
 
-	
+
 
 	public int getPrecio() {
 		return precio;
@@ -171,6 +171,6 @@ public class Vehiculo {
 		return idVehiculo;
 	}
 
-	
-	
+
+
 }
