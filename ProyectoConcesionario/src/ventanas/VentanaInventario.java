@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Date;
 
 public class VentanaInventario extends JFrame {
@@ -85,31 +86,25 @@ public class VentanaInventario extends JFrame {
             String color = resultSet.getString("color");
             String tipo = resultSet.getString("tipo");
             int potencia = resultSet.getInt("potencia");
-            int numPlazas = resultSet.getInt("plazas");
+            int numPlazas = resultSet.getInt("numPlazas");
             int precio = resultSet.getInt("precio");
             int cuota = resultSet.getInt("cuota");
-            Date matriculacion = resultSet.getDate("matriculacion");
-            
-            int peso = 0;
-            boolean baul = false;
-            int kilometraje = 0;
-            try {
-                peso = resultSet.getInt("peso");
-            } catch (SQLException e) {
-                // La columna "peso" no existe o no se puede obtener, se asigna el valor predeterminado (0 en este caso)
-            }
-
-            try {
-                baul = resultSet.getBoolean("baul");
-            } catch (SQLException e) {
-                // La columna "baul" no existe o no se puede obtener, se asigna el valor predeterminado (0 en este caso)
-            }
+            Date matriculacion=null;
+			try {
+				matriculacion = dao.stringToDate(resultSet.getString("matriculacion"),dao.format);
+			} catch (ParseException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            int kilometraje =0;
+           
+           
             try {
                kilometraje = resultSet.getInt("kilometraje");
             } catch (SQLException e) {
                 // La columna "kilometraje" no existe o no se puede obtener, se asigna el valor predeterminado (0 en este caso)
             }
-            Object[] fila = {id,combustible, marca, modelo,color, tipo,potencia,numPlazas, precio,cuota,matriculacion,peso,baul,kilometraje};
+            Object[] fila = {id,combustible, marca, modelo,color, tipo,potencia,numPlazas, precio,cuota,matriculacion};
             tableModel.addRow(fila);
         }
 

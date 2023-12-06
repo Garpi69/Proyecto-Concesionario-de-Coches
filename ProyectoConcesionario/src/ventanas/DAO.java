@@ -143,8 +143,8 @@ public class DAO {
             preparedStatement.setString(4, cliente.getdNI());
             preparedStatement.setString(5, cliente.getNombre());
             preparedStatement.setString(6, cliente.getApellidos());
-            preparedStatement.setString(7, dateToString(cliente.getFechaNacimiento(),string));
-            preparedStatement.setLong(8, cliente.getNumTarjeta());
+           
+            preparedStatement.setLong(7, cliente.getNumTarjeta());
 
             int filasAfectadas = preparedStatement.executeUpdate();
 
