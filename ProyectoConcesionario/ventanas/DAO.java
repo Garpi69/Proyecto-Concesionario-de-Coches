@@ -42,16 +42,31 @@ public class DAO {
         }
     }
 
-    String format ="dd/mm/yyyy";
-    public String dateToString(java.util.Date date, String format) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-        return dateFormat.format(date);
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    public String dateToString(java.util.Date date, SimpleDateFormat format) {
+        
+        return format.format(date);
     }
-	 public java.util.Date stringToDate(String dateString, String format) throws ParseException {
-	        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-	        return dateFormat.parse(dateString);
-	    }
+   
 
+   
+    public java.util.Date stringToDate(String dateString, SimpleDateFormat format) throws ParseException {
+        java.util.Date date = null;
+    	if (dateString != null && !dateString.isEmpty()) {
+    		 try {
+    		        
+    		        date = format.parse(dateString);
+    		       
+    		    } catch (ParseException e) {
+    		        e.printStackTrace();
+    		    }
+        } else {
+            // Manejo cuando la cadena de fecha es nula o está vacía
+            return null; // Otra acción o valor predeterminado según sea necesario
+        }
+		return date;
+    }
+   
 
 
 
@@ -63,7 +78,7 @@ public class DAO {
         Cliente cliente = null;
 
         try {
-        	 String query = "SELECT * FROM cliente WHERE Identifiacion = ?";
+        	 String query = "SELECT * FROM cliente WHERE dni = ?";
              preparedStatement = this.conn.prepareStatement(query);
              preparedStatement.setString(1, dniCliente);
 
@@ -119,7 +134,7 @@ public class DAO {
             pstmt.setString(4, trabajador.getdNI());
             pstmt.setString(5, trabajador.getNombre());
             pstmt.setString(6, trabajador.getApellidos());
-            pstmt.setString(7, dateToString(trabajador.getFechaNacimiento(),string));
+            pstmt.setString(7, dateToString(trabajador.getFechaNacimiento(),format));
             pstmt.setLong(8,  trabajador.getSueldo());
             pstmt.setBoolean(9, trabajador.esAdmin());
             pstmt.setString(10, trabajador.getPuesto());
@@ -166,6 +181,44 @@ public class DAO {
             }
         }
     }
+	public void eliminarCliente(String login) throws SQLException {
+		conectar();
+	    PreparedStatement preparedStatement = null;
+	    Connection conn = this.conn;
+	    try {
+	        
+	        
+	       
+	        String query = "DELETE FROM cliente WHERE login = ?";
+	        preparedStatement = conn.prepareStatement(query);
+	       
+	        preparedStatement.setString(1, login);
+
+	        int filasAfectadas = preparedStatement.executeUpdate();
+
+	        if (filasAfectadas > 0) {
+	            System.out.println("Cliente eliminado correctamente");
+	        } else {
+	            System.out.println("No se encontró ningún cliente con ese DNI");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (preparedStatement != null) {
+	                preparedStatement.close();
+	            }
+	            if (conn != null) {
+	                conn.close();
+	            }
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	       
+	    }
+	   
+	}
+
 	public boolean comprobarCredencialesTrabajador(String usuarioIngresado, String contrasenaIngresada) throws SQLException {
 		conectar();
         PreparedStatement preparedStatement = null;
@@ -356,7 +409,7 @@ public class DAO {
 		            preparedStatement.setInt(9, cocheSegundaMano.getNumPlazas());
 		            preparedStatement.setInt(10, cocheSegundaMano.getPrecio());
 		            preparedStatement.setInt(11, cocheSegundaMano.getCuota());
-		            preparedStatement.setString(12, dateToString(cocheSegundaMano.getMatriculacion(),string));
+		            preparedStatement.setString(12, dateToString(cocheSegundaMano.getMatriculacion(),format));
 		            preparedStatement.setInt(13, cocheSegundaMano.getKilometraje());
 
 		            preparedStatement.executeUpdate();
@@ -401,7 +454,7 @@ public class DAO {
 	            preparedStatement.setInt(9, motoSegundaMano.getNumPlazas());
 	            preparedStatement.setInt(10,motoSegundaMano.getPrecio());
 	            preparedStatement.setInt(11, motoSegundaMano.getCuota());
-	            preparedStatement.setString(12, dateToString(motoSegundaMano.getMatriculacion(),string));
+	            preparedStatement.setString(12, dateToString(motoSegundaMano.getMatriculacion(),format));
 	            preparedStatement.setInt(13, motoSegundaMano.getPeso());
 	            preparedStatement.setInt(14, motoSegundaMano.getPotencia());
 	            preparedStatement.setInt(15, motoSegundaMano.getKilometraje());

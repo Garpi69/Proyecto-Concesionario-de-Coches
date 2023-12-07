@@ -70,7 +70,7 @@ public class VentanaCrearObjetoCliente extends JFrame {
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Cliente cliente=guardarCliente();
+               dispose();
             }
         });
         panel.add(guardarButton);

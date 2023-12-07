@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -84,7 +85,12 @@ public class VentanaAñadirCliente extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Cliente cliente = crearObjetoCliente();
-
+                try {
+					dao.agregarCliente(cliente);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 				JOptionPane.showMessageDialog(null, "Informacion Guardada", "Guardado", JOptionPane.PLAIN_MESSAGE);
 				dispose();
@@ -114,7 +120,7 @@ public class VentanaAñadirCliente extends JFrame {
          String apellidos = textoApellidos.getText();
          long numTarjeta = Long.parseLong(textoNumTarjeta.getText());
          String format ="dd/mm/yyyy";
-         String fechaNacimientoString = dao.dateToString((Date) fechaNacimientoSpinner.getValue(),format);
+         String fechaNacimientoString = dao.dateToString((Date) fechaNacimientoSpinner.getValue(),dao.format);
          Date fechaNacimiento = null;
  		try {
  			fechaNacimiento = dao.stringToDate(fechaNacimientoString,dao.format);

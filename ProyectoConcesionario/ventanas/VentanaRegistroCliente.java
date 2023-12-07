@@ -122,7 +122,7 @@ public class VentanaRegistroCliente extends JFrame {
          String apellidos = textoApellidos.getText();
          long numTarjeta = Long.parseLong(textoNumTarjeta.getText());
          String format ="dd/mm/yyyy";
-         String fechaNacimientoString = dao.dateToString((Date) fechaNacimientoSpinner.getValue(),format);
+         String fechaNacimientoString = dao.dateToString((Date) fechaNacimientoSpinner.getValue(),dao.format);
          Date fechaNacimiento = null;
 		try {
 			fechaNacimiento = dao.stringToDate(fechaNacimientoString,dao.format);

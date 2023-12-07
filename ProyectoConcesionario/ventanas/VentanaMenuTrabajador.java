@@ -109,6 +109,7 @@ public class VentanaMenuTrabajador extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//MOSTRAR CLIENTES
+				new VentanaVerClientes();
 
 			}
 		});

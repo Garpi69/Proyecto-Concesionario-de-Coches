@@ -1,6 +1,11 @@
 package ventanas;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,11 +32,13 @@ public class VentanaInventario extends JFrame {
     private DAO dao = new DAO();
     public VentanaInventario() {
         setTitle("Inventario de Vehículos");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
-        JPanel filterPanel = new JPanel();
-        filterPanel.setLayout(new FlowLayout());
+
+        JPanel filterPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // Espacios entre componentes
 
         JTextField marcaField = new JTextField(10);
         JTextField modeloField = new JTextField(10);
@@ -40,22 +47,39 @@ public class VentanaInventario extends JFrame {
         JButton filtrarButton = new JButton("Filtrar");
         filtrarButton.addActionListener(e -> filtrarVehiculos(marcaField.getText(), modeloField.getText(), colorField.getText()));
 
-        filterPanel.add(new JLabel("Marca:"));
-        filterPanel.add(marcaField);
-        filterPanel.add(new JLabel("Modelo:"));
-        filterPanel.add(modeloField);
-        filterPanel.add(new JLabel("Color:"));
-        filterPanel.add(colorField);
-        filterPanel.add(filtrarButton);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        filterPanel.add(new JLabel("Marca:"), gbc);
+
+        gbc.gridx = 1;
+        filterPanel.add(marcaField, gbc);
+
+        gbc.gridx = 2;
+        filterPanel.add(new JLabel("Modelo:"), gbc);
+
+        gbc.gridx = 3;
+        filterPanel.add(modeloField, gbc);
+
+        gbc.gridx = 4;
+        filterPanel.add(new JLabel("Color:"), gbc);
+
+        gbc.gridx = 5;
+        filterPanel.add(colorField, gbc);
+
+        gbc.gridx = 6;
+        filterPanel.add(filtrarButton, gbc);
+
         tableModel = new DefaultTableModel();
         inventarioTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(inventarioTable);
-        setVisible(true);
-        add(scrollPane);
+
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(filterPanel, BorderLayout.NORTH);
+        getContentPane().add(scrollPane, BorderLayout.CENTER);
+
         cargarInventario();
-
+        setVisible(true);
     }
-
    public void cargarInventario() {
         // Asegúrate de tener la conexión con tu base de datos
         try {
@@ -135,37 +159,38 @@ public class VentanaInventario extends JFrame {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-            	while (resultSet.next()) {
-            	    int id = resultSet.getInt("idVehiculo");
-            	    String combustible = resultSet.getString("combustible");
+                int id = resultSet.getInt("idVehiculo");
+                String combustible = resultSet.getString("combustible");
+                String tipo = resultSet.getString("tipo");
+                int potencia = resultSet.getInt("potencia");
+                int numPlazas = resultSet.getInt("numPlazas");
+                int precio = resultSet.getInt("precio");
+                int cuota = resultSet.getInt("cuota");
+                String matriculacion = resultSet.getString("matriculacion");
+               
+                Date matriculacionDate = null;
+                try {
+					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                // Resto del código para obtener los valores del vehículo
 
-            	    String tipo = resultSet.getString("tipo");
-            	    int potencia = resultSet.getInt("potencia");
-            	    int numPlazas = resultSet.getInt("plazas");
-            	    int precio = resultSet.getInt("precio");
-            	    int cuota = resultSet.getInt("cuota");
-            	    Date matriculacion = resultSet.getDate("matriculacion");
-
-            	    int peso = 0;
-            	    boolean baul = false;
-            	    int kilometraje = 0;
-
-            	    // Resto del código para obtener los valores del vehículo
-
-            	    Object[] fila = {id, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, peso, baul, kilometraje};
-            	    tableModel.addRow(fila);
-            	}
-
+                Object[] fila = {id, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacionDate, 0, false};
+                tableModel.addRow(fila);
             }
 
             resultSet.close();
             statement.close();
             connection.close();
+            inventarioTable.repaint();
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al filtrar el inventario: " + ex.getMessage());
         }
     }
+
     public static void main(String[] args) {
     	new VentanaInventario();
     }
