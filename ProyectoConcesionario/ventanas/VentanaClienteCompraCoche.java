@@ -28,7 +28,7 @@ public class VentanaClienteCompraCoche extends JFrame {
 
     public VentanaClienteCompraCoche() {
         setTitle("Inventario de Coches");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
 

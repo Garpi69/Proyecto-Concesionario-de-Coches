@@ -16,7 +16,7 @@ import javax.swing.WindowConstants;
 public class VentanaMenuClienteCompraVehiculo extends JFrame {
     public VentanaMenuClienteCompraVehiculo() {
         setTitle("Menú Cliente - Compra de Vehículo");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(500, 600);
         setLocationRelativeTo(null);
 

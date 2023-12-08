@@ -30,7 +30,7 @@ public class VentanaConcesionarioCompraCocheSegundaMano extends JFrame {
 			e.printStackTrace();
 		}
         setTitle("Agregar Coche");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 300);
         setLocationRelativeTo(null);
 

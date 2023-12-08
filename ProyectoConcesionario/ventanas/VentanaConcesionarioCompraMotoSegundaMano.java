@@ -37,7 +37,7 @@ public class VentanaConcesionarioCompraMotoSegundaMano extends JFrame {
     DAO dao = new DAO();
     public VentanaConcesionarioCompraMotoSegundaMano(Cliente cliente) {
         setTitle("Agregar Moto de Segunda Mano");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 450);
         setLocationRelativeTo(null);
 

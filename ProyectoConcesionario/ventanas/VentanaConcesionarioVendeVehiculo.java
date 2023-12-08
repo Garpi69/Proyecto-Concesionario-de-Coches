@@ -10,12 +10,13 @@ import javax.swing.JOptionPane;
 
 import clases.Cliente;
 
-public class VentanaConcesionarioVendeVehiculo {
+public class VentanaConcesionarioVendeVehiculo extends JFrame {
 
     DAO dao = new DAO();
 
     public void abrirVentanaAgregarVehiculo() {
-        JFrame ventanaAgregarVehiculo = new JFrame("Agregar Venta de Vehículo");
+    	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	JFrame ventanaAgregarVehiculo = new JFrame("Agregar Venta de Vehículo");
         ventanaAgregarVehiculo.setSize(300, 200);
         ventanaAgregarVehiculo.setLocationRelativeTo(null);
         ventanaAgregarVehiculo.setLayout(new GridLayout(4, 1));

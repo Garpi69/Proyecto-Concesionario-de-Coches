@@ -14,7 +14,7 @@ import javax.swing.WindowConstants;
 public class VentanaMenuCliente extends JFrame {
     public VentanaMenuCliente() {
         setTitle("Compra o Venta");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(300, 200);
         setLocationRelativeTo(null);
 

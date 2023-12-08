@@ -30,7 +30,7 @@ public class VentanaAñadirCliente extends JFrame {
     protected JSpinner fechaNacimientoSpinner ;
     public Cliente VentanaAñadirCliente() {
         setTitle("Registro");
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 

@@ -10,12 +10,13 @@ import javax.swing.JOptionPane;
 
 import clases.Cliente;
 
-public class VentanaConcesionarioCompraVehiculo {
+public class VentanaConcesionarioCompraVehiculo extends JFrame {
 
     DAO dao = new DAO();
-
+    
     public void abrirVentanaAgregarVehiculo() {
-        JFrame ventanaAgregarVehiculo = new JFrame("Agregar Vehículo");
+    	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	JFrame ventanaAgregarVehiculo = new JFrame("Agregar Vehículo");
         ventanaAgregarVehiculo.setSize(300, 200);
         ventanaAgregarVehiculo.setLocationRelativeTo(null);
         ventanaAgregarVehiculo.setLayout(new GridLayout(4, 1));
@@ -24,8 +25,7 @@ public class VentanaConcesionarioCompraVehiculo {
         JButton cocheSegundaManoButton = new JButton("Coche Segunda Mano");
         JButton motoNuevaButton = new JButton("Moto Nueva");
         JButton motoSegundaManoButton = new JButton("Moto Segunda Mano");
-        //Cliente cliente = new Cliente();
-     // ...
+       
 
         cocheNuevoButton.addActionListener(new ActionListener() {
             @Override

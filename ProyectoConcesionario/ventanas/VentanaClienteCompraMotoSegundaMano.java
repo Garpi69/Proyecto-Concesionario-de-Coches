@@ -28,7 +28,7 @@ public class VentanaClienteCompraMotoSegundaMano extends JFrame {
 
     public VentanaClienteCompraMotoSegundaMano() {
         setTitle("Inventario de Motos de Segunda Mano");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
 

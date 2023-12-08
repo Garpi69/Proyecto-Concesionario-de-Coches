@@ -19,7 +19,7 @@ import javax.swing.WindowConstants;
 public class VentanaLoginRegistroCliente extends JFrame {
     public VentanaLoginRegistroCliente() {
         setTitle("Login o Registro");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(350, 250);
         setLocationRelativeTo(null);
         setResizable(false);

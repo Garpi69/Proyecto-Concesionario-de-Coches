@@ -27,7 +27,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
 
     public VentanaMenuClienteVendeCoche() {
         setTitle("Datos del Coche");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 

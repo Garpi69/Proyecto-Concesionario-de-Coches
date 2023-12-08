@@ -21,7 +21,7 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
 	private DAO dao = new DAO();
     public VentanaMenuClienteVendeMoto() {
         setTitle("Datos de la Moto");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 

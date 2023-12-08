@@ -35,7 +35,7 @@ public class VentanaConcesionarioCompraMoto extends JFrame {
     DAO dao = new DAO();
     public VentanaConcesionarioCompraMoto() {
         setTitle("Agregar Moto Nueva");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 
