@@ -18,7 +18,8 @@ import javax.swing.WindowConstants;
 import clases.Cliente;
 import clases.MotoSegundaMano;
 public class VentanaMenuClienteVendeMoto extends JFrame {
-	private DAO dao = new DAO();
+    private DAO dao = new DAO();
+
     public VentanaMenuClienteVendeMoto() {
         setTitle("Datos de la Moto");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -26,7 +27,7 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(12, 2));
+        panel.setLayout(new GridLayout(14, 2, 10, 10));
 
         JLabel idLabel = new JLabel("ID Vehículo:");
         JTextField idField = new JTextField();
@@ -68,7 +69,7 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
         panel.add(numPlazasLabel);
         panel.add(numPlazasField);
 
-        JLabel dniClienteField= new JLabel("Introduzca su DNI:");
+        JLabel dniClienteField = new JLabel("Introduzca su DNI:");
         JTextField dniField = new JTextField();
         panel.add(dniClienteField);
         panel.add(dniField);
@@ -104,49 +105,44 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
         panel.add(baulField);
 
         JButton enviarButton = new JButton("Enviar");
-        enviarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // Obtener los valores ingresados por el cliente
-                    int idVehiculo = Integer.parseInt(idField.getText());
-                    String combustible = combustibleField.getText();
-                    String marca = marcaField.getText();
-                    String modelo = modeloField.getText();
-                    String color = colorField.getText();
-                    String tipo = tipoField.getText();
-                    int potencia = Integer.parseInt(potenciaField.getText());
-                    int numPlazas = Integer.parseInt(numPlazasField.getText());
-                    int precio = Integer.parseInt(precioField.getText());
-                    int cuota = Integer.parseInt(cuotaField.getText());
-                    int kilometraje = Integer.parseInt(kilometrajeField.getText());
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    Date matriculacion = dateFormat.parse(matriculacionField.getText());
+        enviarButton.addActionListener(e -> {
+            try {
+                // Obtener los valores ingresados por el cliente
+                int idVehiculo = Integer.parseInt(idField.getText());
+                String combustible = combustibleField.getText();
+                String marca = marcaField.getText();
+                String modelo = modeloField.getText();
+                String color = colorField.getText();
+                String tipo = tipoField.getText();
+                int potencia = Integer.parseInt(potenciaField.getText());
+                int numPlazas = Integer.parseInt(numPlazasField.getText());
+                int precio = Integer.parseInt(precioField.getText());
+                int cuota = Integer.parseInt(cuotaField.getText());
+                int kilometraje = Integer.parseInt(kilometrajeField.getText());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date matriculacion = dateFormat.parse(matriculacionField.getText());
 
-                    int peso = Integer.parseInt(pesoField.getText());
-                    boolean baul = Boolean.parseBoolean(baulField.getText());
-                    String dniCliente = dniField.getText();
-                    Cliente cliente = dao.obtenerClientePorDNI(dniCliente);
-                    MotoSegundaMano moto = new MotoSegundaMano(idVehiculo,combustible,marca,modelo,color,tipo,potencia,numPlazas,precio,cuota,matriculacion,kilometraje,baul,peso);
+                int peso = Integer.parseInt(pesoField.getText());
+                boolean baul = Boolean.parseBoolean(baulField.getText());
+                String dniCliente = dniField.getText();
+                Cliente cliente = dao.obtenerClientePorDNI(dniCliente);
+                MotoSegundaMano moto = new MotoSegundaMano(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, kilometraje, baul, peso);
 
-                    dao.agregarMotoVendidaPorCliente(moto,cliente);
-                    JOptionPane.showMessageDialog(null, "Datos de la moto recibidos correctamente");
+                dao.agregarMotoVendidaPorCliente(moto, cliente);
+                JOptionPane.showMessageDialog(null, "Datos de la moto recibidos correctamente");
 
-
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Error: Ingresa valores numéricos válidos");
-                } catch (ParseException ex) {
-                    JOptionPane.showMessageDialog(null, "Error: Formato de fecha incorrecto. Utiliza dd/MM/yyyy");
-                } catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Error: Ingresa valores numéricos válidos");
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Error: Formato de fecha incorrecto. Utiliza dd/MM/yyyy");
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
         });
+        panel.add(new JLabel());
         panel.add(enviarButton);
-        setVisible(true);
+        
         add(panel);
+        setVisible(true);
     }
-
-
 }

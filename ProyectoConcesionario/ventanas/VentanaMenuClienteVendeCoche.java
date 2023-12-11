@@ -21,10 +21,20 @@ import clases.Cliente;
 import clases.CocheSegundaMano;
 
 public class VentanaMenuClienteVendeCoche extends JFrame {
-	DAO dao = new DAO();
-	 protected JTextField idField, dniField, combustibleField, marcaField, modeloField, colorField, tipoField, potenciaField, numPlazasField, precioField, kilometrajeField, matriculacionField;
-	    protected JButton enviarButton;
-
+	private JTextField idField;
+    private JTextField dniField;
+    private JTextField combustibleField;
+    private JTextField marcaField;
+    private JTextField modeloField;
+    private JTextField colorField;
+    private JTextField tipoField;
+    private JTextField potenciaField;
+    private JTextField numPlazasField;
+    private JTextField precioField;
+    private JTextField kilometrajeField;
+    private JTextField matriculacionField;
+    private JButton enviarButton;
+    public DAO dao = new DAO();
     public VentanaMenuClienteVendeCoche() {
         setTitle("Datos del Coche");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -70,48 +80,43 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
         panel.add(precioField);
         panel.add(new JLabel("Kilometraje:"));
         panel.add(kilometrajeField);
-        panel.add(new JLabel("Fecha de Matriculación (dd/MM/yyyy):"));
+        panel.add(new JLabel("Matriculación (dd/MM/yyyy):"));
         panel.add(matriculacionField);
 
         enviarButton = new JButton("Enviar");
-        panel.add(new JLabel());
-        panel.add(enviarButton);
-        JButton enviarButton = new JButton("Enviar");
-        enviarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // Obtener los valores ingresados por el cliente
-                    int idVehiculo = Integer.parseInt(idField.getText());
-                    String combustible = combustibleField.getText();
-                    String marca = marcaField.getText();
-                    String modelo = modeloField.getText();
-                    String color = colorField.getText();
-                    String tipo = tipoField.getText();
-                    int potencia = Integer.parseInt(potenciaField.getText());
-                    int numPlazas = Integer.parseInt(numPlazasField.getText());
-                    int precio = Integer.parseInt(precioField.getText());
-                    int cuota = precio/60;
-                    int kilometraje = Integer.parseInt(kilometrajeField.getText());
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    Date matriculacion = dateFormat.parse(matriculacionField.getText());
-                    String dniCliente = dniField.getText();
-                    Cliente cliente = dao.obtenerClientePorDNI(dniCliente);
-                    // Aquí puedes hacer lo que necesites con los datos del coche ingresados por el cliente
-                    JOptionPane.showMessageDialog(null, "Datos del coche recibidos correctamente");
-                    CocheSegundaMano cocheSegundaMano = new CocheSegundaMano(idVehiculo,combustible,marca,modelo,color,tipo,potencia,numPlazas,precio,cuota,matriculacion,kilometraje);
-                    dao.agregarCocheVendidoPorCliente(cocheSegundaMano, cliente);
-                    // Lógica para usar los datos del coche ingresados por el cliente
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Error: Ingresa valores numéricos válidos");
-                } catch (ParseException ex) {
-                    JOptionPane.showMessageDialog(null, "Error: Formato de fecha incorrecto. Utiliza dd/MM/yyyy");
-                } catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-            }
+        enviarButton.addActionListener(e -> {
+            try {
+                // Obtener los valores ingresados por el cliente
+                int idVehiculo = Integer.parseInt(idField.getText());
+                String combustible = combustibleField.getText();
+                String marca = marcaField.getText();
+                String modelo = modeloField.getText();
+                String color = colorField.getText();
+                String tipo = tipoField.getText();
+                int potencia = Integer.parseInt(potenciaField.getText());
+                int numPlazas = Integer.parseInt(numPlazasField.getText());
+                int precio = Integer.parseInt(precioField.getText());
+                int cuota = precio / 60;
+                int kilometraje = Integer.parseInt(kilometrajeField.getText());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date matriculacion = dateFormat.parse(matriculacionField.getText());
+                String dniCliente = dniField.getText();
+                Cliente cliente = dao.obtenerClientePorDNI(dniCliente);
+               
+                JOptionPane.showMessageDialog(null, "Datos del coche recibidos correctamente");
+                 CocheSegundaMano cocheSegundaMano = new CocheSegundaMano(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, kilometraje);
+                 dao.agregarCocheVendidoPorCliente(cocheSegundaMano, cliente);
+               
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Error: Ingresa valores numéricos válidos");
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Error: Formato de fecha incorrecto. Utiliza dd/MM/yyyy");
+            } catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
         });
+        panel.add(new JLabel());
         panel.add(enviarButton);
 
         add(panel);

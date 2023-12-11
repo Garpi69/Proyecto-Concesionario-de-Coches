@@ -145,7 +145,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         getContentPane().add(buttonPanel, BorderLayout.SOUTH );
         cargarInventario();
         comprarButton.addActionListener(e ->{
-        	 if (inventarioTable.getSelectedRow()==1) {
+        	 if (inventarioTable.getSelectedRow()==0) {
              	confirmarCompra();
              }else {
             	 JOptionPane.showMessageDialog(null, "Seleccione un vehiculo");
@@ -244,7 +244,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
                     "Confirmación de Compra", JOptionPane.YES_NO_OPTION);
 
             if (opcion == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(null, "Te hemos enviado un correo electrónico para proceder con la compra.");
+              new DateTimePicker();
                 
             }
         } else {

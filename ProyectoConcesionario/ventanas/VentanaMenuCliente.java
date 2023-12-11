@@ -42,7 +42,18 @@ public class VentanaMenuCliente extends JFrame {
             }
         });
         panel.add(venderButton);
+        
+        JButton verOfertasButton = new JButton("Mis vehiculos en venta");
+        venderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               // new VentanaMenuClienteVerOfertas();
 
+
+            }
+        });
+        panel.add(verOfertasButton);
+        
         // Agregado: Espaciado entre panel y ventana
         JPanel wrapperPanel = new JPanel(new BorderLayout());
         wrapperPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Agregado: Borde

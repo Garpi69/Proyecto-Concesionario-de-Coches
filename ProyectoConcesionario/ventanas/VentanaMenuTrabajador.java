@@ -46,8 +46,8 @@ public class VentanaMenuTrabajador extends JFrame{
 		botonInventario = new JButton("Inventario");
 		botonInforme = new JButton("Informe");
 		botonCalendario = new JButton("Calendario");
-		botonComprarVehiculo = new JButton("Agregar Vehiculo Comprado");
-		botonVenderVehiculo = new JButton("Agregar Vehiculo Vendido");
+		botonComprarVehiculo = new JButton("Agregar Vehiculo a la venta");
+		botonVenderVehiculo = new JButton("Agregar Venta de Vehiculo");
 		botonClientes = new JButton("Clientes");
 
 		buttonPanel.add(botonInventario);
@@ -72,7 +72,7 @@ public class VentanaMenuTrabajador extends JFrame{
 		botonInforme.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				new VentanaInforme();
 
 			}
 		});
