@@ -33,13 +33,16 @@ public class VentanaInventario extends JFrame {
     public VentanaInventario() {
         setTitle("Inventario de Vehículos");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1000, 800);
         setLocationRelativeTo(null);
         
         JPanel filterPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5); // Espacios entre componentes
-
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc2 = new GridBagConstraints();
+        gbc2.insets = new Insets(5, 5, 5, 5); // Espacios entre componentes
+        
         JTextField marcaField = new JTextField(10);
         JTextField modeloField = new JTextField(10);
         JTextField colorField = new JTextField(10);
@@ -55,6 +58,62 @@ public class VentanaInventario extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 0;
         filterPanel.add(new JLabel("Marca:"), gbc);
+        JButton cocheButton = new JButton("Coche");
+        cocheButton.addActionListener(e -> {
+        	try {	
+            	Connection connection = DriverManager.getConnection(dao.url);
+            	tableModel.setRowCount(0);
+                cargarDatosVehiculos(connection,"coche");
+            }catch (SQLException e1) {
+            	
+            }
+            });
+
+        JButton cocheSegundaManoButton = new JButton("Coche de Segunda Mano");
+        cocheSegundaManoButton.addActionListener(e -> {
+        	try {	
+            	Connection connection = DriverManager.getConnection(dao.url);
+            	tableModel.setRowCount(0);
+                cargarDatosVehiculos(connection,"cocheSegundaMano");
+            }catch (SQLException e1) {
+            	
+            }
+            });
+
+        JButton motoButton = new JButton("Moto");
+        motoButton.addActionListener(e -> {
+        	try {	
+            	Connection connection = DriverManager.getConnection(dao.url);
+            	tableModel.setRowCount(0);
+                cargarDatosVehiculos(connection,"moto");
+            }catch (SQLException e1) {
+            	
+            }
+            });
+
+        JButton motoSegundaManoButton = new JButton("Moto de Segunda Mano");
+        motoSegundaManoButton.addActionListener(e -> {
+        try {	
+        	Connection connection = DriverManager.getConnection(dao.url);
+        	tableModel.setRowCount(0);
+            cargarDatosVehiculos(connection,"motoSegundaMano");
+        }catch (SQLException e1) {
+        	
+        }
+        });
+
+        // Añadir los botones al panel de filtros
+        gbc2.gridx = 7;
+        buttonPanel.add(cocheButton, gbc2);
+
+        gbc2.gridx = 8;
+        buttonPanel.add(cocheSegundaManoButton, gbc2);
+
+        gbc2.gridx = 9;
+        buttonPanel.add(motoButton, gbc2);
+
+        gbc2.gridx = 10;
+        buttonPanel.add(motoSegundaManoButton, gbc2);
 
         gbc.gridx = 1;
         filterPanel.add(marcaField, gbc);
@@ -81,7 +140,7 @@ public class VentanaInventario extends JFrame {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(filterPanel, BorderLayout.NORTH);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
-
+        getContentPane().add(buttonPanel, BorderLayout.SOUTH );
         cargarInventario();
         setVisible(true);
     }
