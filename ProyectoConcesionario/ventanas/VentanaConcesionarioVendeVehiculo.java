@@ -1,5 +1,6 @@
 package ventanas;
 
+import clases.Venta;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,18 +33,27 @@ public class VentanaConcesionarioVendeVehiculo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Acciones al presionar "Coche Nuevo"
-                JOptionPane.showMessageDialog(null, "Añade los datos del cliente");
 
-                VentanaRegistroCliente ventanaRegistroCliente = new VentanaRegistroCliente();
-                Cliente cliente = ventanaRegistroCliente.crearObjetoCliente();
-                if (cliente != null) {
-
-                    	//CODIGO PARA ELEGIR EL COCHE QUE SE HA VENDIDO
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error al registrar los datos del cliente");
+        		JOptionPane.showMessageDialog(null, "Escoge el vehiculo vendido");
+        		VentanaMenuClienteCompraVehiculo ventana = new VentanaMenuClienteCompraVehiculo();
+        		int idVehiculo = (int) ventana.inventarioTable.getValueAt(ventana.inventarioTable.getSelectedRow(),0 );
+        		String marca = (String) ventana.inventarioTable.getValueAt(ventana.inventarioTable.getSelectedRow(),3 );
+        		String modelo = (String) ventana.inventarioTable.getValueAt(ventana.inventarioTable.getSelectedRow(),4 );
+        		 VentanaRegistroCliente ventanaRegistroCliente = new VentanaRegistroCliente();
+                 Cliente cliente = ventanaRegistroCliente.crearObjetoCliente();
+        		String dniComprador = cliente.getdNI();
+            	int precioVenta = (int) ventana.inventarioTable.getValueAt(ventana.inventarioTable.getSelectedRow(), 9);
+            	String categoria ="";
+            	Venta venta = new Venta(categoria,idVehiculo,marca,modelo,precioVenta,dniComprador);
+            	
+                
+               
+                		dao.agregarVenta(venta);
+               
+                    
                 }
             }
-        });
+        );
 
         // ...
 

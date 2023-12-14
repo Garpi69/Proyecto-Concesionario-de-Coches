@@ -127,7 +127,7 @@ public class VentanaInforme extends JFrame {
     private void exportarAPDF(JTable table, DefaultTableModel tableModel) {
         Document document = new Document();
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("table.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("InformeConcesionario.pdf"));
             document.open();
 
             // Agregar título

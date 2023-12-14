@@ -20,6 +20,7 @@ public class VentanaMenuTrabajador extends JFrame{
 	protected JButton botonComprarVehiculo ;
 	protected JButton botonVenderVehiculo ;
 	protected JButton botonClientes ;
+	protected JButton botonOfertas;
 
 	public VentanaMenuTrabajador(){
 		 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -45,11 +46,13 @@ public class VentanaMenuTrabajador extends JFrame{
 
 		botonInventario = new JButton("Inventario");
 		botonInforme = new JButton("Informe");
+		botonOfertas = new JButton("Ofertas");
 		botonCalendario = new JButton("Calendario");
 		botonComprarVehiculo = new JButton("Agregar Vehiculo a la venta");
 		botonVenderVehiculo = new JButton("Agregar Venta de Vehiculo");
 		botonClientes = new JButton("Clientes");
-
+		
+		buttonPanel.add(botonOfertas);
 		buttonPanel.add(botonInventario);
 		buttonPanel.add(botonInforme);
 		buttonPanel.add(botonCalendario);
@@ -69,6 +72,18 @@ public class VentanaMenuTrabajador extends JFrame{
 
 		}
 	});
+		botonOfertas.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaTrabajadorVerOfertas();
+				
+			}
+			
+			
+		});
+		
+		
 		botonInforme.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

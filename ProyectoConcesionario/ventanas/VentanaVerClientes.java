@@ -59,7 +59,8 @@ public class VentanaVerClientes extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	
             	int numero= inventarioTable.getSelectedRow();
-            	Object login = inventarioTable.getValueAt(numero, 1);
+            	Object login = inventarioTable.getValueAt(numero, 0);
+            	System.out.println(login);
             	String loginString = login.toString();
             	System.out.println(login);
             	
@@ -151,8 +152,5 @@ public class VentanaVerClientes extends JFrame {
         statement.close();
     }
 
-    public static void main(String[] args) {
-    	new VentanaVerClientes();
-    }
 }
 

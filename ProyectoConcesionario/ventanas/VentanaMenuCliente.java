@@ -43,11 +43,11 @@ public class VentanaMenuCliente extends JFrame {
         });
         panel.add(venderButton);
         
-        JButton verOfertasButton = new JButton("Mis vehiculos en venta");
-        venderButton.addActionListener(new ActionListener() {
+        JButton verOfertasButton = new JButton("Mis ofertas");
+        verOfertasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               // new VentanaMenuClienteVerOfertas();
+               new VentanaMenuClienteVerOfertas();
 
 
             }
@@ -62,10 +62,7 @@ public class VentanaMenuCliente extends JFrame {
         add(wrapperPanel);
         setVisible(true);
     }
-    public static void main(String[] args) {
-		 new VentanaMenuCliente();
-
-	}
+   
 
 
 }
