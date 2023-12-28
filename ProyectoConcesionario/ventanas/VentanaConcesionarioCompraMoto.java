@@ -117,7 +117,7 @@ public class VentanaConcesionarioCompraMoto extends JFrame {
             boolean tieneBaul = baulCheckBox.isSelected();
             String combustible = combustibleField.getText();
             // Conexión a la base de datos SQLite
-            Moto moto = new Moto(idVehiculo,combustible,marca,modelo,color,tipo,potencia,numPlazas,precio,cuota,matriculacion,peso,tieneBaul);
+            Moto moto = new Moto(idVehiculo,combustible,marca,modelo,color,tipo,potencia,numPlazas,precio,cuota,matriculacion,peso,tieneBaul,null,cliente.getLogin());
             agregarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {

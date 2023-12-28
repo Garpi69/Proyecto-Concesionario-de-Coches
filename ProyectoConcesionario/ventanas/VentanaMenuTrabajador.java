@@ -49,7 +49,7 @@ public class VentanaMenuTrabajador extends JFrame{
 		botonOfertas = new JButton("Ofertas");
 		botonCalendario = new JButton("Calendario");
 		botonComprarVehiculo = new JButton("Agregar Vehiculo a la venta");
-		botonVenderVehiculo = new JButton("Agregar Venta de Vehiculo");
+		botonVenderVehiculo = new JButton("Agregar Vehiculo Vendido");
 		botonClientes = new JButton("Clientes");
 		
 		buttonPanel.add(botonOfertas);
@@ -102,8 +102,7 @@ public class VentanaMenuTrabajador extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SwingUtilities.invokeLater(() -> {
-		            VentanaConcesionarioCompraVehiculo compraVehiculo = new VentanaConcesionarioCompraVehiculo();
-		            compraVehiculo.abrirVentanaAgregarVehiculo();
+		            new VentanaMenuTrabajadorAñadirCocheComprado();
 		        });
 
 

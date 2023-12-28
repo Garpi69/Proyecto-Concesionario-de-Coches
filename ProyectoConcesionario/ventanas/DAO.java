@@ -49,36 +49,24 @@ public class DAO {
     }
 
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    public String dateToString(java.util.Date date, SimpleDateFormat format) {
-        
-        return format.format(date);
-    }
+   
    
 
    
-    public java.util.Date stringToDate(String dateString, SimpleDateFormat format) throws ParseException {
-        java.util.Date date = null;
-    	if (dateString != null && !dateString.isEmpty()) {
-    		 try {
-    		        
-    		        date = format.parse(dateString);
-    		       
-    		    } catch (ParseException e) {
-    		        e.printStackTrace();
-    		    }
-        } else {
-            // Manejo cuando la cadena de fecha es nula o está vacía
-            return null; // Otra acción o valor predeterminado según sea necesario
-        }
-		return date;
-    }
+    
    
 
 
 
 
     public Cliente obtenerClientePorDNI(String dniCliente) {
-        Connection conn = null;
+    	try {
+			conectar();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Cliente cliente = null;
@@ -100,18 +88,16 @@ public class DAO {
                 String nombre = resultSet.getString("nombre");
 
                 String apellidos = resultSet.getString("apellidos");
-                java.util.Date fechaNacimiento = stringToDate(resultSet.getString("fechaNacimiento"),format);
+                java.sql.Date fechaNacimientoSQL = resultSet.getDate("fechaNacimiento");
+                java.util.Date fechaNacimiento = sqlDateToJavaDate(fechaNacimientoSQL);
                 long numTarjeta = resultSet.getLong("numTarjeta");
 
                 // Construir el objeto Cliente
-                cliente = new Cliente(login, contraseña, email,dni, nombre, apellidos,fechaNacimiento,numTarjeta);
+                cliente = new Cliente(login, contraseña, email,dni, nombre, apellidos,fechaNacimiento,numTarjeta,"");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+        } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -309,7 +295,7 @@ public class DAO {
         return credencialesCorrectas;
     }
 	public void agregarCocheCompradoPorConcesionario(Coche coche) throws SQLException {
-		String query = "INSERT INTO coche	 (idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO coche	 (idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,ofertas,propietario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
         conectar();
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, coche.getidVehiculo());
@@ -321,8 +307,10 @@ public class DAO {
             pstmt.setInt(7, coche.getNumPlazas());
             pstmt.setInt(8, coche.getPrecio());
             pstmt.setInt(9, coche.getCuota());
-            pstmt.setDate(10, (Date) coche.getMatriculacion());
-
+            java.sql.Date matriculacionSQL = utilDateToSqlDate( coche.getMatriculacion());
+            pstmt.setDate(10, matriculacionSQL);
+            pstmt.setString(11, coche.getOfertas());
+            pstmt.setString(12, coche.getPropietario());
 
             pstmt.executeUpdate();
             System.out.println("Coche agregado a la base de datos");
@@ -343,9 +331,12 @@ public class DAO {
 	            pstmt.setInt(7,  moto.getNumPlazas());
 	            pstmt.setInt(8,  moto.getPrecio());
 	            pstmt.setInt(9,  moto.getCuota());
-	            pstmt.setDate(10, (Date)  moto.getMatriculacion());
+	            java.sql.Date matriculacionSQL = utilDateToSqlDate( moto.getMatriculacion());
+	            pstmt.setDate(10, matriculacionSQL);
 	            pstmt.setInt(11, moto.getPeso());
 	            pstmt.setBoolean(12, moto.isBaul());
+	            pstmt.setString(13, moto.getOfertas());
+	            pstmt.setString(14, moto.getPropietario());
 
 	            pstmt.executeUpdate();
 	            System.out.println("Moto agregada a la base de datos");
@@ -353,7 +344,7 @@ public class DAO {
 	        desconectar();
 	    }
 	public void agregarCocheSegundaManoCompradoPorConcesionario(CocheSegundaMano cocheSegundaMano, Cliente cliente) throws SQLException {
-		String query = "INSERT INTO cocheSegundaMano	 (idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,kilometraje,dniVendedor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
+		String query = "INSERT INTO cocheSegundaMano	 (idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,kilometraje,ofertas,propietario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)";
         conectar();
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, cocheSegundaMano.getidVehiculo());
@@ -366,10 +357,11 @@ public class DAO {
             pstmt.setInt(8, cocheSegundaMano.getNumPlazas());
             pstmt.setInt(9, cocheSegundaMano.getPrecio());
             pstmt.setInt(10, cocheSegundaMano.getCuota());
-            pstmt.setDate(11, (Date) cocheSegundaMano.getMatriculacion());
+            java.sql.Date matriculacionSQL = utilDateToSqlDate( cocheSegundaMano.getMatriculacion());
+            pstmt.setDate(11, matriculacionSQL);
             pstmt.setInt(12, cocheSegundaMano.getKilometraje());
-            pstmt.setString(13, cliente.getdNI());
-
+            pstmt.setString(13, cocheSegundaMano.getOfertas());
+            pstmt.setString(14, cocheSegundaMano.getPropietario());
             pstmt.executeUpdate();
             System.out.println("Coche agregado a la base de datos");
 
@@ -377,7 +369,7 @@ public class DAO {
         desconectar();
     }
 	public void agregarMotoSegundaManoCompradaPorConcesionario(MotoSegundaMano motoSegundaMano, Cliente cliente) throws SQLException  {
-		String query = "INSERT INTO CocheSegundaMano (idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,peso,baul, kilometraje,dniVendedor) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO CocheSegundaMano (idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,peso,baul, kilometraje,ofertas,propietario) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 	   	 conectar();
 	        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
 	            pstmt.setInt(1, motoSegundaMano.getidVehiculo());
@@ -390,11 +382,13 @@ public class DAO {
 	            pstmt.setInt(8,  motoSegundaMano.getNumPlazas());
 	            pstmt.setInt(9,  motoSegundaMano.getPrecio());
 	            pstmt.setInt(10,  motoSegundaMano.getCuota());
-	            pstmt.setDate(11, (Date)  motoSegundaMano.getMatriculacion());
+	            java.sql.Date matriculacionSQL = utilDateToSqlDate(motoSegundaMano.getMatriculacion());
+	            pstmt.setDate(11, matriculacionSQL);
 	            pstmt.setInt(12, motoSegundaMano.getPeso());
 	            pstmt.setBoolean(13,motoSegundaMano.isBaul());
 	            pstmt.setInt(14, motoSegundaMano.getKilometraje());
-	            pstmt.setString(15, cliente.getdNI());
+	            pstmt.setString(15, motoSegundaMano.getOfertas());
+	            pstmt.setString(16, motoSegundaMano.getPropietario());
 	            pstmt.executeUpdate();
 	            System.out.println("Moto agregada a la base de datos");
 	        }
@@ -407,21 +401,23 @@ public class DAO {
 
 		        try {
 		            
-		            String query = "INSERT INTO ofertasCoches(idVehiculo,dniCliente, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, kilometraje) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		            String query = "INSERT INTO cocheSegundaMano(idVehiculo,dniCliente, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, kilometraje,ofertas,propietario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 		            preparedStatement = conn.prepareStatement(query);
 		            preparedStatement.setInt(1, cocheSegundaMano.getIdVehiculo());
-		            preparedStatement.setString(2, cliente.getdNI());
-		            preparedStatement.setString(3, cocheSegundaMano.getCombustible());
-		            preparedStatement.setString(4, cocheSegundaMano.getMarca());
-		            preparedStatement.setString(5, cocheSegundaMano.getModelo());
-		            preparedStatement.setString(6, cocheSegundaMano.getColor());
-		            preparedStatement.setString(7, cocheSegundaMano.getTipo());
-		            preparedStatement.setInt(8, cocheSegundaMano.getPotencia());
-		            preparedStatement.setInt(9, cocheSegundaMano.getNumPlazas());
-		            preparedStatement.setInt(10, cocheSegundaMano.getPrecio());
-		            preparedStatement.setInt(11, cocheSegundaMano.getCuota());
-		            preparedStatement.setString(12, dateToString(cocheSegundaMano.getMatriculacion(),format));
-		            preparedStatement.setInt(13, cocheSegundaMano.getKilometraje());
+		            preparedStatement.setString(2, cocheSegundaMano.getCombustible());
+		            preparedStatement.setString(3, cocheSegundaMano.getMarca());
+		            preparedStatement.setString(4, cocheSegundaMano.getModelo());
+		            preparedStatement.setString(5, cocheSegundaMano.getColor());
+		            preparedStatement.setString(6, cocheSegundaMano.getTipo());
+		            preparedStatement.setInt(7, cocheSegundaMano.getPotencia());
+		            preparedStatement.setInt(8, cocheSegundaMano.getNumPlazas());
+		            preparedStatement.setInt(9, cocheSegundaMano.getPrecio());
+		            preparedStatement.setInt(10, cocheSegundaMano.getCuota());
+		            java.sql.Date sqlDate = utilDateToSqlDate(cocheSegundaMano.getMatriculacion());
+		            preparedStatement.setDate(11, sqlDate);
+		            preparedStatement.setInt(12, cocheSegundaMano.getKilometraje());
+		            preparedStatement.setString(13, null);
+		            preparedStatement.setString(14, cliente.getLogin());
 
 		            preparedStatement.executeUpdate();
 
@@ -451,24 +447,26 @@ public class DAO {
 
 	        try {
 	            String string = "";
-	            String query = "INSERT INTO ofertasMotos(idVehiculo, dniCliente, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,peso,potencia, kilometraje) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+	            String query = "INSERT INTO motoSegundaMano(idVehiculo, dniCliente, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,peso,potencia, kilometraje,ofertas,propietario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)";
 	            preparedStatement = conn.prepareStatement(query);
 	            preparedStatement.setInt(1, motoSegundaMano.getIdVehiculo());
-
-	            preparedStatement.setString(2, cliente.getdNI());
-	            preparedStatement.setString(3, motoSegundaMano.getCombustible());
-	            preparedStatement.setString(4, motoSegundaMano.getMarca());
-	            preparedStatement.setString(5, motoSegundaMano.getModelo());
-	            preparedStatement.setString(6, motoSegundaMano.getColor());
-	            preparedStatement.setString(7, motoSegundaMano.getTipo());
-	            preparedStatement.setInt(8, motoSegundaMano.getPotencia());
-	            preparedStatement.setInt(9, motoSegundaMano.getNumPlazas());
-	            preparedStatement.setInt(10,motoSegundaMano.getPrecio());
-	            preparedStatement.setInt(11, motoSegundaMano.getCuota());
-	            preparedStatement.setString(12, dateToString(motoSegundaMano.getMatriculacion(),format));
-	            preparedStatement.setInt(13, motoSegundaMano.getPeso());
-	            preparedStatement.setInt(14, motoSegundaMano.getPotencia());
-	            preparedStatement.setInt(15, motoSegundaMano.getKilometraje());
+	            preparedStatement.setString(2, motoSegundaMano.getCombustible());
+	            preparedStatement.setString(3, motoSegundaMano.getMarca());
+	            preparedStatement.setString(4, motoSegundaMano.getModelo());
+	            preparedStatement.setString(5, motoSegundaMano.getColor());
+	            preparedStatement.setString(6, motoSegundaMano.getTipo());
+	            preparedStatement.setInt(7, motoSegundaMano.getPotencia());
+	            preparedStatement.setInt(8, motoSegundaMano.getNumPlazas());
+	            preparedStatement.setInt(9,motoSegundaMano.getPrecio());
+	            preparedStatement.setInt(10, motoSegundaMano.getCuota());
+	            java.sql.Date sqlMatriculacion = utilDateToSqlDate(motoSegundaMano.getMatriculacion());
+	            preparedStatement.setDate(11, sqlMatriculacion);
+	            preparedStatement.setInt(12, motoSegundaMano.getPeso());
+	            preparedStatement.setInt(13, motoSegundaMano.getPotencia());
+	            preparedStatement.setInt(14, motoSegundaMano.getKilometraje());
+	            preparedStatement.setString(15, motoSegundaMano.getOfertas());
+	            preparedStatement.setString(16, cliente.getLogin());
+	            
 
 
 	            preparedStatement.executeUpdate();
@@ -522,8 +520,8 @@ public class DAO {
 		 	preparedStatement.setInt(0, idVehiculo);
 		 	ResultSet resultSet = preparedStatement.executeQuery();
 		 	String ofertas = resultSet.getString("ofertas");
-		 	ofertas = ofertas +", Usuario: "+usuario+" Oferta: "+oferta+" €";
-		 	preparedStatement.setString(11, ofertas);
+		 	ofertas = ofertas +"Usuario: "+usuario+" Oferta: "+oferta+" €, ";
+		 	preparedStatement.setString(12, ofertas);
 		 	
          }catch (SQLException e){
         	 try {
@@ -533,7 +531,7 @@ public class DAO {
      		 	ResultSet resultSet = preparedStatement.executeQuery();
      		 	String ofertas = resultSet.getString("ofertas");
      		 	ofertas = ofertas +", Usuario: "+usuario+" Oferta: "+oferta+" €";
-     			preparedStatement.setString(12, ofertas);
+     			preparedStatement.setString(14, ofertas);
               }catch (SQLException e1){
             	  try {
              		 String query =  "SELECT * FROM moto WHERE idVehiculo = ? ";
@@ -551,7 +549,7 @@ public class DAO {
                		 	ResultSet resultSet = preparedStatement.executeQuery();
                		 	String ofertas = resultSet.getString("ofertas");
                		 	ofertas = ofertas +", Usuario: "+usuario+" Oferta: "+oferta+" €";
-               		 	preparedStatement.setString(14, ofertas);
+               		 	preparedStatement.setString(15, ofertas);
                         }catch (SQLException e3){
                        	 
                         }
@@ -673,8 +671,31 @@ public class DAO {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-}
+	}
 		
+	public java.util.Date sqlDateToJavaDate (java.sql.Date sqlDate){
+		java.util.Date utilDate = new java.util.Date(sqlDate.getTime());
+		return utilDate;
+	}
+	public java.sql.Date utilDateToSqlDate (java.util.Date utilDate){
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		return sqlDate;
+	}
+
+	public java.util.Date stringToDate(String fechaNacimientoString, SimpleDateFormat format2) {
+		 try {
+	            return format2.parse(fechaNacimientoString);
+	        } catch (ParseException e) {
+	            // Manejar cualquier error de análisis de fecha aquí
+	            e.printStackTrace();
+	            return null; // O podrías lanzar una excepción, dependiendo del caso
+	        }
+	}
+	public String dateToString(java.util.Date date, SimpleDateFormat format2) {
+		
+	return format2.format(date);
+	}
+	
 	}
 	
 

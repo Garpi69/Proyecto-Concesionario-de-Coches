@@ -158,7 +158,8 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
        hacerOfertaButton.addActionListener(e -> {
     	   int row = inventarioTable.getSelectedRow();
     	   int idVehiculo = (int) inventarioTable.getValueAt(row, 0);
-    	   VentanaOferta ventanaOferta = new VentanaOferta(idVehiculo,dao.cliente.getLogin());
+    	   VentanaOferta ventanaOferta = new VentanaOferta(idVehiculo,dao.cliente.getLogin()
+    			   );
        });
         setVisible(true);
     }
@@ -208,7 +209,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
             String propietario = resultSet.getString("propietario");
 			try {
 				matriculacion = dao.stringToDate(resultSet.getString("matriculacion"),dao.format);
-			} catch (ParseException | SQLException e) {
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -306,12 +307,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
                 String matriculacion = resultSet.getString("matriculacion");
                 String propietario = resultSet.getString("propietario");
                 Date matriculacionDate = null;
-                try {
-					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 
                 
                 // Resto del código para obtener los valores del vehículo
@@ -362,12 +358,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
                 int kilometraje = 0;
                 Date matriculacionDate = null;
                 String propietario = resultSet.getString("propietario");
-                try {
-					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 kilometraje = getIntOrNull(resultSet,"kilometraje");
                 
                 // Resto del código para obtener los valores del vehículo
@@ -420,12 +411,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
                 int baul=0;
                 int peso =0;
                 Date matriculacionDate = null;
-                try {
-					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 String baulString ="No";
                 baul= getIntOrNull(resultSet,"baul");
                 peso = getIntOrNull(resultSet,"peso");
@@ -483,12 +469,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
                 int peso =0;
                 int kilometraje = 0;
                 Date matriculacionDate = null;
-                try {
-					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 baul= getIntOrNull(resultSet,"baul");
                 peso = getIntOrNull(resultSet,"peso");
                 kilometraje = getIntOrNull(resultSet,"kilometraje");

@@ -123,7 +123,7 @@ public class VentanaConcesionarioCompraMotoSegundaMano extends JFrame {
             boolean tieneBaul = baulCheckBox.isSelected();
             int kilometraje = Integer.parseInt(kilometrajeField.getText());
             String combustible = combustibleField.getText();
-            MotoSegundaMano motoSegundaMano = new MotoSegundaMano(idVehiculo,combustible,marca,modelo,color,tipo,potencia,numPlazas,precio,cuota,matriculacion,peso,tieneBaul,kilometraje);
+            MotoSegundaMano motoSegundaMano = new MotoSegundaMano(idVehiculo,combustible,marca,modelo,color,tipo,potencia,numPlazas,precio,cuota,matriculacion,peso,tieneBaul,kilometraje,null,cliente.getLogin());
             agregarButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {

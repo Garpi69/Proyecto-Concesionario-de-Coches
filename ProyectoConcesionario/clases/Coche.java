@@ -14,8 +14,8 @@ public class Coche extends Vehiculo {
 	}
 
 	public Coche(int idVehiculo,String combustible, String marca, String modelo, String color, String tipo, int potencia, int numPlazas,
-			int precio, int cuota, Date matriculacion) {
-		super(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion);
+			int precio, int cuota, Date matriculacion,String ofertas, String propietario) {
+		super(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, ofertas, propietario);
 		this.combustible=combustible;
 	}
 

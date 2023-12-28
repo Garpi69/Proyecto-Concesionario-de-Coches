@@ -169,7 +169,7 @@ public class VentanaInventario extends JFrame {
         // Asegúrate de tener la conexión con tu base de datos
         try {
             Connection connection = DriverManager.getConnection(dao.url);
-            String[] columnas = {"ID", "Combustible", "Marca","Modelo", "Color","Tipo","Potencia","Numero de plazas", "Precio","Cuota","Matriculacion","Peso (Motos)","Baul (Motos)","Kilometraje (Segunda Mano","Propietario"};
+            String[] columnas = {"ID", "Combustible", "Marca","Modelo", "Color","Tipo","Potencia","Numero de plazas", "Precio","Cuota","Matriculacion","Peso (Motos)","Baul (Motos)","Kilometraje (Segunda Mano)","Ofertas","Propietario"};
             tableModel.setColumnIdentifiers(columnas);
          
             // Obtener datos de coches
@@ -208,10 +208,11 @@ public class VentanaInventario extends JFrame {
             int precio = resultSet.getInt("precio");
             int cuota = resultSet.getInt("cuota");
             String propietario = resultSet.getString("propietario");
+            String ofertas = resultSet.getString("ofertas");
             Date matriculacion=null;
 			try {
 				matriculacion = dao.stringToDate(resultSet.getString("matriculacion"),dao.format);
-			} catch (ParseException | SQLException e) {
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -239,7 +240,7 @@ public class VentanaInventario extends JFrame {
            
 			
            
-            Object[] fila = {id,combustible, marca, modelo,color, tipo,potencia,numPlazas, precio,cuota,matriculacion,peso,baulBoolean,kilometraje,propietario};
+            Object[] fila = {id,combustible, marca, modelo,color, tipo,potencia,numPlazas, precio,cuota,matriculacion,peso,baulBoolean,kilometraje,ofertas,propietario};
             tableModel.addRow(fila);
         }
         
@@ -275,20 +276,16 @@ public class VentanaInventario extends JFrame {
                 int precio = resultSet.getInt("precio");
                 int cuota = resultSet.getInt("cuota");
                 String matriculacion = resultSet.getString("matriculacion");
+                String ofertas = resultSet.getString("ofertas");
                 String propietario = resultSet.getString("propietario");
                 
                 Date matriculacionDate = null;
-                try {
-					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 
                 
                 // Resto del código para obtener los valores del vehículo
 
-                Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,propietario};
+                Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,ofertas,propietario};
                 tableModel.addRow(fila);
             }
            
@@ -333,18 +330,14 @@ public class VentanaInventario extends JFrame {
                 String matriculacion = resultSet.getString("matriculacion");
                 int kilometraje = 0;
                 Date matriculacionDate = null;
+                String ofertas = resultSet.getString("ofertas");
                 String propietario = resultSet.getString("propietario");
-                try {
-					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 kilometraje = getIntOrNull(resultSet,"kilometraje");
                 
                 // Resto del código para obtener los valores del vehículo
 
-                Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,0,0,kilometraje,propietario};
+                Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,0,0,kilometraje,ofertas,propietario};
                 tableModel.addRow(fila);
             }
             
@@ -391,12 +384,7 @@ public class VentanaInventario extends JFrame {
                 int baul=0;
                 int peso =0;
                 Date matriculacionDate = null;
-                try {
-					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 String baulString ="No";
                 baul= getIntOrNull(resultSet,"baul");
                 peso = getIntOrNull(resultSet,"peso");
@@ -405,7 +393,8 @@ public class VentanaInventario extends JFrame {
                 }
                 // Resto del código para obtener los valores del vehículo
                 String propietario = resultSet.getString("propietario");
-                Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,peso,baulString,propietario};
+                String ofertas = resultSet.getString("ofertas");
+                Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,peso,baulString,ofertas,propietario};
                 tableModel.addRow(fila);
             }
             
@@ -453,12 +442,7 @@ public class VentanaInventario extends JFrame {
                 int peso =0;
                 int kilometraje = 0;
                 Date matriculacionDate = null;
-                try {
-					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 baul= getIntOrNull(resultSet,"baul");
                 peso = getIntOrNull(resultSet,"peso");
                 kilometraje = getIntOrNull(resultSet,"kilometraje");
@@ -468,7 +452,8 @@ public class VentanaInventario extends JFrame {
                 }
                 // Resto del código para obtener los valores del vehículo
                 String propietario = resultSet.getString("propietario");
-                Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,peso,baulString,kilometraje,propietario};
+                String ofertas = resultSet.getString("ofertas");
+                Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,peso,baulString,kilometraje,ofertas,propietario};
                 tableModel.addRow(fila);
             }
             

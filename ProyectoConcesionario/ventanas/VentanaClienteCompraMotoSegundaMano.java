@@ -199,12 +199,7 @@ public class VentanaClienteCompraMotoSegundaMano extends JFrame {
                 int peso =0;
                 int kilometraje = 0;
                 Date matriculacionDate = null;
-                try {
-					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 baul= getIntOrNull(resultSet,"baul");
                 peso = getIntOrNull(resultSet,"peso");
                 kilometraje = getIntOrNull(resultSet,"kilometraje");

@@ -141,7 +141,7 @@ public class VentanaConcesionarioCompraCoche extends JFrame {
             return null;
         }
 
-        return new Coche(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion);
+        return new Coche(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,null,"concesionario");
     }
 
 }

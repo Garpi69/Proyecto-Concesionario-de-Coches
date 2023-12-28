@@ -35,7 +35,7 @@ public class VentanaInforme extends JFrame {
     private DAO dao = new DAO();
     public VentanaInforme() {
         setTitle("Informe de Ventas");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
 

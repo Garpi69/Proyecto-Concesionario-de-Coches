@@ -24,8 +24,8 @@ public class CocheSegundaMano extends Coche implements SegundaMano {
 
 
 	public CocheSegundaMano(int idVehiculo, String combustible, String marca, String modelo, String color, String tipo,
-			int potencia, int numPlazas, int precio, int cuota, Date matriculacion, int kilometraje) {
-		super(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion);
+			int potencia, int numPlazas, int precio, int cuota, Date matriculacion,int kilometraje,String ofertas,String propietario) {
+		super(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,ofertas,propietario);
 		// TODO Auto-generated constructor stub
 		this.kilometraje=kilometraje;
 	}

@@ -44,7 +44,8 @@ public class VentanaVerClientes extends JFrame {
         agregarClienteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	VentanaAñadirCliente ventana = new VentanaAñadirCliente();
-            	Cliente cliente = ventana.VentanaAñadirCliente();
+            	String dniCliente = ventana.devolverDni();
+            	Cliente cliente = dao.obtenerClientePorDNI(dniCliente);
             	try {
 					dao.agregarCliente(cliente);
 				} catch (SQLException e1) {
@@ -139,7 +140,7 @@ public class VentanaVerClientes extends JFrame {
 			try {
 				String fechaNacimientoString = resultSet.getString("fechaNacimiento");
 				fechaNacimiento = dao.stringToDate(fechaNacimientoString,dao.format);
-			} catch (ParseException | SQLException e) {
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

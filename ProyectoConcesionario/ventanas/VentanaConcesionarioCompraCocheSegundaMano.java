@@ -119,7 +119,7 @@ public class VentanaConcesionarioCompraCocheSegundaMano extends JFrame {
         }
 
         // Crear el objeto Coche con los datos ingresados
-        CocheSegundaMano cocheSegundaMano = new CocheSegundaMano(idVehiculo,combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,kilometraje);
+        CocheSegundaMano cocheSegundaMano = new CocheSegundaMano(idVehiculo,combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,kilometraje,null,cliente.getLogin());
     	agregarButton.addActionListener(e -> {
 			try {
 				dao.conectar();

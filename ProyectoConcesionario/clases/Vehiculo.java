@@ -16,11 +16,13 @@ public class Vehiculo {
 	protected int precio;
 	protected int cuota;
 	protected Date matriculacion;
+	protected String ofertas;
+	protected String propietario;
 
 	public static SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
 
-	public Vehiculo(int idVehiculo,String combustible, String marca, String modelo, String color, String tipo, int potencia, int numPlazas, int precio, int cuota, Date matriculacion) {
+	public Vehiculo(int idVehiculo,String combustible, String marca, String modelo, String color, String tipo, int potencia, int numPlazas, int precio, int cuota, Date matriculacion,String ofertas, String propietario) {
 		super();
 		this.idVehiculo = idVehiculo;
 
@@ -34,6 +36,8 @@ public class Vehiculo {
 		this.precio = precio;
 		this.cuota = cuota;
 		this.matriculacion = matriculacion;
+		this.ofertas = ofertas;
+		this.propietario = propietario;
 	}
 
 	public Vehiculo() {
@@ -50,6 +54,8 @@ public class Vehiculo {
 		this.precio = 0;
 		this.cuota = 0;
 		this.matriculacion = null;
+		this.ofertas=null;
+		this.propietario="";
 	}
 
 	public Vehiculo(Vehiculo v) {
@@ -65,6 +71,8 @@ public class Vehiculo {
 		this.precio = v.precio;
 		this.cuota = v.cuota;
 		this.matriculacion = v.matriculacion;
+		this.ofertas = v.ofertas;
+		this.propietario = v.propietario;
 	}
 
 	public int getIdVehiculo() {
@@ -155,7 +163,23 @@ public class Vehiculo {
 		Vehiculo.df = df;
 	}
 
+	
 
+	public String getOfertas() {
+		return ofertas;
+	}
+
+	public void setOfertas(String ofertas) {
+		this.ofertas = ofertas;
+	}
+
+	public String getPropietario() {
+		return propietario;
+	}
+
+	public void setPropietario(String propietario) {
+		this.propietario = propietario;
+	}
 
 	public int getPrecio() {
 		return precio;

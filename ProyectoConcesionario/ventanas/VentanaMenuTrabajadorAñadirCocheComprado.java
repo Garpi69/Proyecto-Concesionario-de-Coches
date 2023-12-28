@@ -21,7 +21,7 @@ import clases.Cliente;
 import clases.Coche;
 import clases.CocheSegundaMano;
 
-public class VentanaMenuClienteVendeCoche extends JFrame {
+public class VentanaMenuTrabajadorAñadirCocheComprado extends JFrame {
 	private JTextField idField;
     private JTextField dniField;
     private JTextField combustibleField;
@@ -36,7 +36,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
     private JTextField matriculacionField;
     private JButton enviarButton;
     public DAO dao = new DAO();
-    public VentanaMenuClienteVendeCoche() {
+    public VentanaMenuTrabajadorAñadirCocheComprado() {
         setTitle("Datos del Coche");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 400);
@@ -87,10 +87,65 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
         enviarButton = new JButton("Enviar");
         enviarButton.addActionListener(e -> {
             try {
-            	 CocheSegundaMano cocheSegundaMano = obtenerCocheSegundaMano();
-            	 String dniCliente = dniField.getText();
-            	 Cliente cliente = dao.obtenerClientePorDNI(dniCliente);
-                 dao.agregarCocheVendidoPorCliente(cocheSegundaMano, cliente);
+            	int kilometraje = Integer.parseInt(kilometrajeField.getText());
+            		if (kilometraje==0) {
+            			int idVehiculo = Integer.parseInt(idField.getText());
+            	        String combustible = combustibleField.getText();
+            	        String marca = marcaField.getText();
+            	        String modelo = modeloField.getText();
+            	        String color = colorField.getText();
+            	        String tipo = tipoField.getText();
+            	        int potencia = Integer.parseInt(potenciaField.getText());
+            	        int numPlazas = Integer.parseInt(numPlazasField.getText());
+            	        int precio = Integer.parseInt(precioField.getText());
+            	        int cuota = precio / 60;
+            	        int kilometraje2 = Integer.parseInt(kilometrajeField.getText());
+            	        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            	        Date matriculacion = null;
+            			try {
+            				matriculacion = dateFormat.parse(matriculacionField.getText());
+            			} catch (ParseException e1) {
+            				// TODO Auto-generated catch block
+            				e1.printStackTrace();
+            			}
+            			Coche coche = new Coche(idVehiculo,combustible,marca,modelo,color,tipo,potencia,numPlazas,precio,cuota,matriculacion,null,"concesionario");
+            			dao.agregarCocheCompradoPorConcesionario(coche);
+            		}else {
+            			  int idVehiculo = Integer.parseInt(idField.getText());
+            		        String combustible = combustibleField.getText();
+            		        String marca = marcaField.getText();
+            		        String modelo = modeloField.getText();
+            		        String color = colorField.getText();
+            		        String tipo = tipoField.getText();
+            		        int potencia = Integer.parseInt(potenciaField.getText());
+            		        int numPlazas = Integer.parseInt(numPlazasField.getText());
+            		        int precio = Integer.parseInt(precioField.getText());
+            		        int cuota = precio / 60;
+            		        int kilometraje2 = Integer.parseInt(kilometrajeField.getText());
+            		        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            		        Date matriculacion = null;
+            		        String dniCliente = dniField.getText();
+            				try {
+            					matriculacion = dateFormat.parse(matriculacionField.getText());
+            				} catch (ParseException e1) {
+            					// TODO Auto-generated catch block
+            					e1.printStackTrace();
+            				}
+            				Cliente cliente = null;
+            				Cliente cliente2 = null;
+            				cliente = dao.obtenerClientePorDNI(dniCliente);
+            				if (cliente==null) {
+            					JOptionPane.showMessageDialog(null, "El cliente no está en la base de datos, introduzca los datos por favor");
+            					VentanaAñadirCliente clienteNuevoVentana = new VentanaAñadirCliente();
+            					cliente2 = dao.obtenerClientePorDNI(clienteNuevoVentana.devolverDni());
+            				}
+            				CocheSegundaMano cocheSegundaMano = new CocheSegundaMano(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,kilometraje2,null,"concesionario");
+            				dao.agregarCocheSegundaManoCompradoPorConcesionario(cocheSegundaMano, cliente2);
+            		
+            		}
+            		
+            	
+            	
                
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Error: Ingresa valores numéricos válidos");
@@ -131,7 +186,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
        
        
         JOptionPane.showMessageDialog(null, "Datos del coche recibidos correctamente");
-         CocheSegundaMano cocheSegundaMano = new CocheSegundaMano(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, kilometraje,null,dao.cliente.getLogin());
+         CocheSegundaMano cocheSegundaMano = new CocheSegundaMano(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, kilometraje,null,"concesionario");
     return cocheSegundaMano;
 
 };

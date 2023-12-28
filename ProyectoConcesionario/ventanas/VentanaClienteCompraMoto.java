@@ -198,12 +198,7 @@ public class VentanaClienteCompraMoto extends JFrame {
                 int baul=0;
                 int peso =0;
                 Date matriculacionDate = null;
-                try {
-					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 String baulString ="No";
                 baul= getIntOrNull(resultSet,"baul");
                 peso = getIntOrNull(resultSet,"peso");

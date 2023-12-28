@@ -1,4 +1,6 @@
 package ventanas;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,128 +23,146 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
     private DAO dao = new DAO();
 
     public VentanaMenuClienteVendeMoto() {
-        setTitle("Datos de la Moto");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 400);
-        setLocationRelativeTo(null);
+    	  setTitle("Datos de la Moto");
+          setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+          setSize(400, 650);
+          setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(14, 2, 10, 10));
+          JPanel panel = new JPanel();
+          panel.setLayout(new GridBagLayout());
 
-        JLabel idLabel = new JLabel("ID Vehículo:");
-        JTextField idField = new JTextField();
-        panel.add(idLabel);
-        panel.add(idField);
+          GridBagConstraints gbc = new GridBagConstraints();
+          gbc.anchor = GridBagConstraints.WEST;
+          gbc.gridx = 0;
+          gbc.gridy = 0;
+          gbc.insets.bottom = 5;
+          gbc.insets.top = 5;
+          gbc.insets.left = 10;
+          gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel combustibleLabel = new JLabel("Combustible:");
-        JTextField combustibleField = new JTextField();
-        panel.add(combustibleLabel);
-        panel.add(combustibleField);
+          panel.add(new JLabel("ID Vehículo:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Combustible:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Marca:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Modelo:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Color:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Tipo:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Potencia:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Número de Plazas:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Introduzca su DNI:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Precio:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Kilometraje:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Cuota:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Fecha de Matriculación (dd/MM/yyyy):"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("Peso:"), gbc);
+          gbc.gridy++;
+          panel.add(new JLabel("¿Tiene baúl? (true/false):"), gbc);
 
-        JLabel marcaLabel = new JLabel("Marca:");
-        JTextField marcaField = new JTextField();
-        panel.add(marcaLabel);
-        panel.add(marcaField);
+          gbc.gridx = 1;
+          gbc.gridy = 0;
+          gbc.weightx = 1.0;
+          gbc.insets.left = 0;
+          gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel modeloLabel = new JLabel("Modelo:");
-        JTextField modeloField = new JTextField();
-        panel.add(modeloLabel);
-        panel.add(modeloField);
+          JTextField idField = new JTextField();
+          panel.add(idField, gbc);
+          gbc.gridy++;
+          JTextField combustibleField = new JTextField();
+          panel.add(combustibleField, gbc);
+          gbc.gridy++;
+          JTextField marcaField = new JTextField();
+          panel.add(marcaField, gbc);
+          gbc.gridy++;
+          JTextField modeloField = new JTextField();
+          panel.add(modeloField, gbc);
+          gbc.gridy++;
+          JTextField colorField = new JTextField();
+          panel.add(colorField, gbc);
+          gbc.gridy++;
+          JTextField tipoField = new JTextField();
+          panel.add(tipoField, gbc);
+          gbc.gridy++;
+          JTextField potenciaField = new JTextField();
+          panel.add(potenciaField, gbc);
+          gbc.gridy++;
+          JTextField numPlazasField = new JTextField();
+          panel.add(numPlazasField, gbc);
+          gbc.gridy++;
+          JTextField dniField = new JTextField();
+          panel.add(dniField, gbc);
+          gbc.gridy++;
+          JTextField precioField = new JTextField();
+          panel.add(precioField, gbc);
+          gbc.gridy++;
+          JTextField kilometrajeField = new JTextField();
+          panel.add(kilometrajeField, gbc);
+          gbc.gridy++;
+          JTextField cuotaField = new JTextField();
+          panel.add(cuotaField, gbc);
+          gbc.gridy++;
+          JTextField matriculacionField = new JTextField();
+          panel.add(matriculacionField, gbc);
+          gbc.gridy++;
+          JTextField pesoField = new JTextField();
+          panel.add(pesoField, gbc);
+          gbc.gridy++;
+          JTextField baulField = new JTextField();
+          panel.add(baulField, gbc);
 
-        JLabel colorLabel = new JLabel("Color:");
-        JTextField colorField = new JTextField();
-        panel.add(colorLabel);
-        panel.add(colorField);
+          JButton enviarButton = new JButton("Enviar");
+          gbc.gridy++;
+          gbc.gridx = 0;
+          gbc.gridwidth = 2;
+          panel.add(enviarButton, gbc);
+          
+          enviarButton.addActionListener(e -> {
+              try {
+                  // Obtener los valores ingresados por el cliente
+                  int idVehiculo = Integer.parseInt(idField.getText());
+                  String combustible = combustibleField.getText();
+                  String marca = marcaField.getText();
+                  String modelo = modeloField.getText();
+                  String color = colorField.getText();
+                  String tipo = tipoField.getText();
+                  int potencia = Integer.parseInt(potenciaField.getText());
+                  int numPlazas = Integer.parseInt(numPlazasField.getText());
+                  int precio = Integer.parseInt(precioField.getText());
+                  int cuota = Integer.parseInt(cuotaField.getText());
+                  int kilometraje = Integer.parseInt(kilometrajeField.getText());
+                  SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                  Date matriculacion = dateFormat.parse(matriculacionField.getText());
 
-        JLabel tipoLabel = new JLabel("Tipo:");
-        JTextField tipoField = new JTextField();
-        panel.add(tipoLabel);
-        panel.add(tipoField);
+                  int peso = Integer.parseInt(pesoField.getText());
+                  boolean baul = Boolean.parseBoolean(baulField.getText());
+                  String dniCliente = dniField.getText();
+                  Cliente cliente = dao.obtenerClientePorDNI(dniCliente);
+                  MotoSegundaMano moto = new MotoSegundaMano(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, kilometraje, baul, peso,null,dao.cliente.getLogin());
 
-        JLabel potenciaLabel = new JLabel("Potencia:");
-        JTextField potenciaField = new JTextField();
-        panel.add(potenciaLabel);
-        panel.add(potenciaField);
+                  dao.agregarMotoVendidaPorCliente(moto, cliente);
+                  JOptionPane.showMessageDialog(null, "Datos de la moto recibidos correctamente");
 
-        JLabel numPlazasLabel = new JLabel("Número de Plazas:");
-        JTextField numPlazasField = new JTextField();
-        panel.add(numPlazasLabel);
-        panel.add(numPlazasField);
+              } catch (NumberFormatException ex) {
+                  JOptionPane.showMessageDialog(null, "Error: Ingresa valores numéricos válidos");
+              } catch (ParseException ex) {
+                  JOptionPane.showMessageDialog(null, "Error: Formato de fecha incorrecto. Utiliza dd/MM/yyyy");
+              } catch (SQLException e1) {
+                  e1.printStackTrace();
+              }
+          });
 
-        JLabel dniClienteField = new JLabel("Introduzca su DNI:");
-        JTextField dniField = new JTextField();
-        panel.add(dniClienteField);
-        panel.add(dniField);
-
-        JLabel precioLabel = new JLabel("Precio:");
-        JTextField precioField = new JTextField();
-        panel.add(precioLabel);
-        panel.add(precioField);
-
-        JLabel kilometrajeLabel = new JLabel("Kilometraje:");
-        JTextField kilometrajeField = new JTextField();
-        panel.add(kilometrajeLabel);
-        panel.add(kilometrajeField);
-
-        JLabel cuotaLabel = new JLabel("Cuota:");
-        JTextField cuotaField = new JTextField();
-        panel.add(cuotaLabel);
-        panel.add(cuotaField);
-
-        JLabel matriculacionLabel = new JLabel("Fecha de Matriculación (dd/MM/yyyy):");
-        JTextField matriculacionField = new JTextField();
-        panel.add(matriculacionLabel);
-        panel.add(matriculacionField);
-
-        JLabel pesoLabel = new JLabel("Peso:");
-        JTextField pesoField = new JTextField();
-        panel.add(pesoLabel);
-        panel.add(pesoField);
-
-        JLabel baulLabel = new JLabel("¿Tiene baúl? (true/false):");
-        JTextField baulField = new JTextField();
-        panel.add(baulLabel);
-        panel.add(baulField);
-
-        JButton enviarButton = new JButton("Enviar");
-        enviarButton.addActionListener(e -> {
-            try {
-                // Obtener los valores ingresados por el cliente
-                int idVehiculo = Integer.parseInt(idField.getText());
-                String combustible = combustibleField.getText();
-                String marca = marcaField.getText();
-                String modelo = modeloField.getText();
-                String color = colorField.getText();
-                String tipo = tipoField.getText();
-                int potencia = Integer.parseInt(potenciaField.getText());
-                int numPlazas = Integer.parseInt(numPlazasField.getText());
-                int precio = Integer.parseInt(precioField.getText());
-                int cuota = Integer.parseInt(cuotaField.getText());
-                int kilometraje = Integer.parseInt(kilometrajeField.getText());
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                Date matriculacion = dateFormat.parse(matriculacionField.getText());
-
-                int peso = Integer.parseInt(pesoField.getText());
-                boolean baul = Boolean.parseBoolean(baulField.getText());
-                String dniCliente = dniField.getText();
-                Cliente cliente = dao.obtenerClientePorDNI(dniCliente);
-                MotoSegundaMano moto = new MotoSegundaMano(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, kilometraje, baul, peso);
-
-                dao.agregarMotoVendidaPorCliente(moto, cliente);
-                JOptionPane.showMessageDialog(null, "Datos de la moto recibidos correctamente");
-
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Error: Ingresa valores numéricos válidos");
-            } catch (ParseException ex) {
-                JOptionPane.showMessageDialog(null, "Error: Formato de fecha incorrecto. Utiliza dd/MM/yyyy");
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-        });
-        panel.add(new JLabel());
-        panel.add(enviarButton);
-        
-        add(panel);
-        setVisible(true);
-    }
+          add(panel);
+          setVisible(true);
+      }
 }

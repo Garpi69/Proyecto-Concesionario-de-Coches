@@ -98,7 +98,7 @@ public class VentanaCrearObjetoCliente extends JFrame {
 		}
 
 
-        Cliente cliente = new Cliente(login, contra, email, dni, nombre, apellidos,fechaNacimiento ,numTarjeta);
+        Cliente cliente = new Cliente(login, contra, email, dni, nombre, apellidos,fechaNacimiento ,numTarjeta,"");
 		return cliente;
 
 

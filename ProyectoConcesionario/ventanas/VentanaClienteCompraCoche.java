@@ -196,12 +196,7 @@ public class VentanaClienteCompraCoche extends JFrame {
                 String matriculacion = resultSet.getString("matriculacion");
                 
                 Date matriculacionDate = null;
-                try {
-					 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 
                 
                 // Resto del código para obtener los valores del vehículo

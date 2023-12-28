@@ -33,7 +33,7 @@ public class VentanaMenuClienteVendeVehiculo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new VentanaMenuClienteVendeCoche();
-                JOptionPane.showMessageDialog(null, "Has seleccionado Vender Coche");
+                
             }
         });
         panel.add(venderCocheButton);
@@ -44,7 +44,7 @@ public class VentanaMenuClienteVendeVehiculo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new VentanaMenuClienteVendeMoto();
-                JOptionPane.showMessageDialog(null, "Has seleccionado Vender Moto");
+               
             }
         });
         panel.add(venderMotoButton);

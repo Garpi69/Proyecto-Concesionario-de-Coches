@@ -28,7 +28,7 @@ public class VentanaAñadirCliente extends JFrame {
     protected JPasswordField textoPassword, textoRepetirPassword;
     protected JButton botonSignUp, botonCancelar;
     protected JSpinner fechaNacimientoSpinner ;
-    public Cliente VentanaAñadirCliente() {
+    public  VentanaAñadirCliente() {
         setTitle("Registro");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 400);
@@ -107,7 +107,7 @@ public class VentanaAñadirCliente extends JFrame {
         this.add(panelBotones, BorderLayout.SOUTH);
 
         this.setVisible(true);
-		return cliente;
+		
 
 
     }
@@ -122,18 +122,16 @@ public class VentanaAñadirCliente extends JFrame {
          String format ="dd/mm/yyyy";
          String fechaNacimientoString = dao.dateToString((Date) fechaNacimientoSpinner.getValue(),dao.format);
          Date fechaNacimiento = null;
- 		try {
- 			fechaNacimiento = dao.stringToDate(fechaNacimientoString,dao.format);
- 		} catch (ParseException e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
- 		}
-         Cliente cliente = new Cliente(nombreUsuario, contrasena, email, dni, nombre, apellidos,fechaNacimiento, numTarjeta);
+ 		fechaNacimiento = dao.stringToDate(fechaNacimientoString,dao.format);
+         Cliente cliente = new Cliente(nombreUsuario, contrasena, email, dni, nombre, apellidos,fechaNacimiento, numTarjeta,"");
          return cliente;
     }
 
 
-
+    public String devolverDni() {
+    	String dniCliente = textoDni.getText();
+    	return dniCliente;
+    }
 
 
 }

@@ -124,13 +124,8 @@ public class VentanaRegistroCliente extends JFrame {
          String format ="dd/mm/yyyy";
          String fechaNacimientoString = dao.dateToString((Date) fechaNacimientoSpinner.getValue(),dao.format);
          Date fechaNacimiento = null;
-		try {
-			fechaNacimiento = dao.stringToDate(fechaNacimientoString,dao.format);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-         Cliente cliente = new Cliente(nombreUsuario, contrasena, email, dni, nombre, apellidos,fechaNacimiento, numTarjeta);
+		fechaNacimiento = dao.stringToDate(fechaNacimientoString,dao.format);
+         Cliente cliente = new Cliente(nombreUsuario, contrasena, email, dni, nombre, apellidos,fechaNacimiento, numTarjeta,"");
          return cliente;
     }
 
