@@ -1,9 +1,9 @@
 package ventanas;
 
 public class Principal {
-
+	private static DAO dao = new DAO();
 	public static void main(String[] args) {
-		 new VentanaElegirTipoUsuario();
+		 VentanaElegirTipoUsuario ventanaElegirTipoUsuario = new VentanaElegirTipoUsuario(dao);
 
 	}
 

@@ -48,7 +48,7 @@ public class DAO {
         }
     }
 
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
    
    
 

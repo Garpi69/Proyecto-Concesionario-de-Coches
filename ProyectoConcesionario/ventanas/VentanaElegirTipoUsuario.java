@@ -41,14 +41,14 @@ public class VentanaElegirTipoUsuario extends JFrame {
 	
 	private JTextField textoLogin;
     private JPasswordField textoPassword;
-    private JButton botonVerContraseña, botonAceptar, botonCancelar, botonTipoUsuario,botonRegistro;
-    private JLabel labelTipoUsuario;
+    private JButton botonVerContraseña, botonAceptar, botonCancelar, botonRegistro;
+ 
   
     private Image imagenFondo;
     private JPanel panelGeneral;
-    private DAO dao = new DAO();
+  
 
-    public VentanaElegirTipoUsuario() {
+    public VentanaElegirTipoUsuario(DAO dao2) {
         setTitle("Login");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
@@ -144,7 +144,7 @@ public class VentanaElegirTipoUsuario extends JFrame {
         botonAceptar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                autenticacion();
+                autenticacion(dao2);
             }
         });
 
@@ -184,13 +184,14 @@ public class VentanaElegirTipoUsuario extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-        private void autenticacion() {
+        private void autenticacion(DAO dao2) {
             String usuarioIngresado = textoLogin.getText();
             String contrasenaIngresada = new String(textoPassword.getPassword());
             boolean login = false;
                 try {
-					if (dao.comprobarCredencialesTrabajador(usuarioIngresado, contrasenaIngresada)) {
-						 new VentanaMenuTrabajador();
+					if (dao2.comprobarCredencialesTrabajador(usuarioIngresado, contrasenaIngresada)) {
+						VentanaMenuTrabajador ventanaMenuTrabajador = new VentanaMenuTrabajador(dao2);
+						 dispose();
 						 login = true;
 					}
 				} catch (SQLException e) {
@@ -200,8 +201,9 @@ public class VentanaElegirTipoUsuario extends JFrame {
                
            
             	try {
-					if (dao.comprobarCredencialesCliente(usuarioIngresado, contrasenaIngresada)) {
-						new VentanaMenuCliente();
+					if (dao2.comprobarCredencialesCliente(usuarioIngresado, contrasenaIngresada)) {
+						VentanaMenuCliente ventanaMenuCliente = new VentanaMenuCliente(dao2);
+						dispose();
 						login=true;
 					}else {
 						if(!login) {

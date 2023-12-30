@@ -22,7 +22,7 @@ public class VentanaMenuTrabajador extends JFrame{
 	protected JButton botonClientes ;
 	protected JButton botonOfertas;
 
-	public VentanaMenuTrabajador(){
+	public VentanaMenuTrabajador(DAO dao){
 		 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		 JPanel contentPanel = new JPanel();
