@@ -6,9 +6,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,6 +21,7 @@ import javax.swing.JButton;
 
 public class VentanaMenuClienteVerOfertas extends JFrame {
 	private DAO dao = new DAO();
+
 	public VentanaMenuClienteVerOfertas() {
 		
 		setTitle("Ofertas");
@@ -35,6 +38,7 @@ public class VentanaMenuClienteVerOfertas extends JFrame {
         
         recibidasButton.addActionListener( e->{
         	try {
+        		
         		dao.cargarOfertasRecibidas("coche",tableModel,dao.cliente.getLogin());
         		dao.cargarOfertasRecibidas("cocheSegundaMano",tableModel,dao.cliente.getLogin());
         		dao.cargarOfertasRecibidas("moto",tableModel,dao.cliente.getLogin());
@@ -45,6 +49,7 @@ public class VentanaMenuClienteVerOfertas extends JFrame {
         	
         });
         enviadasButton.addActionListener(e->{
+        
         	dao.cargarOfertasEnviadas("coche",tableModel,dao.cliente.getLogin());
         	dao.cargarOfertasEnviadas("cocheSegundaMano", tableModel,dao.cliente.getLogin());
         	dao.cargarOfertasEnviadas("moto", tableModel,dao.cliente.getLogin());
@@ -63,7 +68,52 @@ public class VentanaMenuClienteVerOfertas extends JFrame {
         buttonPanel.add(recibidasButton, gbc2);
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(buttonPanel, BorderLayout.NORTH );
-        
+        JButton aceptarButton = new JButton("Aceptar");
+        aceptarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obtener la fila seleccionada en la tabla
+                int selectedRow = ofertasTable.getSelectedRow();
+                if (selectedRow != -1) {
+                	Object cocheAceptado = ofertasTable.getValueAt(selectedRow,0);
+                	Object precioAceptado = ofertasTable.getValueAt(selectedRow, 1);
+                	String precioAceptadoString = precioAceptado.toString()
+;                	int precioAceptadoInt = Integer.parseInt(precioAceptadoString);
+                	Object usuarioAceptado = ofertasTable.getValueAt(selectedRow, 2);
+                	String cocheAceptadoString = cocheAceptado.toString();
+                	String usuarioAceptadoString = usuarioAceptado.toString();
+                	System.out.print(cocheAceptadoString);
+                	dao.eliminarCoche(cocheAceptadoString);
+                	JOptionPane.showMessageDialog(null, "Felicidades, "+ofertasTable.getValueAt(selectedRow, 1)+"€ serán ingresados en su cuenta");
+                	dao.eliminarOferta(cocheAceptadoString,usuarioAceptadoString,precioAceptadoInt);
+                    // Aquí puedes implementar la lógica para aceptar la oferta seleccionada
+                    // Usando dao.cliente.getLogin() para obtener el usuario actual
+                    //dao.aceptarOferta(ofertasTable.getValueAt(selectedRow, 0), dao.cliente.getLogin());
+                }
+            }
+        });
+
+        JButton rechazarButton = new JButton("Rechazar");
+        rechazarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obtener la fila seleccionada en la tabla
+                int selectedRow = ofertasTable.getSelectedRow();
+                if (selectedRow != -1) {
+                    // Aquí puedes implementar la lógica para rechazar la oferta seleccionada
+                    // Usando dao.cliente.getLogin() para obtener el usuario actual
+                    //dao.rechazarOferta(ofertasTable.getValueAt(selectedRow, 0), dao.cliente.getLogin());
+                }
+            }
+        });
+
+        gbc2.insets = new Insets(5, 5, 5, 5);
+
+        gbc2.gridx = 9;
+        buttonPanel.add(aceptarButton, gbc2);
+
+        gbc2.gridx = 10;
+        buttonPanel.add(rechazarButton, gbc2);
        
         getContentPane().add(scrollPane, BorderLayout.CENTER);
         setVisible(true);

@@ -3,9 +3,12 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,11 +24,21 @@ public class VentanaMenuTrabajador extends JFrame{
 	protected JButton botonVenderVehiculo ;
 	protected JButton botonClientes ;
 	protected JButton botonOfertas;
+	protected JPanel contentPanel;
 
 	public VentanaMenuTrabajador(DAO dao){
 		 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
-		 JPanel contentPanel = new JPanel();
+		Image imagenFondo = new ImageIcon("/Users/jonmendizabal/Downloads/seguro-taller-por-514-euros.jpg").getImage();
+		contentPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        
+		 
 	        contentPanel.setLayout(new BorderLayout());
 
 
@@ -35,14 +48,14 @@ public class VentanaMenuTrabajador extends JFrame{
 
 	        JLabel TituloLabel = new JLabel("Concesionario");
 	        TituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
-	        titlePanel.add(TituloLabel);
+	        contentPanel.add(TituloLabel);
 
 
 	        contentPanel.add(titlePanel, BorderLayout.NORTH);
 
 
 	        JPanel buttonPanel = new JPanel();
-	        buttonPanel.setLayout(new FlowLayout());
+	        contentPanel.setLayout(new FlowLayout());
 
 		botonInventario = new JButton("Inventario");
 		botonInforme = new JButton("Informe");
@@ -52,16 +65,17 @@ public class VentanaMenuTrabajador extends JFrame{
 		botonVenderVehiculo = new JButton("Agregar Vehiculo Vendido");
 		botonClientes = new JButton("Clientes");
 		
-		buttonPanel.add(botonOfertas);
-		buttonPanel.add(botonInventario);
-		buttonPanel.add(botonInforme);
-		buttonPanel.add(botonCalendario);
-		buttonPanel.add(botonComprarVehiculo);
-		buttonPanel.add(botonVenderVehiculo);
-		buttonPanel.add(botonClientes);
+		contentPanel.add(botonOfertas);
+		contentPanel.add(botonInventario);
+		contentPanel.add(botonInforme);
+		contentPanel.add(botonCalendario);
+		contentPanel.add(botonComprarVehiculo);
+		contentPanel.add(botonVenderVehiculo);
+		contentPanel.add(botonClientes);
 
 		contentPanel.add(buttonPanel,BorderLayout.CENTER);
 		add(contentPanel);
+		setContentPane(contentPanel);
 		botonInventario.addActionListener(new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {

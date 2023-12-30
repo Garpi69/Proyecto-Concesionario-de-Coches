@@ -36,7 +36,8 @@ public class VentanaMenuCliente extends JFrame {
 	        comprarButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                new VentanaMenuClienteCompraVehiculo();
+	            	VentanaMenuClienteCompraVehiculo ventanaMenuClienteCompraVehiculo = new VentanaMenuClienteCompraVehiculo();
+	            	ventanaMenuClienteCompraVehiculo.setVisible(true);
 	            }
 	        });
 	        panel.add(comprarButton);

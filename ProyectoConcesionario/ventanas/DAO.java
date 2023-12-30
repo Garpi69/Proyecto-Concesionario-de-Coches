@@ -695,7 +695,103 @@ public class DAO {
 		
 	return format2.format(date);
 	}
-	
+	public void eliminarCoche(String nombreCoche) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            // Establecer la conexión con la base de datos (reemplaza con tus propios datos de conexión)
+            connection = DriverManager.getConnection(url);
+
+            // Sentencia SQL para eliminar un coche por nombre
+            String sql = "DELETE FROM coche WHERE marca = ? AND modelo = ? and propietario = ?";
+            String[] nombreCocheDividido = nombreCoche.split(" ");
+            System.out.print(nombreCocheDividido);
+            String marcaCoche = nombreCocheDividido[0];
+            String modeloCoche = nombreCocheDividido[1];
+            // Preparar la sentencia
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, marcaCoche);
+            statement.setString(2, modeloCoche);
+            statement.setString(3, cliente.getLogin());
+            // Establecer el nombre del coche a eliminar
+
+            // Ejecutar la sentencia de eliminación
+            int filasEliminadas = statement.executeUpdate();
+
+            if (filasEliminadas > 0) {
+                System.out.println("El coche ha sido eliminado correctamente.");
+            } else {
+                System.out.println("No se encontró el coche para eliminar.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones (registra, notifica, etc.)
+        } finally {
+            // Cerrar statement y conexión
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+	 public void eliminarOferta(String cocheAceptado, String usuarioAceptado, int precioAceptado) {
+	        // Conexión a la base de datos (asegúrate de tener los datos correctos)
+	       	String[] cocheDatos = cocheAceptado.split(" ");
+	       	String marca = cocheDatos[0];
+	       	String modelo = cocheDatos[1];
+	       	String ofertaNueva = "";
+	        try (Connection connection = DriverManager.getConnection(url)) {
+	            String[] tablas = { "coche", "cocheSegundaMano", "moto", "motoSegundaMano" };
+
+	            for (String tabla : tablas) {
+	                String sql = "SELECT ofertas FROM " + tabla + " WHERE propietario = ? AND marca = ? AND modelo = ?";
+	                PreparedStatement statement = connection.prepareStatement(sql);
+	                statement.setString(1, cliente.getLogin());
+	                statement.setString(2, marca);
+	                statement.setString(3, modelo);
+
+	                ResultSet resultSet = statement.executeQuery();
+	                String ofertaABorrar = usuarioAceptado+": "+precioAceptado;
+	                if (resultSet.next()) {
+	                	String oferta = resultSet.getString("ofertas");
+	                	String[] ofertas = oferta.split(",");
+	                	for(String ofertaString: ofertas) {
+	                		if (ofertaString ==ofertaABorrar) {
+	                			ofertaString="";
+	                			
+	                		}else {
+	                			ofertaNueva= ofertaNueva+", "+ofertaString;
+	                		}
+	                	}
+	                    // Modificar el valor de la oferta (restar, sumar, etc.)
+	                   
+
+	                    // Actualizar el valor de la oferta en la tabla
+	                    sql = "UPDATE " + tabla + " SET ofertas = ? WHERE propietario = ? AND marca = ? AND modelo = ?";
+	                    statement = connection.prepareStatement(sql);
+	                    statement.setString(1, ofertaNueva);
+	                    statement.setString(2, usuarioAceptado);
+	                    statement.setString(3, marca);
+	                    statement.setString(4, modelo);
+	                    statement.executeUpdate();
+
+	                    // Eliminar la oferta si es necesario
+	                 
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            System.out.println("Error al eliminar la oferta: " + e.getMessage());
+	        }
+	    }
 	}
 	
 

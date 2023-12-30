@@ -50,10 +50,16 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         JButton filtrarButton = new JButton("Filtrar");
         filtrarButton.addActionListener(e -> {
         tableModel.setRowCount(0);
-        filtrarCoche(marcaField.getText(), modeloField.getText(), colorField.getText());
-        filtrarCocheSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText());
-        filtrarMoto(marcaField.getText(), modeloField.getText(), colorField.getText());
-        filtrarMotoSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText());
+        try {
+			filtrarCoche(marcaField.getText(), modeloField.getText(), colorField.getText());
+			filtrarCocheSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText());
+		    filtrarMoto(marcaField.getText(), modeloField.getText(), colorField.getText());
+		    filtrarMotoSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText());
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+       
         });
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -206,9 +212,13 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
             int precio = resultSet.getInt("precio");
             int cuota = resultSet.getInt("cuota");
             Date matriculacion=null;
+            String matriculacionString= resultSet.getString("matriculacion");
             String propietario = resultSet.getString("propietario");
 			try {
-				matriculacion = dao.stringToDate(resultSet.getString("matriculacion"),dao.format);
+				if (matriculacionString!=null) {
+					matriculacion = dao.stringToDate(resultSet.getString("matriculacion"),dao.format);
+				}
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -230,17 +240,19 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
                  
             }catch (SQLException e) {
             }
-            boolean baulBoolean =false;
+           String baulString= "";
             if (baul==1) {
-            	baulBoolean=true;
+            	baulString="Si";
+            }else {
+            	baulString = "No";
             }
            
-			
+        	
            
-            Object[] fila = {id,combustible, marca, modelo,color, tipo,potencia,numPlazas, precio,cuota,matriculacion,peso,baulBoolean,kilometraje,propietario};
+            Object[] fila = {id,combustible, marca, modelo,color, tipo,potencia,numPlazas, precio,cuota,matriculacion,peso,baulString,kilometraje,propietario};
             tableModel.addRow(fila);
         }
-        
+       
         resultSet.close();
         statement.close();
     }
@@ -277,7 +289,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
             JOptionPane.showMessageDialog(null, "Selecciona un coche para comprar.");
         }
     }
-    private void filtrarCoche(String marca, String modelo, String color) {
+    private void filtrarCoche(String marca, String modelo, String color) throws ParseException {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
            
@@ -304,10 +316,16 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
                 int numPlazas = resultSet.getInt("numPlazas");
                 int precio = resultSet.getInt("precio");
                 int cuota = resultSet.getInt("cuota");
-                String matriculacion = resultSet.getString("matriculacion");
+            
                 String propietario = resultSet.getString("propietario");
                 Date matriculacionDate = null;
-                matriculacionDate = dao.stringToDate(matriculacion, dao.format);
+                try {
+                	 matriculacionDate = dao.stringToDate( resultSet.getString("matriculacion"), dao.format);
+                }catch (SQLException e){
+                	
+                }
+               
+               
                 
                 
                 // Resto del código para obtener los valores del vehículo
