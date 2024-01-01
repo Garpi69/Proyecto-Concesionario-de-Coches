@@ -687,15 +687,15 @@ public class DAO {
 	            return format2.parse(fechaNacimientoString);
 	        } catch (ParseException e) {
 	            // Manejar cualquier error de análisis de fecha aquí
-	            e.printStackTrace();
-	            return null; // O podrías lanzar una excepción, dependiendo del caso
+	        	java.util.Date fechaNacimiento = new java.util.Date();
+	            return fechaNacimiento; // O podrías lanzar una excepción, dependiendo del caso
 	        }
 	}
-	public String dateToString(java.util.Date date, SimpleDateFormat format2) {
+	public String dateToString (java.util.Date date, SimpleDateFormat format2) {
 		
 	return format2.format(date);
 	}
-	public void eliminarCoche(String nombreCoche) {
+	public void eliminarVehiculo(String nombreCoche, String tabla) {
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -704,7 +704,7 @@ public class DAO {
             connection = DriverManager.getConnection(url);
 
             // Sentencia SQL para eliminar un coche por nombre
-            String sql = "DELETE FROM coche WHERE marca = ? AND modelo = ? and propietario = ?";
+            String sql = "DELETE FROM "+tabla+" WHERE marca = ? AND modelo = ? and propietario = ?";
             String[] nombreCocheDividido = nombreCoche.split(" ");
             System.out.print(nombreCocheDividido);
             String marcaCoche = nombreCocheDividido[0];

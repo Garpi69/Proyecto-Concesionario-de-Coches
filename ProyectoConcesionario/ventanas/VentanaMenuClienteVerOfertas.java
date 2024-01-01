@@ -83,7 +83,7 @@ public class VentanaMenuClienteVerOfertas extends JFrame {
                 	String cocheAceptadoString = cocheAceptado.toString();
                 	String usuarioAceptadoString = usuarioAceptado.toString();
                 	System.out.print(cocheAceptadoString);
-                	dao.eliminarCoche(cocheAceptadoString);
+                	dao.eliminarVehiculo(cocheAceptadoString,"coche");
                 	JOptionPane.showMessageDialog(null, "Felicidades, "+ofertasTable.getValueAt(selectedRow, 1)+"€ serán ingresados en su cuenta");
                 	dao.eliminarOferta(cocheAceptadoString,usuarioAceptadoString,precioAceptadoInt);
                     // Aquí puedes implementar la lógica para aceptar la oferta seleccionada

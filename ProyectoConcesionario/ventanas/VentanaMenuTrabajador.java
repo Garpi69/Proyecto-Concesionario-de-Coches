@@ -1,158 +1,149 @@
 package ventanas;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
-public class VentanaMenuTrabajador extends JFrame{
+public class VentanaMenuTrabajador extends JFrame {
+	 public VentanaMenuTrabajador(DAO dao) {
+	        setTitle("Trabajador: "+dao.trabajador.getLogin());
+	        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        setSize(980, 700);
+	        setLocationRelativeTo(null);
 
-	protected JButton botonInventario ;
-	protected JButton botonInforme ;
-	protected JButton botonCalendario ;
-	protected JButton botonComprarVehiculo ;
-	protected JButton botonVenderVehiculo ;
-	protected JButton botonClientes ;
-	protected JButton botonOfertas;
-	protected JPanel contentPanel;
+	        JPanel panel = new JPanel();
+	        panel.setLayout(new GridLayout(2, 1, 10, 10)); // Espaciado entre componentes
 
-	public VentanaMenuTrabajador(DAO dao){
-		 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setVisible(true);
-		Image imagenFondo = new ImageIcon("/Users/jonmendizabal/Downloads/seguro-taller-por-514-euros.jpg").getImage();
-		contentPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-        
-		 
-	        contentPanel.setLayout(new BorderLayout());
+	        JButton inventarioButton = new JButton("Inventario");
+	        estilizarBoton( inventarioButton,"/Users/jonmendizabal/Downloads/warehouse_AdobeStock_294439367.jpeg", "Inventario");
+	        inventarioButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	new VentanaInventario(dao);
+	            }
+	        });
+	        panel.add( inventarioButton);
 
+	        JButton clientesButton = new JButton("Clientes");
+	        estilizarBoton(clientesButton,"/Users/jonmendizabal/Downloads/cliente-e1551799486636.jpg","Clientes") ;
+	        clientesButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                new VentanaVerClientes();
+	            }
+	        });
+	        panel.add(clientesButton);
 
-	        JPanel titlePanel = new JPanel();
-	        titlePanel.setLayout(new FlowLayout());
+	        JButton informeButton = new JButton("Informe");
+	        estilizarBoton(informeButton,"/Users/jonmendizabal/Downloads/informe.jpg", "Informe");
+	       informeButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                new VentanaInforme();
+	            }
+	        });
+	        panel.add(informeButton);
+	        
+	        JButton miPerfil = new JButton("Añadir venta");
+	        estilizarBoton(miPerfil,"/Users/jonmendizabal/Downloads/cash-Ennio-Leanza.jpg" ,"Añadir Venta");
+	        miPerfil.addActionListener(new ActionListener() {
 
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					new VentanaAñadirVenta(dao);
+					
+				}
+	        	
+	        });
+	        panel.add(miPerfil);
+	       
 
-	        JLabel TituloLabel = new JLabel("Concesionario");
-	        TituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
-	        contentPanel.add(TituloLabel);
+	        // Espaciado entre panel y ventana
+	        JPanel wrapperPanel = new JPanel(new BorderLayout());
+	        wrapperPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Borde
 
+	        wrapperPanel.add(panel, BorderLayout.CENTER);
+	        add(wrapperPanel);
+	        setVisible(true);
+	    }
 
-	        contentPanel.add(titlePanel, BorderLayout.NORTH);
+	 private void estilizarBoton(JButton button, String imagePath,String buttonName) {
+		 button.setPreferredSize(new Dimension(250, 80));
+		    button.setBackground(Color.decode("#3F51B5"));
+		    button.setForeground(Color.WHITE);
+		    button.setFont(new Font("Arial", Font.BOLD, 16));
+		    button.setFocusPainted(false);
+		    button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		    button.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		    button.setOpaque(true);
 
+		    ImageIcon originalIcon = new ImageIcon(imagePath);
+		    Image originalImage = originalIcon.getImage();
+		    Image blackLayer = createBlackLayer(originalImage);
+		    ImageIcon newIcon = new ImageIcon(blackLayer);
 
-	        JPanel buttonPanel = new JPanel();
-	        contentPanel.setLayout(new FlowLayout());
+		    JLabel imageLabel = new JLabel(newIcon);
+		    imageLabel.setLayout(new BorderLayout());
+		    imageLabel.setPreferredSize(new Dimension(originalIcon.getIconWidth(), originalIcon.getIconHeight()));
 
-		botonInventario = new JButton("Inventario");
-		botonInforme = new JButton("Informe");
-		botonOfertas = new JButton("Ofertas");
-		botonCalendario = new JButton("Calendario");
-		botonComprarVehiculo = new JButton("Agregar Vehiculo a la venta");
-		botonVenderVehiculo = new JButton("Agregar Vehiculo Vendido");
-		botonClientes = new JButton("Clientes");
-		
-		contentPanel.add(botonOfertas);
-		contentPanel.add(botonInventario);
-		contentPanel.add(botonInforme);
-		contentPanel.add(botonCalendario);
-		contentPanel.add(botonComprarVehiculo);
-		contentPanel.add(botonVenderVehiculo);
-		contentPanel.add(botonClientes);
+		    JLabel textLabel = new JLabel(buttonName, SwingConstants.CENTER);
+		    textLabel.setForeground(Color.WHITE);
+		    textLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-		contentPanel.add(buttonPanel,BorderLayout.CENTER);
-		add(contentPanel);
-		setContentPane(contentPanel);
-		botonInventario.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			VentanaInventario ventana = new VentanaInventario();
-			ventana.cargarInventario();
+		    imageLabel.add(textLabel, BorderLayout.CENTER);
+		    button.add(imageLabel);
 
+		    button.addMouseListener(new java.awt.event.MouseAdapter() {
+		        @Override
+		        public void mouseEntered(java.awt.event.MouseEvent evt) {
+		            button.setBackground(Color.decode("#6573C3"));
+		        }
 
+		        @Override
+		        public void mouseExited(java.awt.event.MouseEvent evt) {
+		            button.setBackground(Color.decode("#3F51B5"));
+		        }
+		    });
+	        
+	 }
+	 private Image createBlackLayer(Image originalImage) {
+	        // Crear una BufferedImage para la imagen original
+		  BufferedImage bufferedImage = new BufferedImage(
+		            originalImage.getWidth(null),
+		            originalImage.getHeight(null),
+		            BufferedImage.TYPE_INT_ARGB
+		    );
 
-		}
-	});
-		botonOfertas.addActionListener(new ActionListener() {
+		    Graphics2D g = bufferedImage.createGraphics();
+		    g.drawImage(originalImage, 0, 0, null);
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new VentanaTrabajadorVerOfertas();
-				
-			}
-			
-			
-		});
-		
-		
-		botonInforme.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new VentanaInforme();
+		    Color transparentBlack = new Color(0, 0, 0, 128); // 128 para una opacidad del 50%
+		    g.setColor(transparentBlack);
+		    g.fillRect(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
 
-			}
-		});
-		botonCalendario.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		    g.dispose();
 
-
-
-			}
-		});botonComprarVehiculo.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				SwingUtilities.invokeLater(() -> {
-		            new VentanaMenuTrabajadorAñadirCocheComprado();
-		        });
-
-
-
-			}
-		});
-		botonVenderVehiculo.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//ABRIR VENTANA PARA ELEGIR QUE VEHICULO SE HA VENDIDO (COCHE, MOTO, COCHE2MANO,MOTO2MANO)
-				VentanaConcesionarioVendeVehiculo ventana = new VentanaConcesionarioVendeVehiculo();
-				ventana.abrirVentanaAgregarVehiculo();
-				//PEDIR ID VEHICULO VENDIDO Y DATOS CLIENTE (SUPONIENDO QUE NO TIENE CUENTA) USAR OBTENERCLIENTE
-				//ELIMINAR DE LA TABLA COCHE/MOTO/COCHESEGUNDAMANO/MOTOSEGUNDAMANO Y AÑADIR A VENTAS
-
-			}
-		});
-		botonClientes.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//MOSTRAR CLIENTES
-				new VentanaVerClientes();
-
-			}
-		});
-
-
-        this.setVisible(true);
-
-		this.setTitle("Menu");
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.setSize(800, 600);
-		setVisible(true);
-		this.setLocationRelativeTo(null);
-
-
-	}
-
+		    return bufferedImage;
+	    }
+	 
 }
+
+
+

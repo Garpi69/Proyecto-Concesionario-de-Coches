@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -31,13 +33,16 @@ public class VentanaInventario extends JFrame {
 
 	private JTable inventarioTable;
     private DefaultTableModel tableModel;
-    private DAO dao = new DAO();
-    public VentanaInventario() {
+    private boolean esTrabajador = false;
+    public VentanaInventario(DAO dao) {
+    	if (dao.cliente.getLogin()!=null) {
+    		esTrabajador = true;
+    	}
         setTitle("Inventario de Vehículos");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1000, 800);
         setLocationRelativeTo(null);
-        
+        setVisible(true);
         JPanel filterPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5); // Espacios entre componentes
@@ -52,10 +57,10 @@ public class VentanaInventario extends JFrame {
         JButton filtrarButton = new JButton("Filtrar");
         filtrarButton.addActionListener(e -> {
         tableModel.setRowCount(0);
-        filtrarCoche(marcaField.getText(), modeloField.getText(), colorField.getText());
-        filtrarCocheSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText());
-        filtrarMoto(marcaField.getText(), modeloField.getText(), colorField.getText());
-        filtrarMotoSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText());
+        filtrarCoche(marcaField.getText(), modeloField.getText(), colorField.getText(),dao);
+        filtrarCocheSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText(),dao);
+        filtrarMoto(marcaField.getText(), modeloField.getText(), colorField.getText(),dao);
+        filtrarMotoSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText(),dao);
         });
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -65,7 +70,7 @@ public class VentanaInventario extends JFrame {
         	try {	
             	Connection connection = DriverManager.getConnection(dao.url);
             	tableModel.setRowCount(0);
-                cargarDatosVehiculos(connection,"coche");
+                cargarDatosVehiculos(connection,"coche",dao);
             }catch (SQLException e1) {
             	
             }
@@ -76,7 +81,7 @@ public class VentanaInventario extends JFrame {
         	try {	
             	Connection connection = DriverManager.getConnection(dao.url);
             	tableModel.setRowCount(0);
-                cargarDatosVehiculos(connection,"cocheSegundaMano");
+                cargarDatosVehiculos(connection,"cocheSegundaMano",dao);
             }catch (SQLException e1) {
             	
             }
@@ -87,7 +92,7 @@ public class VentanaInventario extends JFrame {
         	try {	
             	Connection connection = DriverManager.getConnection(dao.url);
             	tableModel.setRowCount(0);
-                cargarDatosVehiculos(connection,"moto");
+                cargarDatosVehiculos(connection,"moto",dao);
             }catch (SQLException e1) {
             	
             }
@@ -98,7 +103,7 @@ public class VentanaInventario extends JFrame {
         try {	
         	Connection connection = DriverManager.getConnection(dao.url);
         	tableModel.setRowCount(0);
-            cargarDatosVehiculos(connection,"motoSegundaMano");
+            cargarDatosVehiculos(connection,"motoSegundaMano",dao);
         }catch (SQLException e1) {
         	
         }
@@ -143,7 +148,7 @@ public class VentanaInventario extends JFrame {
         
         comprarButton.addActionListener(e ->{
        	 if (inventarioTable.getSelectedRow()==0) {
-            	confirmarCompra();
+            	confirmarCompra(dao);
             }else {
            	 JOptionPane.showMessageDialog(null, "Seleccione un vehiculo");
             }
@@ -157,15 +162,18 @@ public class VentanaInventario extends JFrame {
         tableModel = new DefaultTableModel();
         inventarioTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(inventarioTable);
-
+        if (esTrabajador) {
+        	mostrarTrabajador(buttonPanel,dao);
+        }
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(filterPanel, BorderLayout.NORTH);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH );
-        cargarInventario();
+        
+        cargarInventario(dao);
         setVisible(true);
     }
-   public void cargarInventario() {
+   public void cargarInventario(DAO dao) {
         // Asegúrate de tener la conexión con tu base de datos
         try {
             Connection connection = DriverManager.getConnection(dao.url);
@@ -173,16 +181,16 @@ public class VentanaInventario extends JFrame {
             tableModel.setColumnIdentifiers(columnas);
          
             // Obtener datos de coches
-            cargarDatosVehiculos(connection, "coche");
+            cargarDatosVehiculos(connection, "coche",dao);
 
             // Obtener datos de coches de segunda mano
-            cargarDatosVehiculos(connection, "cocheSegundaMano");
+            cargarDatosVehiculos(connection, "cocheSegundaMano",dao);
 
             // Obtener datos de motos
-            cargarDatosVehiculos(connection, "moto");
+            cargarDatosVehiculos(connection, "moto",dao);
 
             // Obtener datos de motos de segunda mano
-            cargarDatosVehiculos(connection, "motoSegundaMano");
+            cargarDatosVehiculos(connection, "motoSegundaMano",dao);
 
             connection.close();
         } catch (SQLException ex) {
@@ -191,7 +199,7 @@ public class VentanaInventario extends JFrame {
         }
     }
 
-    private void cargarDatosVehiculos(Connection connection, String tabla) throws SQLException {
+    private void cargarDatosVehiculos(Connection connection, String tabla, DAO dao) throws SQLException {
         String sql = "SELECT * FROM " + tabla;
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
@@ -209,10 +217,10 @@ public class VentanaInventario extends JFrame {
             int cuota = resultSet.getInt("cuota");
             String propietario = resultSet.getString("propietario");
             String ofertas = resultSet.getString("ofertas");
-            Date matriculacion=null;
+            String matriculacion=null;
 			try {
-				matriculacion = dao.stringToDate(resultSet.getString("matriculacion"),dao.format);
-			} catch (SQLException e) {
+				matriculacion = resultSet.getString("matriculacion");
+			} catch (SQLException  e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -233,14 +241,15 @@ public class VentanaInventario extends JFrame {
                  
             }catch (SQLException e) {
             }
-            boolean baulBoolean =false;
+            String baulString ="No";
             if (baul==1) {
-            	baulBoolean=true;
+            	baulString="Si";
+            	
             }
            
 			
            
-            Object[] fila = {id,combustible, marca, modelo,color, tipo,potencia,numPlazas, precio,cuota,matriculacion,peso,baulBoolean,kilometraje,ofertas,propietario};
+            Object[] fila = {id,combustible, marca, modelo,color, tipo,potencia,numPlazas, precio,cuota,matriculacion,peso,baulString,kilometraje,ofertas,propietario};
             tableModel.addRow(fila);
         }
         
@@ -248,7 +257,7 @@ public class VentanaInventario extends JFrame {
         statement.close();
     }
 
-    private void filtrarCoche(String marca, String modelo, String color) {
+    private void filtrarCoche(String marca, String modelo, String color,DAO dao) {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
            
@@ -299,7 +308,7 @@ public class VentanaInventario extends JFrame {
         }
         inventarioTable.repaint();
     }
-    private void filtrarCocheSegundaMano(String marca, String modelo, String color) {
+    private void filtrarCocheSegundaMano(String marca, String modelo, String color, DAO dao) {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
            
@@ -352,7 +361,7 @@ public class VentanaInventario extends JFrame {
         inventarioTable.repaint();
        
     }
-    private void filtrarMoto(String marca, String modelo, String color) {
+    private void filtrarMoto(String marca, String modelo, String color, DAO dao) {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
            
@@ -409,7 +418,7 @@ public class VentanaInventario extends JFrame {
         inventarioTable.repaint();
        
         }
-    private void filtrarMotoSegundaMano(String marca, String modelo, String color) {
+    private void filtrarMotoSegundaMano(String marca, String modelo, String color, DAO dao) {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
            
@@ -468,7 +477,7 @@ public class VentanaInventario extends JFrame {
         inventarioTable.repaint();
        
     }
-    private void confirmarCompra() {
+    private void confirmarCompra(DAO dao) {
         int selectedRow = inventarioTable.getSelectedRow();
         if (selectedRow != -1) {
             int idVehiculo = (int) inventarioTable.getValueAt(selectedRow, 0);
@@ -511,6 +520,35 @@ public class VentanaInventario extends JFrame {
         }
         return valor;
     }
-    
+    private void mostrarTrabajador ( JPanel buttonPanel, DAO dao) {
+    	JButton buttonAñadir = new JButton("Añadir");
+    	JButton buttonEliminar = new JButton("Eliminar");
+    	buttonPanel.add(buttonAñadir);
+    	buttonPanel.add(buttonEliminar);
+    	buttonAñadir.addActionListener(new ActionListener() {
+    		@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+    			new VentanaAñadirCoche(dao);
+				
+			}
+    	});
+    	buttonEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int selectedRow = inventarioTable.getSelectedRow();
+				String marca = inventarioTable.getValueAt(selectedRow, 2).toString();
+				String modelo = inventarioTable.getValueAt(selectedRow, 3).toString();
+				dao.eliminarVehiculo(marca+" "+modelo,"coche");
+				dao.eliminarVehiculo(marca+" "+modelo,"cocheSegundaMano");
+				dao.eliminarVehiculo(marca+" "+modelo,"moto");
+				dao.eliminarVehiculo(marca+" "+modelo,"motoSegundaMano");
+				JOptionPane.showMessageDialog(null, "Coche eliminado correctamente");
+				
+			}
+    		
+    	});
+    }
+    	
 }
 
