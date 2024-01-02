@@ -1,5 +1,6 @@
 package ventanas;
 import java.sql.Connection;
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -79,6 +80,7 @@ public class VentanaVerClientes extends JFrame {
         });
         
 
+        JLabel labelComboBox = new JLabel("Login: ");
         
         
         tableModel = new DefaultTableModel();
@@ -88,7 +90,49 @@ public class VentanaVerClientes extends JFrame {
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
         buttonPanel.add(agregarClienteButton);
         buttonPanel.add(eliminarClienteButton);
+        
+        String[] opciones = {"login", "email", "dni", "apellidos"};
+        JComboBox<String> buscarPorComboBox = new JComboBox<>(opciones);
 
+        // Agregar un ActionListener al JComboBox para manejar la búsqueda
+       
+            
+        JTextField valorBusquedaField = new JTextField(20); // Campo para ingresar el valor de búsqueda
+
+        JButton buscarButton = new JButton("Buscar");
+        buscarButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String opcionSeleccionada = (String) buscarPorComboBox.getSelectedItem();
+                String valorBusqueda = valorBusquedaField.getText();
+                if (opcionSeleccionada != null && valorBusqueda != null && !valorBusqueda.isEmpty()) {
+                    buscarClientePor(opcionSeleccionada, valorBusqueda,dao);
+                } else {
+                    JOptionPane.showMessageDialog(VentanaVerClientes.this, "Por favor, seleccione una opción y ingrese un valor para buscar.");
+                }
+            }
+        });
+        buscarPorComboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			
+				labelComboBox.setText(""+buscarPorComboBox.getSelectedItem()+": ");
+				repaint();
+				
+			}
+        	
+        });
+        
+        filterPanel.add(buscarPorComboBox);
+       
+       
+        filterPanel.add(new JLabel("Buscar por:"));
+        filterPanel.add(buscarPorComboBox);
+       
+        filterPanel.add(labelComboBox);
+        filterPanel.add(valorBusquedaField);
+        filterPanel.add(buscarButton);
+        
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(filterPanel, BorderLayout.NORTH);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -152,6 +196,67 @@ public class VentanaVerClientes extends JFrame {
         resultSet.close();
         statement.close();
     }
+    public void buscarClientePor(String opcion,String valorBusqueda,DAO dao) {
+    	 // Limpiar la tabla antes de mostrar nuevos resultados de búsqueda
+        tableModel.setRowCount(0);
 
-}
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DriverManager.getConnection(dao.url);
+
+            // Consulta SQL según la opción seleccionada para buscar clientes
+            String sql = "SELECT * FROM cliente WHERE "+opcion+" = ?";
+            
+
+            
+            if (valorBusqueda != null && !valorBusqueda.isEmpty()) {
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, valorBusqueda);
+                rs = stmt.executeQuery();
+
+                // Agregar los resultados de la búsqueda a la tabla
+                while (rs.next()) {
+                    // Obtener los datos del cliente y añadirlos a la tabla
+                    // Esto depende de la estructura de tu tabla 'cliente'
+                    // Asumiendo que tienes columnas login, correo, dni, apellido
+                    String login = rs.getString("login");
+                    String contra = rs.getString("contra");
+                    String correo = rs.getString("email");
+                    String dni = rs.getString("dni");
+                    String nombre = rs.getString("nombre");
+                    String apellido = rs.getString("apellidos");
+                    String fechaNacimiento = rs.getString("fechaNacimiento");
+                    int numTarjeta = rs.getInt("numTarjeta");
+
+                    Object[] fila = {login,contra, correo, dni,nombre, apellido,fechaNacimiento,numTarjeta};
+                    tableModel.addRow(fila);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un valor para buscar.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al buscar clientes: " + e.getMessage());
+        } finally {
+            // Cerrar recursos
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    }
+
 

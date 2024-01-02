@@ -37,7 +37,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-public class VentanaElegirTipoUsuario extends JFrame {
+public class VentanaInicio extends JFrame {
 	
 	private JTextField textoLogin;
     private JPasswordField textoPassword;
@@ -48,7 +48,7 @@ public class VentanaElegirTipoUsuario extends JFrame {
     private JPanel panelGeneral;
   
 
-    public VentanaElegirTipoUsuario(DAO dao2) {
+    public VentanaInicio(DAO dao2) {
         setTitle("Login");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         

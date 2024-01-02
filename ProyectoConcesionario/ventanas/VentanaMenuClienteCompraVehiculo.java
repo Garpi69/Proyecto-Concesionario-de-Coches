@@ -29,8 +29,8 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
 
 	JTable inventarioTable;
     private DefaultTableModel tableModel;
-    private DAO dao = new DAO();
-    public VentanaMenuClienteCompraVehiculo() {
+  
+    public VentanaMenuClienteCompraVehiculo(DAO dao) {
         setTitle("Inventario de Vehículos");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1000, 800);
@@ -51,10 +51,10 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         filtrarButton.addActionListener(e -> {
         tableModel.setRowCount(0);
         try {
-			filtrarCoche(marcaField.getText(), modeloField.getText(), colorField.getText());
-			filtrarCocheSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText());
-		    filtrarMoto(marcaField.getText(), modeloField.getText(), colorField.getText());
-		    filtrarMotoSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText());
+			filtrarCoche(marcaField.getText(), modeloField.getText(), colorField.getText(),dao);
+			filtrarCocheSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText(),dao);
+		    filtrarMoto(marcaField.getText(), modeloField.getText(), colorField.getText(),dao);
+		    filtrarMotoSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText(),dao);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -69,7 +69,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         	try {	
             	Connection connection = DriverManager.getConnection(dao.url);
             	tableModel.setRowCount(0);
-                cargarDatosVehiculos(connection,"coche");
+                cargarDatosVehiculos(connection,"coche",dao);
             }catch (SQLException e1) {
             	
             }
@@ -80,7 +80,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         	try {	
             	Connection connection = DriverManager.getConnection(dao.url);
             	tableModel.setRowCount(0);
-                cargarDatosVehiculos(connection,"cocheSegundaMano");
+                cargarDatosVehiculos(connection,"cocheSegundaMano",dao);
             }catch (SQLException e1) {
             	
             }
@@ -91,7 +91,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         	try {	
             	Connection connection = DriverManager.getConnection(dao.url);
             	tableModel.setRowCount(0);
-                cargarDatosVehiculos(connection,"moto");
+                cargarDatosVehiculos(connection,"moto",dao);
             }catch (SQLException e1) {
             	
             }
@@ -102,7 +102,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         try {	
         	Connection connection = DriverManager.getConnection(dao.url);
         	tableModel.setRowCount(0);
-            cargarDatosVehiculos(connection,"motoSegundaMano");
+            cargarDatosVehiculos(connection,"motoSegundaMano",dao);
         }catch (SQLException e1) {
         	
         }
@@ -152,10 +152,10 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         getContentPane().add(filterPanel, BorderLayout.NORTH);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH );
-        cargarInventario();
+        cargarInventario(dao);
         comprarButton.addActionListener(e ->{
-        	 if (inventarioTable.getSelectedRow()==0) {
-             	confirmarCompra();
+        	 if (inventarioTable.getSelectedRow()!=-1) {
+             	confirmarCompra(dao);
              }else {
             	 JOptionPane.showMessageDialog(null, "Seleccione un vehiculo");
              }
@@ -169,7 +169,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
        });
         setVisible(true);
     }
-   public void cargarInventario() {
+   public void cargarInventario(DAO dao) {
         // Asegúrate de tener la conexión con tu base de datos
         try {
             Connection connection = DriverManager.getConnection(dao.url);
@@ -177,16 +177,16 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
             tableModel.setColumnIdentifiers(columnas);
          
             // Obtener datos de coches
-            cargarDatosVehiculos(connection, "coche");
+            cargarDatosVehiculos(connection, "coche",dao);
 
             // Obtener datos de coches de segunda mano
-            cargarDatosVehiculos(connection, "cocheSegundaMano");
+            cargarDatosVehiculos(connection, "cocheSegundaMano",dao);
 
             // Obtener datos de motos
-            cargarDatosVehiculos(connection, "moto");
+            cargarDatosVehiculos(connection, "moto",dao);
 
             // Obtener datos de motos de segunda mano
-            cargarDatosVehiculos(connection, "motoSegundaMano");
+            cargarDatosVehiculos(connection, "motoSegundaMano",dao);
 
             connection.close();
         } catch (SQLException ex) {
@@ -195,7 +195,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         }
     }
 
-    private void cargarDatosVehiculos(Connection connection, String tabla) throws SQLException {
+    private void cargarDatosVehiculos(Connection connection, String tabla, DAO dao) throws SQLException {
         String sql = "SELECT * FROM " + tabla;
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
@@ -256,7 +256,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         resultSet.close();
         statement.close();
     }
-    private void confirmarCompra() {
+    private void confirmarCompra(DAO dao) {
         int selectedRow = inventarioTable.getSelectedRow();
         if (selectedRow != -1) {
             int idVehiculo = (int) inventarioTable.getValueAt(selectedRow, 0);
@@ -266,8 +266,9 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
             int opcion = JOptionPane.showConfirmDialog(null, "¿Seguro que desea comprar este vehículo?",
                     "Confirmación de Compra", JOptionPane.YES_NO_OPTION);
             String categoria = "";
+            String nombreCoche = marca+" "+modelo;
             if (opcion == JOptionPane.YES_OPTION) {
-              new DateTimePicker();
+              new DateTimePicker(dao,nombreCoche);
               if ((int)inventarioTable.getValueAt(selectedRow,7)>2) {
             	  if(inventarioTable.getValueAt(selectedRow, 13)!=null) {
             		  categoria = "Coche";
@@ -289,7 +290,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
             JOptionPane.showMessageDialog(null, "Selecciona un coche para comprar.");
         }
     }
-    private void filtrarCoche(String marca, String modelo, String color) throws ParseException {
+    private void filtrarCoche(String marca, String modelo, String color,DAO dao) throws ParseException {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
            
@@ -344,7 +345,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         }
         inventarioTable.repaint();
     }
-    private void filtrarCocheSegundaMano(String marca, String modelo, String color) {
+    private void filtrarCocheSegundaMano(String marca, String modelo, String color, DAO dao) {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
            
@@ -396,7 +397,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         inventarioTable.repaint();
        
     }
-    private void filtrarMoto(String marca, String modelo, String color) {
+    private void filtrarMoto(String marca, String modelo, String color, DAO dao) {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
            
@@ -453,7 +454,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         inventarioTable.repaint();
        
         }
-    private void filtrarMotoSegundaMano(String marca, String modelo, String color) {
+    private void filtrarMotoSegundaMano(String marca, String modelo, String color, DAO dao) {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
            

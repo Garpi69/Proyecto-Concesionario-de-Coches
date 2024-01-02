@@ -50,6 +50,16 @@ public class VentanaMenuTrabajador extends JFrame {
 	            }
 	        });
 	        panel.add(clientesButton);
+	        
+	        JButton citasButton = new JButton("Citas");
+	        estilizarBoton(citasButton,"/Users/jonmendizabal/Downloads/reunion.jpg","Citas") ;
+	        citasButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                new VentanaVerCitas(dao);
+	            }
+	        });
+	        panel.add(citasButton);
 
 	        JButton informeButton = new JButton("Informe");
 	        estilizarBoton(informeButton,"/Users/jonmendizabal/Downloads/informe.jpg", "Informe");

@@ -93,7 +93,7 @@ public class VentanaRegistroCliente extends JFrame {
                     dao.agregarCliente(cliente);
 
                     JOptionPane.showMessageDialog(null, "Informacion Guardada", "Guardado", JOptionPane.PLAIN_MESSAGE);
-                    VentanaElegirTipoUsuario ventana = new VentanaElegirTipoUsuario(dao);
+                    VentanaInicio ventana = new VentanaInicio(dao);
                 } catch (SQLException e1) {
                     JOptionPane.showMessageDialog(null, "ERROR", "No se ha podido guardar el usuario",
                             JOptionPane.PLAIN_MESSAGE);

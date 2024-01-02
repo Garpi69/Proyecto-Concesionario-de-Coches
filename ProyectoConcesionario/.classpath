@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/jcalendar-1/lib/jgoodies-looks-2.4.1.jar"/>
 	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/jcalendar-1/lib/junit-4.6.jar"/>
 	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/itextpdf-5.5.9.jar"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/Desktop/javax.mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,6 +1,7 @@
 package ventanas;
 
 import javax.swing.*;
+import clases.Cita;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,7 +14,7 @@ public class DateTimePicker {
     private JSpinner hourSpinner;
     private JDialog dialog;
 
-    public DateTimePicker() {
+    public DateTimePicker(DAO dao, String nombreCoche) {
         dialog = new JDialog();
         dialog.setTitle("Seleccione fecha y hora para concertar una cita:");
         dialog.setLayout(new GridBagLayout());
@@ -48,8 +49,11 @@ public class DateTimePicker {
         JButton selectButton = new JButton("Seleccionar");
         selectButton.addActionListener(e -> {
             Date selectedDate = getSelectedDateTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String date = sdf.format(selectedDate);
             JOptionPane.showMessageDialog(dialog, "Fecha y Hora Seleccionadas: " + sdf.format(selectedDate));
+            Cita cita = new Cita(date,dao.cliente.getLogin(),nombreCoche);
+            dao.añadirCita(cita, dao);
         });
 
         gbc.gridy++;

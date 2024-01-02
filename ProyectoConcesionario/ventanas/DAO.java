@@ -1,5 +1,8 @@
 package ventanas;
-
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.awt.AWTException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -13,6 +16,7 @@ import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import clases.Cita;
 import clases.Cliente;
 import clases.Coche;
 import clases.CocheSegundaMano;
@@ -75,6 +79,62 @@ public class DAO {
         	 String query = "SELECT * FROM cliente WHERE dni = ?";
              preparedStatement = this.conn.prepareStatement(query);
              preparedStatement.setString(1, dniCliente);
+
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                String login = resultSet.getString("login");
+                String contraseña = resultSet.getString("contra");
+                String email = resultSet.getString("email");
+                String dni = resultSet.getString("dni");
+                String nombre = resultSet.getString("nombre");
+
+                String apellidos = resultSet.getString("apellidos");
+                java.sql.Date fechaNacimientoSQL = resultSet.getDate("fechaNacimiento");
+                java.util.Date fechaNacimiento = sqlDateToJavaDate(fechaNacimientoSQL);
+                long numTarjeta = resultSet.getLong("numTarjeta");
+
+                // Construir el objeto Cliente
+                cliente = new Cliente(login, contraseña, email,dni, nombre, apellidos,fechaNacimiento,numTarjeta,"");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return cliente;
+    }
+    public Cliente obtenerClientePorLogin(String loginCliente) {
+    	try {
+			conectar();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Cliente cliente = null;
+
+        try {
+        	 String query = "SELECT * FROM cliente WHERE login = ?";
+             preparedStatement = this.conn.prepareStatement(query);
+             preparedStatement.setString(1, loginCliente);
 
 
             resultSet = preparedStatement.executeQuery();
@@ -272,6 +332,7 @@ public class DAO {
             credencialesCorrectas = resultSet.next();
             if (credencialesCorrectas) {
             	cliente.setLogin(usuarioIngresado);
+            
             	
             }
         } catch (SQLException e) {
@@ -792,6 +853,94 @@ public class DAO {
 	            System.out.println("Error al eliminar la oferta: " + e.getMessage());
 	        }
 	    }
+
+	public void añadirCita(Cita cita, DAO dao) {
+		Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            // Establecer la conexión con la base de datos (reemplaza con tus propios datos de conexión)
+            connection = DriverManager.getConnection(url);
+
+            // Sentencia SQL para eliminar un coche por nombre
+            String sql = "INSERT INTO citas(fecha, usuario, vehiculo) VALUES (?,?,?)";
+           
+            // Preparar la sentencia
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, cita.getFecha());
+            statement.setString(2,cita.getUsuario());
+            statement.setString(3, cita.getNombreVehiculo());
+            // Establecer el nombre del coche a eliminar
+
+            // Ejecutar la sentencia de eliminación
+            int filasEliminadas = statement.executeUpdate();
+
+            if (filasEliminadas > 0) {
+                System.out.println("La cita ha sido añadida correctamente, le enviaremos un correo de confirmación");
+                dao.enviarCorreoConfirmacionCita(cita);
+            } else {
+                System.out.println("No se pudo añadir la cita, contacte con atención al cliente");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones (registra, notifica, etc.)
+        } finally {
+            // Cerrar statement y conexión
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+		
+	}
+
+	private void enviarCorreoConfirmacionCita(Cita cita) {
+		 	final String username = "deustocars@gmail.com";
+	        final String password = "DeustoCars2024";
+	        final String host = "smtp.gmail.com";
+	        final int port = 587;
+	        Cliente cliente = obtenerClientePorLogin(cita.getUsuario());
+	        // Propiedades para establecer la conexión
+	        Properties props = new Properties();
+	        props.put("mail.smtp.auth", "true");
+	        props.put("mail.smtp.starttls.enable", "true");
+	        props.put("mail.smtp.host", host);
+	        props.put("mail.smtp.port", port);
+
+	        // Crear una sesión de correo electrónico con autenticación
+	        Session session = Session.getInstance(props,
+	                new Authenticator() {
+	                    protected PasswordAuthentication getPasswordAuthentication() {
+	                        return new PasswordAuthentication(username, password);
+	                    }
+	                });
+
+	        try {
+	            // Crear un mensaje MIME
+	            Message message = new MimeMessage(session);
+	            message.setFrom(new InternetAddress(username));
+	            message.setRecipients(Message.RecipientType.TO,
+	                    InternetAddress.parse(cliente.getEmail()));
+	            message.setSubject("Confirmacion de cita");
+	            message.setText("¡Hola "+cliente.getNombre()+"!\n\nTe confirmamos tu cita en nuestra sucursal.\n\nFecha: "+cita.getFecha());
+
+	            // Enviar el mensaje
+	            Transport.send(message);
+
+	            System.out.println("¡El correo electrónico ha sido enviado con éxito!");
+
+	        } catch (MessagingException e) {
+	            throw new RuntimeException("Error al enviar el correo electrónico: " + e);
+	        }
+		
+	}
 	}
 	
 
