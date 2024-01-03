@@ -271,20 +271,22 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
               new DateTimePicker(dao,nombreCoche);
               if ((int)inventarioTable.getValueAt(selectedRow,7)>2) {
             	  if(inventarioTable.getValueAt(selectedRow, 13)!=null) {
-            		  categoria = "Coche";
+            		  categoria = "coche";
             	  }else {
-            		  categoria = "Coche de segunda mano";
+            		  categoria = "cocheSegundaMano";
             	  }
               }else {
             	  if(inventarioTable.getValueAt(selectedRow, 13)!=null) {
-            		  categoria = "Moto";
+            		  categoria = "moto";
             	  }else {
-            		  categoria = "Moto de segunda mano";
+            		  categoria = "motoSegundaMano";
             	  }
               }
               String dniCliente=dao.trabajador.getdNI();
               Venta venta = new Venta(categoria,idVehiculo,marca,modelo,precio,dniCliente);
               dao.agregarVenta(venta);
+              dao.eliminarVehiculo(nombreCoche,categoria);
+              cargarInventario(dao);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona un coche para comprar.");

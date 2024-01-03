@@ -22,8 +22,7 @@ import clases.Coche;
 import clases.CocheSegundaMano;
 
 public class VentanaMenuClienteVendeCoche extends JFrame {
-	private JTextField idField;
-    private JTextField dniField;
+	
     private JTextField combustibleField;
     private JTextField marcaField;
     private JTextField modeloField;
@@ -46,8 +45,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
         panel.setLayout(new GridLayout(13, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        idField = new JTextField();
-        dniField = new JTextField();
+       
         combustibleField = new JTextField();
         marcaField = new JTextField();
         modeloField = new JTextField();
@@ -59,10 +57,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
         kilometrajeField = new JTextField();
         matriculacionField = new JTextField();
 
-        panel.add(new JLabel("ID Vehículo:"));
-        panel.add(idField);
-        panel.add(new JLabel("DNI del Cliente:"));
-        panel.add(dniField);
+       
         panel.add(new JLabel("Combustible:"));
         panel.add(combustibleField);
         panel.add(new JLabel("Marca:"));
@@ -88,8 +83,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
         enviarButton.addActionListener(e -> {
             try {
             	 CocheSegundaMano cocheSegundaMano = obtenerCocheSegundaMano();
-            	 String dniCliente = dniField.getText();
-            	 Cliente cliente = dao.obtenerClientePorDNI(dniCliente);
+            	 Cliente cliente = dao.obtenerClientePorLogin(dao.cliente.getLogin());
                  dao.agregarCocheVendidoPorCliente(cocheSegundaMano, cliente);
                
             } catch (NumberFormatException ex) {
@@ -106,9 +100,9 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
         add(panel);
         setVisible(true);
     }
-    public CocheSegundaMano obtenerCocheSegundaMano () {
+    public CocheSegundaMano obtenerCocheSegundaMano () throws SQLException {
     	 // Obtener los valores ingresados por el cliente
-        int idVehiculo = Integer.parseInt(idField.getText());
+        int idVehiculo = dao.asignarIdAVehiculo();
         String combustible = combustibleField.getText();
         String marca = marcaField.getText();
         String modelo = modeloField.getText();

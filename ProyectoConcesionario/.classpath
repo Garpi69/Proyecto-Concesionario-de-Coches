@@ -7,16 +7,13 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/sqlite-jdbc-3.44.1.0.jar"/>
-	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/logback.jar"/>
 	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/slf4j.jar"/>
 	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/sqlite-jdbc-3.34.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/javax.jms.jar"/>
-	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/jcalendar-1/lib/jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/jcalendar-1/lib/jgoodies-common-1.2.0.jar"/>
-	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/jcalendar-1/lib/jgoodies-looks-2.4.1.jar"/>
-	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/jcalendar-1/lib/junit-4.6.jar"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/activation.jar"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/google-api-java-client/libs-sources/xpp3-1.1.4c-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/google-api-java-client/libs/xpp3-1.1.4c.jar"/>
 	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/itextpdf-5.5.9.jar"/>
-	<classpathentry kind="lib" path="/Users/jonmendizabal/Desktop/javax.mail.jar"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/Downloads/logback.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -48,7 +48,7 @@ public class VentanaInicio extends JFrame {
     private JPanel panelGeneral;
   
 
-    public VentanaInicio(DAO dao2) {
+    public VentanaInicio(DAO dao) {
         setTitle("Login");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
@@ -144,7 +144,7 @@ public class VentanaInicio extends JFrame {
         botonAceptar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                autenticacion(dao2);
+                autenticacion(dao);
             }
         });
 
@@ -184,14 +184,16 @@ public class VentanaInicio extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-        private void autenticacion(DAO dao2) {
+        private void autenticacion(DAO dao) {
             String usuarioIngresado = textoLogin.getText();
             String contrasenaIngresada = new String(textoPassword.getPassword());
             boolean login = false;
                 try {
-					if (dao2.comprobarCredencialesTrabajador(usuarioIngresado, contrasenaIngresada)) {
-						VentanaMenuTrabajador ventanaMenuTrabajador = new VentanaMenuTrabajador(dao2);
+					if (dao.comprobarCredencialesTrabajador(usuarioIngresado, contrasenaIngresada)) {
+						VentanaMenuTrabajador ventanaMenuTrabajador = new VentanaMenuTrabajador(dao);
 						 dispose();
+						 dao.esAdmin = dao.esAdmin(usuarioIngresado);
+						 
 						 login = true;
 					}
 				} catch (SQLException e) {
@@ -201,8 +203,8 @@ public class VentanaInicio extends JFrame {
                
            
             	try {
-					if (dao2.comprobarCredencialesCliente(usuarioIngresado, contrasenaIngresada)) {
-						VentanaMenuCliente ventanaMenuCliente = new VentanaMenuCliente(dao2);
+					if (dao.comprobarCredencialesCliente(usuarioIngresado, contrasenaIngresada)) {
+						VentanaMenuCliente ventanaMenuCliente = new VentanaMenuCliente(dao);
 						dispose();
 						login=true;
 					}else {

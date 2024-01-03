@@ -16,6 +16,14 @@ public class Trabajador extends Persona{
 		this.puesto = puesto;
 	}
 
+	public boolean isEsAdmin() {
+		return esAdmin;
+	}
+
+	public void setEsAdmin(boolean esAdmin) {
+		this.esAdmin = esAdmin;
+	}
+
 	public Trabajador() {
 		super("", "", "", "", "", "",null);
 		this.sueldo = 0;

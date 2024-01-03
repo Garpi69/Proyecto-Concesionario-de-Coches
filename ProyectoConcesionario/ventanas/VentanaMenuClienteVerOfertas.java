@@ -84,8 +84,17 @@ public class VentanaMenuClienteVerOfertas extends JFrame {
                 	String usuarioAceptadoString = usuarioAceptado.toString();
                 	System.out.print(cocheAceptadoString);
                 	dao.eliminarVehiculo(cocheAceptadoString,"coche");
+					dao.eliminarVehiculo(cocheAceptadoString,"cocheSegundaMano");
+					dao.eliminarVehiculo(cocheAceptadoString,"moto");
+					dao.eliminarVehiculo(cocheAceptadoString,"motoSegundaMano");
+                	
                 	JOptionPane.showMessageDialog(null, "Felicidades, "+ofertasTable.getValueAt(selectedRow, 1)+"€ serán ingresados en su cuenta");
                 	dao.eliminarOferta(cocheAceptadoString,usuarioAceptadoString,precioAceptadoInt);
+                	dao.cargarOfertasEnviadas("coche",tableModel,dao.cliente.getLogin());
+                	dao.cargarOfertasEnviadas("cocheSegundaMano", tableModel,dao.cliente.getLogin());
+                	dao.cargarOfertasEnviadas("moto", tableModel,dao.cliente.getLogin());
+                	dao.cargarOfertasEnviadas("motoSegundaMano", tableModel,dao.cliente.getLogin());
+                	ofertasTable.repaint();
                     // Aquí puedes implementar la lógica para aceptar la oferta seleccionada
                     // Usando dao.cliente.getLogin() para obtener el usuario actual
                     //dao.aceptarOferta(ofertasTable.getValueAt(selectedRow, 0), dao.cliente.getLogin());

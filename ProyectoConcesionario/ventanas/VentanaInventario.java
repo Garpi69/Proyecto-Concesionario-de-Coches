@@ -139,26 +139,7 @@ public class VentanaInventario extends JFrame {
 
         gbc.gridx = 6;
         filterPanel.add(filtrarButton, gbc);
-        JButton comprarButton = new JButton("Comprar");
-        gbc.gridx=7;
-        filterPanel.add(comprarButton,gbc);
-        JButton hacerOfertaButton = new JButton("Hacer oferta");
-        gbc.gridx=8;
-        filterPanel.add(hacerOfertaButton,gbc);
-        
-        comprarButton.addActionListener(e ->{
-       	 if (inventarioTable.getSelectedRow()==0) {
-            	confirmarCompra(dao);
-            }else {
-           	 JOptionPane.showMessageDialog(null, "Seleccione un vehiculo");
-            }
-       	
-       });
-        hacerOfertaButton.addActionListener(e -> {
-     	   int row = inventarioTable.getSelectedRow();
-     	   int idVehiculo = (int) inventarioTable.getValueAt(row, 0);
-     	   VentanaOferta ventanaOferta = new VentanaOferta(idVehiculo,"concesionario");
-        });
+       
         tableModel = new DefaultTableModel();
         inventarioTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(inventarioTable);
@@ -488,7 +469,7 @@ public class VentanaInventario extends JFrame {
                     "Confirmación de Compra", JOptionPane.YES_NO_OPTION);
             String categoria = "";
             if (opcion == JOptionPane.YES_OPTION) {
-              new DateTimePicker();
+              new DateTimePicker(dao,marca+" "+modelo);
               if ((int)inventarioTable.getValueAt(selectedRow,7)>2) {
             	  if(inventarioTable.getValueAt(selectedRow, 13)!=null) {
             		  categoria = "Coche";

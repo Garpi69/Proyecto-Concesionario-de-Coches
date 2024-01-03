@@ -50,7 +50,8 @@ public class VentanaMiPerfil extends JFrame{
 	        guardarButton.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	                guardarCambios(dao2);
-	                
+	                hacerNoEditable(panel);
+	                dispose();
 	               
 	            }
 	        });
@@ -119,7 +120,7 @@ public class VentanaMiPerfil extends JFrame{
 	                        resultSet.getString("dni"),
 	                        resultSet.getString("nombre"),
 	                        resultSet.getString("apellidos"),
-	                       dao.stringToDate(resultSet.getString("fechaNacimiento"),dao.format),
+	                        dao.stringToDate(resultSet.getString("fechaNacimiento"),dao.format),
 	                        Long.parseLong(resultSet.getString("numTarjeta")),
 	                        resultSet.getString("ofertasEnviadas")
 	                );
@@ -150,10 +151,13 @@ public class VentanaMiPerfil extends JFrame{
 	            String query = "UPDATE cliente SET login = ?,contra = ?, email = ?, dni = ?, nombre = ?, apellidos = ?, fechaNacimiento = ?, numTarjeta = ? WHERE login = ?";
 	            PreparedStatement statement = conn.prepareStatement(query);
 	            statement.setString(1, loginField.getText());
+	            System.out.print(loginField.getText());
 	            statement.setString(2, contraField.getText());
+	            System.out.print(contraField.getText());
 	            statement.setString(3, emailField.getText());
-	           
+	            System.out.print(emailField.getText());
 	            statement.setString(4, dniField.getText());
+	            System.out.print(dniField.getText());
 	            statement.setString(5, nombreField.getText());
 	            statement.setString(6, apellidoField.getText());
 	            statement.setString(7, fechaNacimientoField.getText());

@@ -54,6 +54,7 @@ public class DateTimePicker {
             JOptionPane.showMessageDialog(dialog, "Fecha y Hora Seleccionadas: " + sdf.format(selectedDate));
             Cita cita = new Cita(date,dao.cliente.getLogin(),nombreCoche);
             dao.añadirCita(cita, dao);
+            dialog.dispose();
         });
 
         gbc.gridy++;

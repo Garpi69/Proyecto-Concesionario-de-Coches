@@ -11,6 +11,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -23,11 +25,19 @@ import javax.swing.WindowConstants;
 
 public class VentanaMenuCliente extends JFrame {
 	 public VentanaMenuCliente(DAO dao) {
-	        setTitle("Compra o Venta");
+	        setTitle("Usuario: "+dao.cliente.getLogin());
 	        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	        setSize(980, 700);
 	        setLocationRelativeTo(null);
-
+	        
+	        addWindowListener(new WindowAdapter() {
+	            @Override
+	            public void windowClosing(WindowEvent e) {
+	                // Llama a tu función aquí
+	                dao.guardarSiCierraVentana();
+	            }
+	        });
+	        
 	        JPanel panel = new JPanel();
 	        panel.setLayout(new GridLayout(2, 1, 10, 10)); // Espaciado entre componentes
 
@@ -75,6 +85,19 @@ public class VentanaMenuCliente extends JFrame {
 	        });
 	        panel.add(miPerfil);
 	       
+	        JButton cerrarSesionButton = new JButton("Inventario");
+	        estilizarBoton( cerrarSesionButton,"/Users/jonmendizabal/Downloads/El-arte-de-perderse.jpg", "Cerrar Sesión");
+	        cerrarSesionButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	new VentanaInicio(dao);
+	            	dao.guardarActividad("Trabajador: "+dao.trabajador.getLogin()+" cerró sesión");
+	            	dao.cliente.setLogin("");
+	            	
+	            	dispose();
+	            }
+	        });
+	        panel.add( cerrarSesionButton);
 
 	        // Espaciado entre panel y ventana
 	        JPanel wrapperPanel = new JPanel(new BorderLayout());

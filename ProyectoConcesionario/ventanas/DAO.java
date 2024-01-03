@@ -1,20 +1,33 @@
 package ventanas;
-import java.util.Properties;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.awt.AWTException;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Properties;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.List;
+
+
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+
 
 import clases.Cita;
 import clases.Cliente;
@@ -28,12 +41,15 @@ import clases.Venta;
 public class DAO {
 
 
-
-
+	
+	protected  String[] administradores = new String[]{"worker1", "worker2"};
+	protected boolean esAdmin = false;
+	protected SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
     protected final String url = "jdbc:sqlite:/Users/jonmendizabal/ProyectoProgram/Proyecto-Concesionario-de-Coches-master/basedatos/baseDeDatos.sqlite";
-    Connection conn;
+    protected Connection conn;
     protected Cliente cliente= new Cliente();
     protected Trabajador trabajador = new Trabajador();
+    
     public void conectar() throws SQLException {
     	try {
 			Class.forName("org.sqlite.JDBC");
@@ -44,25 +60,12 @@ public class DAO {
         conn = DriverManager.getConnection(url);
         System.out.println("Conexión establecida");
     }
-
     public void desconectar() throws SQLException {
         if (conn != null) {
             conn.close();
             System.out.println("Conexión cerrada");
         }
     }
-
-    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-   
-   
-
-   
-    
-   
-
-
-
-
     public Cliente obtenerClientePorDNI(String dniCliente) {
     	try {
 			conectar();
@@ -92,12 +95,12 @@ public class DAO {
                 String nombre = resultSet.getString("nombre");
 
                 String apellidos = resultSet.getString("apellidos");
-                java.sql.Date fechaNacimientoSQL = resultSet.getDate("fechaNacimiento");
-                java.util.Date fechaNacimiento = sqlDateToJavaDate(fechaNacimientoSQL);
+                String fechaNacimiento = resultSet.getString("fechaNacimiento");
+                java.util.Date fechaNacimientoDate = stringToDate(fechaNacimiento,format);
                 long numTarjeta = resultSet.getLong("numTarjeta");
 
                 // Construir el objeto Cliente
-                cliente = new Cliente(login, contraseña, email,dni, nombre, apellidos,fechaNacimiento,numTarjeta,"");
+                cliente = new Cliente(login, contraseña, email,dni, nombre, apellidos,fechaNacimientoDate,numTarjeta,"");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,12 +151,12 @@ public class DAO {
                 String nombre = resultSet.getString("nombre");
 
                 String apellidos = resultSet.getString("apellidos");
-                java.sql.Date fechaNacimientoSQL = resultSet.getDate("fechaNacimiento");
-                java.util.Date fechaNacimiento = sqlDateToJavaDate(fechaNacimientoSQL);
+                String fechaNacimiento = resultSet.getString("fechaNacimiento");
+                java.util.Date fechaNacimientoDate = stringToDate(fechaNacimiento,format);
                 long numTarjeta = resultSet.getLong("numTarjeta");
 
                 // Construir el objeto Cliente
-                cliente = new Cliente(login, contraseña, email,dni, nombre, apellidos,fechaNacimiento,numTarjeta,"");
+                cliente = new Cliente(login, contraseña, email,dni, nombre, apellidos,fechaNacimientoDate,numTarjeta,"");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -194,6 +197,7 @@ public class DAO {
             System.out.println("Nuevo usuario agregado a la base de datos");
         }
         desconectar();
+        guardarActividad("Trabajador "+trabajador.getLogin()+" agregado");
     }
 	public void agregarCliente(Cliente cliente) throws SQLException {
 		conectar();
@@ -232,6 +236,7 @@ public class DAO {
                 ex.printStackTrace();
             }
         }
+        guardarActividad("Cliente "+cliente.getLogin()+" agregado");
     }
 	public void eliminarCliente(String login) throws SQLException {
 		conectar();
@@ -268,16 +273,18 @@ public class DAO {
 	        }
 	       
 	    }
+	    guardarActividad("Cliente "+login+" eliminado");
 	   
 	}
-
 	public boolean comprobarCredencialesTrabajador(String usuarioIngresado, String contrasenaIngresada) throws SQLException {
+		trabajador.setAdmin(esAdmin(usuarioIngresado));
+		System.out.print(trabajador.esAdmin());
 		conectar();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         boolean credencialesCorrectas = false;
         String dniTrabajador="";
-        trabajador.setdNI(contrasenaIngresada);
+        trabajador.setLogin(usuarioIngresado);
         try {
 
             String query = "SELECT * FROM trabajador WHERE login = ? AND contra = ?";
@@ -291,6 +298,8 @@ public class DAO {
             if (resultSet.next()) {
                 // Se encontró una coincidencia en la base de datos
                 credencialesCorrectas = true;
+                
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -310,6 +319,9 @@ public class DAO {
             }
         }
         desconectar();
+        if (credencialesCorrectas) {
+        	guardarActividad("Trabajador "+trabajador.getLogin()+" logeado");
+        }
         return credencialesCorrectas;
     }
 	public boolean comprobarCredencialesCliente(String usuarioIngresado, String contrasenaIngresada) throws SQLException {
@@ -332,6 +344,7 @@ public class DAO {
             credencialesCorrectas = resultSet.next();
             if (credencialesCorrectas) {
             	cliente.setLogin(usuarioIngresado);
+            	guardarActividad("Cliente "+usuarioIngresado+" logeado");
             
             	
             }
@@ -500,7 +513,6 @@ public class DAO {
 
 
 		    }
-
 	public void agregarMotoVendidaPorCliente(MotoSegundaMano motoSegundaMano, Cliente cliente) throws SQLException {
 		conectar();
 	 	 PreparedStatement preparedStatement = null;
@@ -550,7 +562,7 @@ public class DAO {
 
 
 	    }
-	 public void agregarVenta(Venta venta) {
+	public void agregarVenta(Venta venta) {
 	       
 	       
 
@@ -571,8 +583,9 @@ public class DAO {
 	        } catch (SQLException e) {
 	            System.out.println("Error al agregar venta a la base de datos: " + e.getMessage());
 	        }
+	        guardarActividad("Venta de "+venta.getMarca()+" "+venta.getModelo()+" añadida");
 	    }
-	 public void agregarOfertaAVehiculo(int idVehiculo, int oferta,String usuario) {
+	public void agregarOfertaAVehiculo(int idVehiculo, int oferta,String usuario) {
 		
 		 
          try {
@@ -618,8 +631,8 @@ public class DAO {
               }
         	 
          }
+         guardarActividad("Oferta de "+oferta+"€ añadida a vehiculo "+idVehiculo);
 	 }
-
 	public void cargarOfertasRecibidas(String tabla, DefaultTableModel tableModel,String propietario) throws AWTException {
 			try {
 				conectar();
@@ -677,8 +690,6 @@ public class DAO {
 			e.printStackTrace();
 		}
 	}
-
-
 	public void cargarOfertasEnviadas(String tabla,DefaultTableModel tableModel,String usuario) {
 		try {
 			conectar();
@@ -732,8 +743,7 @@ public class DAO {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	}
-		
+	}	
 	public java.util.Date sqlDateToJavaDate (java.sql.Date sqlDate){
 		java.util.Date utilDate = new java.util.Date(sqlDate.getTime());
 		return utilDate;
@@ -742,7 +752,6 @@ public class DAO {
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 		return sqlDate;
 	}
-
 	public java.util.Date stringToDate(String fechaNacimientoString, SimpleDateFormat format2) {
 		 try {
 	            return format2.parse(fechaNacimientoString);
@@ -754,7 +763,7 @@ public class DAO {
 	}
 	public String dateToString (java.util.Date date, SimpleDateFormat format2) {
 		
-	return format2.format(date);
+		return format2.format(date);
 	}
 	public void eliminarVehiculo(String nombreCoche, String tabla) {
         Connection connection = null;
@@ -802,8 +811,9 @@ public class DAO {
                 e.printStackTrace();
             }
         }
+        guardarActividad("Vehiculo "+nombreCoche+" eliminado");
     }
-	 public void eliminarOferta(String cocheAceptado, String usuarioAceptado, int precioAceptado) {
+	public void eliminarOferta(String cocheAceptado, String usuarioAceptado, int precioAceptado) {
 	        // Conexión a la base de datos (asegúrate de tener los datos correctos)
 	       	String[] cocheDatos = cocheAceptado.split(" ");
 	       	String marca = cocheDatos[0];
@@ -853,7 +863,6 @@ public class DAO {
 	            System.out.println("Error al eliminar la oferta: " + e.getMessage());
 	        }
 	    }
-
 	public void añadirCita(Cita cita, DAO dao) {
 		Connection connection = null;
         PreparedStatement statement = null;
@@ -863,11 +872,12 @@ public class DAO {
             connection = DriverManager.getConnection(url);
 
             // Sentencia SQL para eliminar un coche por nombre
-            String sql = "INSERT INTO citas(fecha, usuario, vehiculo) VALUES (?,?,?)";
+            String sql = "INSERT INTO citas(fecha, usuario, nombreVehiculo) VALUES (?,?,?)";
+            String fecha = cita.getFecha();
            
             // Preparar la sentencia
             statement = connection.prepareStatement(sql);
-            statement.setString(1, cita.getFecha());
+            statement.setString(1, fecha);
             statement.setString(2,cita.getUsuario());
             statement.setString(3, cita.getNombreVehiculo());
             // Establecer el nombre del coche a eliminar
@@ -876,8 +886,8 @@ public class DAO {
             int filasEliminadas = statement.executeUpdate();
 
             if (filasEliminadas > 0) {
-                System.out.println("La cita ha sido añadida correctamente, le enviaremos un correo de confirmación");
-                dao.enviarCorreoConfirmacionCita(cita);
+                System.out.println("La cita ha sido añadida correctamente");
+               
             } else {
                 System.out.println("No se pudo añadir la cita, contacte con atención al cliente");
             }
@@ -900,47 +910,176 @@ public class DAO {
         }
 		
 	}
-
-	private void enviarCorreoConfirmacionCita(Cita cita) {
-		 	final String username = "deustocars@gmail.com";
-	        final String password = "DeustoCars2024";
-	        final String host = "smtp.gmail.com";
-	        final int port = 587;
-	        Cliente cliente = obtenerClientePorLogin(cita.getUsuario());
-	        // Propiedades para establecer la conexión
-	        Properties props = new Properties();
-	        props.put("mail.smtp.auth", "true");
-	        props.put("mail.smtp.starttls.enable", "true");
-	        props.put("mail.smtp.host", host);
-	        props.put("mail.smtp.port", port);
-
-	        // Crear una sesión de correo electrónico con autenticación
-	        Session session = Session.getInstance(props,
-	                new Authenticator() {
-	                    protected PasswordAuthentication getPasswordAuthentication() {
-	                        return new PasswordAuthentication(username, password);
-	                    }
-	                });
-
-	        try {
-	            // Crear un mensaje MIME
-	            Message message = new MimeMessage(session);
-	            message.setFrom(new InternetAddress(username));
-	            message.setRecipients(Message.RecipientType.TO,
-	                    InternetAddress.parse(cliente.getEmail()));
-	            message.setSubject("Confirmacion de cita");
-	            message.setText("¡Hola "+cliente.getNombre()+"!\n\nTe confirmamos tu cita en nuestra sucursal.\n\nFecha: "+cita.getFecha());
-
-	            // Enviar el mensaje
-	            Transport.send(message);
-
-	            System.out.println("¡El correo electrónico ha sido enviado con éxito!");
-
-	        } catch (MessagingException e) {
-	            throw new RuntimeException("Error al enviar el correo electrónico: " + e);
+	public boolean esAdmin (String usuario) {
+		boolean adminEs = false;
+		Connection conn = null;
+		PreparedStatement statement = null;
+		int adminInt = 0;
+		try {
+			conn = DriverManager.getConnection(url);
+			String sql = "SELECT * FROM trabajador WHERE login = ?";
+			
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, usuario);
+			ResultSet resultSet = statement.executeQuery();
+			adminInt = resultSet.getInt("esAdmin");
+			conn.close();
+		}catch (SQLException e) {
+			
+		}
+		if (adminInt==1) {
+			adminEs=true;
+		}
+		return adminEs;
+	}
+	public void cargarDatosTrabajadores(DefaultTableModel tableModel) {
+		Connection conn;
+		PreparedStatement statement;
+		try {
+			conn = DriverManager.getConnection(url);
+			
+			String sql = "SELECT * FROM trabajador";
+			statement = conn.prepareStatement(sql);
+        	
+	        ResultSet resultSet = statement.executeQuery();
+	        
+	        while(resultSet.next()) {
+	        	String usuario = resultSet.getString("login");
+	        	String contra = resultSet.getString("contra");
+	        	String  email = resultSet.getString("email");
+	        	String dni = resultSet.getString("dni");
+	        	String nombre = resultSet.getString("nombre");
+	        	String apellidos = resultSet.getString("apellidos");
+	        	String fechaNacimiento = resultSet.getString("fechaNacimiento");
+	        	int sueldo = resultSet.getInt("sueldo");
+	        	String puesto = resultSet.getString("puesto");
+	        	Object[] fila = {usuario,contra,email,dni,nombre,apellidos,fechaNacimiento,sueldo,puesto};
+	 	        tableModel.addRow(fila);
 	        }
+	       
+			
+			
+		}catch (SQLException e){
+			
+		}
+		try {
+			desconectar();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void eliminarTrabajador(String loginTrabajador) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		int filasEliminadas = 0;
+		try {
+			conn = DriverManager.getConnection(url);
+			String sql = "DELETE FROM trabajador WHERE login = ?";
+			System.out.print(loginTrabajador);
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, loginTrabajador);
+			
+			filasEliminadas = statement.executeUpdate();
+			conn.close();
+		} catch (SQLException e) {
+	        e.printStackTrace(); // Imprime la traza del error para depurar
+	        JOptionPane.showMessageDialog(null, "Error al eliminar el trabajador: " + e.getMessage());
+	    } 
+		guardarActividad("Trabajador "+loginTrabajador+" eliminado");
+         
+	}
+	public void cargarActividad(DefaultTableModel tableModel) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		try {
+			conn = DriverManager.getConnection(url);
+			String sql = "SELECT * FROM actividad";
+			statement = conn.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				String usuario = resultSet.getString("usuario");
+				String fecha = resultSet.getString("fecha");
+				String actividad = resultSet.getString("actividad");
+				Object[] fila = {usuario,fecha,actividad};
+				tableModel.addRow(fila);
+			}
+			conn.close();
+			
+		}catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Error al cargar la actividad");
+		}
 		
 	}
+	public void guardarActividad(String actividad) {
+		Connection conn = null;
+		PreparedStatement statement = null;
+		LocalTime hora = LocalTime.now();
+		LocalDate dia = LocalDate.now();
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String horaFormateada = hora.format(formato);
+		String fecha = dia+" "+horaFormateada;
+		int filasAfectadas = 0;
+		try {
+			conn = DriverManager.getConnection(url);
+			String sql = "INSERT INTO actividad(usuario,fecha,actividad)  VALUES (?,?,?)";
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, trabajador.getLogin());
+			statement.setString(2, fecha);
+			statement.setString(3, actividad);
+			
+			filasAfectadas = statement.executeUpdate();
+			conn.close();
+			
+		}catch (SQLException e) {
+			
+		}
+		if (filasAfectadas>-1) {
+			
+		}else {
+			JOptionPane.showMessageDialog(null, "No se pudo registrar la actividad");
+		}
+		
+	}
+	
+	public void guardarSiCierraVentana() {
+		if (trabajador.getLogin()!=null) {
+			guardarActividad("Trabajador: "+trabajador.getLogin()+" cerró sesión");
+		}else {
+			guardarActividad("Usuario: "+cliente.getLogin()+" cerró sesión");
+		}
+	}
+	public static int generarID() {
+        return (int) (Math.random() * 1000000); // Puedes ajustar el rango según tus necesidades
+    }
+	 public static boolean idExiste(Connection conn, int id) throws SQLException {
+	        String[] tablas = {"coche", "cocheSegundaMano", "moto", "motoSegundaMano"};
+
+	        for (String tabla : tablas) {
+	            String query = "SELECT COUNT(*) FROM " + tabla + " WHERE idVehiculo = ?";
+	            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+	                pstmt.setInt(1, id);
+	                ResultSet rs = pstmt.executeQuery();
+	                if (rs.next() && rs.getInt(1) > 0) {
+	                    return true; // El ID existe en al menos una tabla
+	                }
+	            }
+	        }
+	        return false; // El ID no existe en ninguna tabla
+	    }
+	public int asignarIdAVehiculo() throws SQLException {
+		 int idVehiculo;
+	        do {
+	            idVehiculo = generarID(); // Generar un ID aleatorio
+	        } while (idExiste(conn, idVehiculo)); // Verificar si el ID ya existe en las tablas
+
+	        return idVehiculo;
+	}
+	
+	
+	
+	
 	}
 	
 
