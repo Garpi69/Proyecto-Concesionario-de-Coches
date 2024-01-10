@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -30,7 +29,7 @@ public class VentanaAñadirCliente extends JFrame {
     protected JSpinner fechaNacimientoSpinner ;
     public  VentanaAñadirCliente() {
         setTitle("Registro");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 
@@ -70,7 +69,6 @@ public class VentanaAñadirCliente extends JFrame {
         panelSignUp.add(fechaNacimientoSpinner);
         this.add(panelSignUp, BorderLayout.CENTER);
 
-
         JPanel panelBotones = new JPanel();
         panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 
@@ -105,10 +103,7 @@ public class VentanaAñadirCliente extends JFrame {
         });
 
         this.add(panelBotones, BorderLayout.SOUTH);
-
         this.setVisible(true);
-		
-
 
     }
     public Cliente crearObjetoCliente() {

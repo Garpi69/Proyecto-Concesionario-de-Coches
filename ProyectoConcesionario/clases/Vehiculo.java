@@ -163,7 +163,7 @@ public class Vehiculo {
 		Vehiculo.df = df;
 	}
 
-	
+
 
 	public String getOfertas() {
 		return ofertas;

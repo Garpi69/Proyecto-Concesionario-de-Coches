@@ -37,7 +37,7 @@ public class Cliente extends Persona {
 	public String[] getOfertasEnviadasArray() {
 		String[] ofertasEnviadasArray = ofertasEnviadas.split(",");
 		return ofertasEnviadasArray;
-		
+
 	}
 	public void setOfertasEnviadasArray(String[] ofertasEnviadasArray) {
 		String ofertasEnviadas = "";

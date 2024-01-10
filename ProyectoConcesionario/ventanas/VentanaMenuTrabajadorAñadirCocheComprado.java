@@ -1,8 +1,6 @@
 package ventanas;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,7 +36,7 @@ public class VentanaMenuTrabajadorAñadirCocheComprado extends JFrame {
     public DAO dao = new DAO();
     public VentanaMenuTrabajadorAñadirCocheComprado() {
         setTitle("Datos del Coche");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 
@@ -141,12 +139,12 @@ public class VentanaMenuTrabajadorAñadirCocheComprado extends JFrame {
             				}
             				CocheSegundaMano cocheSegundaMano = new CocheSegundaMano(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion,kilometraje2,null,"concesionario");
             				dao.agregarCocheSegundaManoCompradoPorConcesionario(cocheSegundaMano, cliente2);
-            		
+
             		}
-            		
-            	
-            	
-               
+
+
+
+
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Error: Ingresa valores numéricos válidos");
             } catch (SQLException e1) {
@@ -154,7 +152,7 @@ public class VentanaMenuTrabajadorAñadirCocheComprado extends JFrame {
 				e1.printStackTrace();
 			}
         });
-        
+
         panel.add(new JLabel());
         panel.add(enviarButton);
 
@@ -162,7 +160,7 @@ public class VentanaMenuTrabajadorAñadirCocheComprado extends JFrame {
         setVisible(true);
     }
     public CocheSegundaMano obtenerCocheSegundaMano () {
-    	 // Obtener los valores ingresados por el cliente
+
         int idVehiculo = Integer.parseInt(idField.getText());
         String combustible = combustibleField.getText();
         String marca = marcaField.getText();
@@ -182,12 +180,12 @@ public class VentanaMenuTrabajadorAñadirCocheComprado extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-       
-       
-       
+
+
+
         JOptionPane.showMessageDialog(null, "Datos del coche recibidos correctamente");
          CocheSegundaMano cocheSegundaMano = new CocheSegundaMano(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, kilometraje,null,"concesionario");
     return cocheSegundaMano;
 
-};
+}
 }

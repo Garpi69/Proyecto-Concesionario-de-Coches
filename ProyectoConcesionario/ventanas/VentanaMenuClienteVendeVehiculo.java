@@ -17,7 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -25,7 +24,7 @@ import javax.swing.WindowConstants;
 public class VentanaMenuClienteVendeVehiculo extends JFrame {
     public VentanaMenuClienteVendeVehiculo() {
         setTitle("Menú Cliente - Venta de Vehículo");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(500, 600);
         setLocationRelativeTo(null);
 
@@ -35,23 +34,23 @@ public class VentanaMenuClienteVendeVehiculo extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
 
         JButton venderCocheButton = new JButton("Vender Coche");
-        estilizarBoton(venderCocheButton,"/Users/jonmendizabal/Downloads/coche-stock-ford-fiesta.jpg", "Vender Coche");
+        estilizarBoton(venderCocheButton,"./imagenes/coche-stock-ford-fiesta.jpg", "Vender Coche");
         venderCocheButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new VentanaMenuClienteVendeCoche();
-                
+
             }
         });
         panel.add(venderCocheButton);
 
         JButton venderMotoButton = new JButton("Vender Moto");
-        estilizarBoton(venderMotoButton,"/Users/jonmendizabal/Downloads/moto-naked-un-modelo-de-moto-de-carretera.jpeg","Vender Moto");
+        estilizarBoton(venderMotoButton,"./imagenes/moto-naked-un-modelo-de-moto-de-carretera.jpeg","Vender Moto");
         venderMotoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new VentanaMenuClienteVendeMoto();
-               
+
             }
         });
         panel.add(venderMotoButton);
@@ -115,6 +114,6 @@ public class VentanaMenuClienteVendeVehiculo extends JFrame {
 		            button.setBackground(Color.decode("#3F51B5"));
 		        }
 		    });
-	        
+
 	 }
 }

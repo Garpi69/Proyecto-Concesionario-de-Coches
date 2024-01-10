@@ -1,9 +1,6 @@
 package ventanas;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +21,7 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
 
     public VentanaMenuClienteVendeMoto() {
     	  setTitle("Datos de la Moto");
-          setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+          setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
           setSize(400, 650);
           setLocationRelativeTo(null);
 
@@ -126,7 +123,7 @@ public class VentanaMenuClienteVendeMoto extends JFrame {
           gbc.gridx = 0;
           gbc.gridwidth = 2;
           panel.add(enviarButton, gbc);
-          
+
           enviarButton.addActionListener(e -> {
               try {
                   // Obtener los valores ingresados por el cliente

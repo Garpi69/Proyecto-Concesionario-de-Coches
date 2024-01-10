@@ -1,33 +1,18 @@
 package ventanas;
 import java.awt.AWTException;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Properties;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-
-
 
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-
 
 import clases.Cita;
 import clases.Cliente;
@@ -41,15 +26,15 @@ import clases.Venta;
 public class DAO {
 
 
-	
+
 	protected  String[] administradores = new String[]{"worker1", "worker2"};
 	protected boolean esAdmin = false;
 	protected SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-    protected final String url = "jdbc:sqlite:/Users/jonmendizabal/ProyectoProgram/Proyecto-Concesionario-de-Coches-master/basedatos/baseDeDatos.sqlite";
+    protected final String url = "jdbc:sqlite:./database/databaseConcesionario.sqlite";
     protected Connection conn;
     protected Cliente cliente= new Cliente();
     protected Trabajador trabajador = new Trabajador();
-    
+
     public void conectar() throws SQLException {
     	try {
 			Class.forName("org.sqlite.JDBC");
@@ -73,7 +58,7 @@ public class DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-       
+
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Cliente cliente = null;
@@ -129,7 +114,7 @@ public class DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-       
+
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Cliente cliente = null;
@@ -243,12 +228,12 @@ public class DAO {
 	    PreparedStatement preparedStatement = null;
 	    Connection conn = this.conn;
 	    try {
-	        
-	        
-	       
+
+
+
 	        String query = "DELETE FROM cliente WHERE login = ?";
 	        preparedStatement = conn.prepareStatement(query);
-	       
+
 	        preparedStatement.setString(1, login);
 
 	        int filasAfectadas = preparedStatement.executeUpdate();
@@ -271,10 +256,10 @@ public class DAO {
 	        } catch (SQLException ex) {
 	            ex.printStackTrace();
 	        }
-	       
+
 	    }
 	    guardarActividad("Cliente "+login+" eliminado");
-	   
+
 	}
 	public boolean comprobarCredencialesTrabajador(String usuarioIngresado, String contrasenaIngresada) throws SQLException {
 		trabajador.setAdmin(esAdmin(usuarioIngresado));
@@ -291,15 +276,15 @@ public class DAO {
             preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, usuarioIngresado);
             preparedStatement.setString(2, contrasenaIngresada);
-            
+
             resultSet = preparedStatement.executeQuery();
             dniTrabajador = resultSet.getString("dni");
             trabajador.setdNI(dniTrabajador);
             if (resultSet.next()) {
                 // Se encontró una coincidencia en la base de datos
                 credencialesCorrectas = true;
-                
-                
+
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -345,8 +330,8 @@ public class DAO {
             if (credencialesCorrectas) {
             	cliente.setLogin(usuarioIngresado);
             	guardarActividad("Cliente "+usuarioIngresado+" logeado");
-            
-            	
+
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -474,7 +459,7 @@ public class DAO {
 		     String string = "";
 
 		        try {
-		            
+
 		            String query = "INSERT INTO cocheSegundaMano(idVehiculo,dniCliente, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, kilometraje,ofertas,propietario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 		            preparedStatement = conn.prepareStatement(query);
 		            preparedStatement.setInt(1, cocheSegundaMano.getIdVehiculo());
@@ -539,7 +524,7 @@ public class DAO {
 	            preparedStatement.setInt(14, motoSegundaMano.getKilometraje());
 	            preparedStatement.setString(15, motoSegundaMano.getOfertas());
 	            preparedStatement.setString(16, cliente.getLogin());
-	            
+
 
 
 	            preparedStatement.executeUpdate();
@@ -563,8 +548,8 @@ public class DAO {
 
 	    }
 	public void agregarVenta(Venta venta) {
-	       
-	       
+
+
 
 	        String query = "INSERT INTO ventas (categoria, idVehiculo, marca, modelo, precioVenta, dniComprador) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -586,8 +571,8 @@ public class DAO {
 	        guardarActividad("Venta de "+venta.getMarca()+" "+venta.getModelo()+" añadida");
 	    }
 	public void agregarOfertaAVehiculo(int idVehiculo, int oferta,String usuario) {
-		
-		 
+
+
          try {
         	 String query =  "SELECT * FROM coche WHERE idVehiculo = ? ";
         	PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -596,7 +581,7 @@ public class DAO {
 		 	String ofertas = resultSet.getString("ofertas");
 		 	ofertas = ofertas +"Usuario: "+usuario+" Oferta: "+oferta+" €, ";
 		 	preparedStatement.setString(12, ofertas);
-		 	
+
          }catch (SQLException e){
         	 try {
         		 String query =  "SELECT * FROM cocheSegundaMano WHERE idVehiculo = ? ";
@@ -625,11 +610,11 @@ public class DAO {
                		 	ofertas = ofertas +", Usuario: "+usuario+" Oferta: "+oferta+" €";
                		 	preparedStatement.setString(15, ofertas);
                         }catch (SQLException e3){
-                       	 
+
                         }
                    }
               }
-        	 
+
          }
          guardarActividad("Oferta de "+oferta+"€ añadida a vehiculo "+idVehiculo);
 	 }
@@ -640,29 +625,29 @@ public class DAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			String sql = "SELECT marca, modelo, ofertas FROM " + tabla + " WHERE propietario LIKE ?";
 		  String  ofertaString="";
 		   String usuarioQueHaceOferta = null;
 		    try {
 		        PreparedStatement statement = conn.prepareStatement(sql);
 		        statement.setString(1, "%" + propietario + "%");
-		        
+
 		        ResultSet resultSet = statement.executeQuery();
-		        
+
 		        while (resultSet.next()) {
 		            String marca = resultSet.getString("marca");
 		            String modelo = resultSet.getString("modelo");
 		            String ofertas = resultSet.getString("ofertas");
-		           
+
 		            if (ofertas != null) {
 		                String vehiculo = marca +" "+ modelo;
-		                
+
 		                String[] ofertasArray = ofertas.split(",");
 		                for (String oferta : ofertasArray) {
 		                	 oferta = oferta.trim().replaceAll("\\s+", "");
 		                    String[] ofertaArray = oferta.split(":");
-		                    
+
 		                    if (ofertaArray.length == 2) { // Verificamos si la oferta tiene el formato adecuado "login:oferta"
 		                    	usuarioQueHaceOferta = ofertaArray[0];
 		                        int ofertaFinal = Integer.parseInt(ofertaArray[1]);
@@ -673,13 +658,13 @@ public class DAO {
 		                        System.out.println("Oferta con formato incorrecto: " + oferta);
 		                    }
 		                }
-		                
-		               
+
+
 	            }else {
-	            	
+
 	            }
 	        }
-	         
+
 	     }catch (SQLException e){
 	    	 JOptionPane.showMessageDialog(null, "No tienes ofertas");
 	     }
@@ -698,11 +683,11 @@ public class DAO {
 			e.printStackTrace();
 		}
 	 String sql = "SELECT * FROM " + tabla ;
-     try {   
+     try {
 	 PreparedStatement statement = conn.prepareStatement(sql);
-        	
+
         ResultSet resultSet = statement.executeQuery();
-        
+
         while (resultSet.next()) {
            try {
             String ofertas = resultSet.getString("ofertas");
@@ -710,7 +695,7 @@ public class DAO {
             if (ofertas != null) {
             	ofertasArray = ofertas.split(",");
             }
-           
+
             String marca = resultSet.getString("marca");
             String modelo = resultSet.getString("modelo");
             String vehiculo = marca+""+modelo;
@@ -728,12 +713,12 @@ public class DAO {
             			}
             		}
             	}
-            }	
+            }
            }catch (SQLException e) {
-        	   
+
            }
-        } 
-        
+        }
+
      }catch (SQLException e){
     	 JOptionPane.showMessageDialog(null, "No tienes ofertas");
      }
@@ -743,7 +728,7 @@ public class DAO {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	}	
+	}
 	public java.util.Date sqlDateToJavaDate (java.sql.Date sqlDate){
 		java.util.Date utilDate = new java.util.Date(sqlDate.getTime());
 		return utilDate;
@@ -762,7 +747,7 @@ public class DAO {
 	        }
 	}
 	public String dateToString (java.util.Date date, SimpleDateFormat format2) {
-		
+
 		return format2.format(date);
 	}
 	public void eliminarVehiculo(String nombreCoche, String tabla) {
@@ -836,16 +821,11 @@ public class DAO {
 	                	String[] ofertas = oferta.split(",");
 	                	for(String ofertaString: ofertas) {
 	                		if (ofertaString ==ofertaABorrar) {
-	                			ofertaString="";
-	                			
-	                		}else {
-	                			ofertaNueva= ofertaNueva+", "+ofertaString;
+	                			ofertaNueva = oferta.replace(ofertaABorrar, "");
+
 	                		}
 	                	}
-	                    // Modificar el valor de la oferta (restar, sumar, etc.)
 	                   
-
-	                    // Actualizar el valor de la oferta en la tabla
 	                    sql = "UPDATE " + tabla + " SET ofertas = ? WHERE propietario = ? AND marca = ? AND modelo = ?";
 	                    statement = connection.prepareStatement(sql);
 	                    statement.setString(1, ofertaNueva);
@@ -854,8 +834,8 @@ public class DAO {
 	                    statement.setString(4, modelo);
 	                    statement.executeUpdate();
 
-	                    // Eliminar la oferta si es necesario
-	                 
+	                	JOptionPane.showMessageDialog(null, "Oferta eliminada con éxito");
+
 	                }
 	            }
 	        } catch (SQLException e) {
@@ -868,35 +848,32 @@ public class DAO {
         PreparedStatement statement = null;
 
         try {
-            // Establecer la conexión con la base de datos (reemplaza con tus propios datos de conexión)
+           
             connection = DriverManager.getConnection(url);
 
-            // Sentencia SQL para eliminar un coche por nombre
+  
             String sql = "INSERT INTO citas(fecha, usuario, nombreVehiculo) VALUES (?,?,?)";
             String fecha = cita.getFecha();
-           
-            // Preparar la sentencia
+
             statement = connection.prepareStatement(sql);
             statement.setString(1, fecha);
             statement.setString(2,cita.getUsuario());
             statement.setString(3, cita.getNombreVehiculo());
-            // Establecer el nombre del coche a eliminar
-
-            // Ejecutar la sentencia de eliminación
+            
             int filasEliminadas = statement.executeUpdate();
 
             if (filasEliminadas > 0) {
                 System.out.println("La cita ha sido añadida correctamente");
-               
+
             } else {
                 System.out.println("No se pudo añadir la cita, contacte con atención al cliente");
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // Manejo de excepciones (registra, notifica, etc.)
+          
         } finally {
-            // Cerrar statement y conexión
+   
             try {
                 if (statement != null) {
                     statement.close();
@@ -908,7 +885,7 @@ public class DAO {
                 e.printStackTrace();
             }
         }
-		
+
 	}
 	public boolean esAdmin (String usuario) {
 		boolean adminEs = false;
@@ -918,14 +895,14 @@ public class DAO {
 		try {
 			conn = DriverManager.getConnection(url);
 			String sql = "SELECT * FROM trabajador WHERE login = ?";
-			
+
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, usuario);
 			ResultSet resultSet = statement.executeQuery();
 			adminInt = resultSet.getInt("esAdmin");
 			conn.close();
 		}catch (SQLException e) {
-			
+
 		}
 		if (adminInt==1) {
 			adminEs=true;
@@ -937,12 +914,12 @@ public class DAO {
 		PreparedStatement statement;
 		try {
 			conn = DriverManager.getConnection(url);
-			
+
 			String sql = "SELECT * FROM trabajador";
 			statement = conn.prepareStatement(sql);
-        	
+
 	        ResultSet resultSet = statement.executeQuery();
-	        
+
 	        while(resultSet.next()) {
 	        	String usuario = resultSet.getString("login");
 	        	String contra = resultSet.getString("contra");
@@ -956,11 +933,11 @@ public class DAO {
 	        	Object[] fila = {usuario,contra,email,dni,nombre,apellidos,fechaNacimiento,sueldo,puesto};
 	 	        tableModel.addRow(fila);
 	        }
-	       
-			
-			
+
+
+
 		}catch (SQLException e){
-			
+
 		}
 		try {
 			desconectar();
@@ -979,15 +956,15 @@ public class DAO {
 			System.out.print(loginTrabajador);
 			statement = conn.prepareStatement(sql);
 			statement.setString(1, loginTrabajador);
-			
+
 			filasEliminadas = statement.executeUpdate();
 			conn.close();
 		} catch (SQLException e) {
-	        e.printStackTrace(); // Imprime la traza del error para depurar
+	        e.printStackTrace(); 
 	        JOptionPane.showMessageDialog(null, "Error al eliminar el trabajador: " + e.getMessage());
-	    } 
+	    }
 		guardarActividad("Trabajador "+loginTrabajador+" eliminado");
-         
+
 	}
 	public void cargarActividad(DefaultTableModel tableModel) {
 		Connection conn = null;
@@ -997,7 +974,7 @@ public class DAO {
 			String sql = "SELECT * FROM actividad";
 			statement = conn.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
-			
+
 			while (resultSet.next()) {
 				String usuario = resultSet.getString("usuario");
 				String fecha = resultSet.getString("fecha");
@@ -1006,11 +983,11 @@ public class DAO {
 				tableModel.addRow(fila);
 			}
 			conn.close();
-			
+
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Error al cargar la actividad");
 		}
-		
+
 	}
 	public void guardarActividad(String actividad) {
 		Connection conn = null;
@@ -1028,21 +1005,21 @@ public class DAO {
 			statement.setString(1, trabajador.getLogin());
 			statement.setString(2, fecha);
 			statement.setString(3, actividad);
-			
+
 			filasAfectadas = statement.executeUpdate();
 			conn.close();
-			
+
 		}catch (SQLException e) {
-			
+
 		}
 		if (filasAfectadas>-1) {
-			
+
 		}else {
 			JOptionPane.showMessageDialog(null, "No se pudo registrar la actividad");
 		}
-		
+
 	}
-	
+
 	public void guardarSiCierraVentana() {
 		if (trabajador.getLogin()!=null) {
 			guardarActividad("Trabajador: "+trabajador.getLogin()+" cerró sesión");
@@ -1051,7 +1028,7 @@ public class DAO {
 		}
 	}
 	public static int generarID() {
-        return (int) (Math.random() * 1000000); // Puedes ajustar el rango según tus necesidades
+        return (int) (Math.random() * 1000000);
     }
 	 public static boolean idExiste(Connection conn, int id) throws SQLException {
 	        String[] tablas = {"coche", "cocheSegundaMano", "moto", "motoSegundaMano"};
@@ -1062,28 +1039,28 @@ public class DAO {
 	                pstmt.setInt(1, id);
 	                ResultSet rs = pstmt.executeQuery();
 	                if (rs.next() && rs.getInt(1) > 0) {
-	                    return true; // El ID existe en al menos una tabla
+	                    return true; 
 	                }
 	            }
 	        }
-	        return false; // El ID no existe en ninguna tabla
+	        return false; 
 	    }
 	public int asignarIdAVehiculo() throws SQLException {
 		 int idVehiculo;
 	        do {
-	            idVehiculo = generarID(); // Generar un ID aleatorio
-	        } while (idExiste(conn, idVehiculo)); // Verificar si el ID ya existe en las tablas
+	            idVehiculo = generarID(); 
+	        } while (idExiste(conn, idVehiculo)); 
 
 	        return idVehiculo;
 	}
-	
-	
-	
-	
-	}
-	
 
-	
+
+
+
+	}
+
+
+
 
 
 

@@ -4,7 +4,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -33,7 +32,7 @@ public class VentanaRegistroCliente extends JFrame {
     protected JSpinner fechaNacimientoSpinner ;
     public VentanaRegistroCliente() {
         setTitle("Registro");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 

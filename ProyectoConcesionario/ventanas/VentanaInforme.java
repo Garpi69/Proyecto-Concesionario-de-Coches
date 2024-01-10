@@ -1,48 +1,47 @@
 package ventanas;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-
-import com.itextpdf.text.pdf.PdfWriter;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
+import java.awt.BorderLayout;
+import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.*;
-import java.awt.Font;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
-import com.itextpdf.*;
-import com.itextpdf.text.pdf.PdfPTable;
-
-
-
-import java.awt.BorderLayout;
-
-
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class VentanaInforme extends JFrame {
     private DefaultTableModel tableModel;
     private JTable table;
     private DAO dao = new DAO();
     public VentanaInforme() {
-        setTitle("Informe de Ventas");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setTitle("Informe de Ventas del Último Mes");
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
 
         tableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Hacer las celdas no editables
+                return false;
             }
         };
         tableModel.addColumn("Categoría");
@@ -54,8 +53,8 @@ public class VentanaInforme extends JFrame {
         tableModel.addColumn("Beneficio");
 
         table = new JTable(tableModel);
-        table.setFont(new Font("Arial", Font.PLAIN, 12)); // Fuente de la tabla
-        table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12)); // Fuente de encabezado
+        table.setFont(new Font("Arial", Font.PLAIN, 12));
+        table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
 
@@ -64,7 +63,7 @@ public class VentanaInforme extends JFrame {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} // Método para cargar los datos desde la base de datos
+		}
 
         JButton exportPDFButton = new JButton("Exportar a PDF");
         exportPDFButton.addActionListener(e -> exportarAPDF(table,tableModel));
@@ -74,17 +73,17 @@ public class VentanaInforme extends JFrame {
     }
 
     private void cargarDatosDesdeDB() throws SQLException{
-    	 // Establecer la conexión con la base de datos
+
         Connection conn = DriverManager.getConnection(dao.url);
         Statement stmt = conn.createStatement();
 
-        // Ejecutar la consulta SQL
+
         ResultSet rs = stmt.executeQuery("SELECT * FROM ventas");
 
-        // Limpiar la tabla antes de cargar nuevos datos
+
         tableModel.setRowCount(0);
 
-        // Agregar filas de la base de datos a la tabla
+
         while (rs.next()) {
             Object[] rowData = {
                     rs.getString("categoria"),
@@ -98,7 +97,7 @@ public class VentanaInforme extends JFrame {
             tableModel.addRow(rowData);
         }
 
-        // Calcular la suma de todas las ventas
+
         double totalCompra = 0.0;
         double totalVenta = 0.0;
         double totalBeneficio = 0.0;
@@ -110,7 +109,6 @@ public class VentanaInforme extends JFrame {
         Object[] sumaTotales = {"Total", "", "", "", totalCompra, totalVenta, totalBeneficio};
         tableModel.addRow(sumaTotales);
 
-        // Cerrar la conexión y los recursos
         try {
 			rs.close();
 			stmt.close();
@@ -119,34 +117,31 @@ public class VentanaInforme extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
+
     }
-
-
-
     private void exportarAPDF(JTable table, DefaultTableModel tableModel) {
         Document document = new Document();
         try {
             PdfWriter.getInstance(document, new FileOutputStream("InformeConcesionario.pdf"));
             document.open();
 
-            // Agregar título
+
             com.itextpdf.text.Font titleFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.BOLD);
             Paragraph title = new Paragraph("Informe de Ventas", titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
-            // Agregar fecha
+
             com.itextpdf.text.Font dateFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.ITALIC);
             Paragraph date = new Paragraph("Fecha: " + new java.util.Date(), dateFont);
             date.setAlignment(Element.ALIGN_RIGHT);
             document.add(date);
 
-            // Agregar tabla
+
             PdfPTable pdfTable = new PdfPTable(table.getColumnCount());
             pdfTable.setWidthPercentage(100);
 
-            // Encabezados de columna
+
             for (int i = 0; i < table.getColumnCount(); i++) {
                 PdfPCell header = new PdfPCell(new Phrase(table.getColumnName(i)));
                 header.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -154,7 +149,7 @@ public class VentanaInforme extends JFrame {
                 pdfTable.addCell(header);
             }
 
-            // Datos de la tabla
+
             for (int i = 0; i < table.getRowCount(); i++) {
                 for (int j = 0; j < table.getColumnCount(); j++) {
                     PdfPCell cell = new PdfPCell(new Phrase(table.getValueAt(i, j).toString()));

@@ -1,7 +1,6 @@
 package ventanas;
 
 import java.awt.BorderLayout;
-import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -14,11 +13,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
+
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -26,23 +26,23 @@ import javax.swing.WindowConstants;
 public class VentanaMenuCliente extends JFrame {
 	 public VentanaMenuCliente(DAO dao) {
 	        setTitle("Usuario: "+dao.cliente.getLogin());
-	        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	        setSize(980, 700);
 	        setLocationRelativeTo(null);
-	        
+
 	        addWindowListener(new WindowAdapter() {
 	            @Override
 	            public void windowClosing(WindowEvent e) {
-	                // Llama a tu función aquí
+
 	                dao.guardarSiCierraVentana();
 	            }
 	        });
-	        
+
 	        JPanel panel = new JPanel();
-	        panel.setLayout(new GridLayout(2, 1, 10, 10)); // Espaciado entre componentes
+	        panel.setLayout(new GridLayout(2, 1, 10, 10));
 
 	        JButton comprarButton = new JButton("Comprar");
-	        estilizarBoton(comprarButton,"/Users/jonmendizabal/Downloads/DSC09923-scaled.jpg", "Comprar");
+	        estilizarBoton(comprarButton,"./imagenes/DSC09923-scaled.jpg", "Comprar");
 	        comprarButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
@@ -53,7 +53,7 @@ public class VentanaMenuCliente extends JFrame {
 	        panel.add(comprarButton);
 
 	        JButton venderButton = new JButton("Vender");
-	        estilizarBoton(venderButton,"/Users/jonmendizabal/Downloads/beautiful-modern-cars-at-luxury-dealership-salon-2021-09-04-04-53-23-utc-scaled.jpg","Vender") ;
+	        estilizarBoton(venderButton,"./imagenes/beautiful-modern-cars-at-luxury-dealership-salon-2021-09-04-04-53-23-utc-scaled.jpg","Vender") ;
 	        venderButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
@@ -63,7 +63,7 @@ public class VentanaMenuCliente extends JFrame {
 	        panel.add(venderButton);
 
 	        JButton verOfertasButton = new JButton("Mis ofertas");
-	        estilizarBoton(verOfertasButton,"/Users/jonmendizabal/Downloads/stock-car-2022-np-20220517.jpg", "Mis Ofertas");
+	        estilizarBoton(verOfertasButton,"./imagenes/stock-car-2022-np-20220517.jpg", "Mis Ofertas");
 	        verOfertasButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
@@ -71,35 +71,35 @@ public class VentanaMenuCliente extends JFrame {
 	            }
 	        });
 	        panel.add(verOfertasButton);
-	        
+
 	        JButton miPerfil = new JButton("Mi Perfil");
-	        estilizarBoton(miPerfil,"/Users/jonmendizabal/Downloads/1366_2000.jpg" ,"Mi Perfil");
+	        estilizarBoton(miPerfil,"./imagenes/1366_2000.jpg" ,"Mi Perfil");
 	        miPerfil.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					VentanaMiPerfil ventanaMiPerfil = new VentanaMiPerfil(dao);
-					
+
 				}
-	        	
+
 	        });
 	        panel.add(miPerfil);
-	       
+
 	        JButton cerrarSesionButton = new JButton("Inventario");
-	        estilizarBoton( cerrarSesionButton,"/Users/jonmendizabal/Downloads/El-arte-de-perderse.jpg", "Cerrar Sesión");
+	        estilizarBoton( cerrarSesionButton,"./imagenes/El-arte-de-perderse.jpg", "Cerrar Sesión");
 	        cerrarSesionButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	new VentanaInicio(dao);
 	            	dao.guardarActividad("Trabajador: "+dao.trabajador.getLogin()+" cerró sesión");
 	            	dao.cliente.setLogin("");
-	            	
+
 	            	dispose();
 	            }
 	        });
 	        panel.add( cerrarSesionButton);
 
-	        // Espaciado entre panel y ventana
+
 	        JPanel wrapperPanel = new JPanel(new BorderLayout());
 	        wrapperPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Borde
 
@@ -145,10 +145,10 @@ public class VentanaMenuCliente extends JFrame {
 		            button.setBackground(Color.decode("#3F51B5"));
 		        }
 		    });
-	        
+
 	 }
 	 private Image createBlackLayer(Image originalImage) {
-	        // Crear una BufferedImage para la imagen original
+
 		  BufferedImage bufferedImage = new BufferedImage(
 		            originalImage.getWidth(null),
 		            originalImage.getHeight(null),
@@ -166,7 +166,7 @@ public class VentanaMenuCliente extends JFrame {
 
 		    return bufferedImage;
 	    }
-	 
+
 }
 
 

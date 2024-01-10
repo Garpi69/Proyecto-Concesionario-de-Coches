@@ -40,9 +40,9 @@ public class Venta {
 	public void setPrecioVenta(int precioVenta) {
 		this.precioVenta = precioVenta;
 	}
-	
 
-	
+
+
 	public String getDniComprador() {
 		return dniComprador;
 	}
@@ -58,7 +58,7 @@ public class Venta {
 		this.modelo = modelo;
 
 		this.precioVenta = precioVenta;
-	
+
 		this.dniComprador = dniComprador;
 	}
 	public Venta() {

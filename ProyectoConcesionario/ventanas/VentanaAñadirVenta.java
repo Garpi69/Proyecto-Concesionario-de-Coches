@@ -1,6 +1,13 @@
 package ventanas;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
 import clases.Venta;
 public class VentanaAñadirVenta extends JFrame {
 
@@ -12,7 +19,7 @@ public class VentanaAñadirVenta extends JFrame {
     private JTextField campoDniComprador;
 
     public VentanaAñadirVenta(DAO dao) {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Añadir Venta");
 
         JPanel panel = new JPanel();
@@ -51,5 +58,5 @@ public class VentanaAñadirVenta extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-    
+
 }

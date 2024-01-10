@@ -1,7 +1,6 @@
 package ventanas;
 
 import java.awt.BorderLayout;
-import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -14,11 +13,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
+
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -26,23 +26,23 @@ import javax.swing.WindowConstants;
 public class VentanaMenuTrabajador extends JFrame {
 	 public VentanaMenuTrabajador(DAO dao) {
 	        setTitle("Trabajador: "+dao.trabajador.getLogin());
-	        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	        setSize(980, 700);
 	        setLocationRelativeTo(null);
-	        
+
 	        addWindowListener(new WindowAdapter() {
 	            @Override
 	            public void windowClosing(WindowEvent e) {
-	                // Llama a tu función aquí
+	         
 	               dao.guardarSiCierraVentana();
 	            }
 	        });
-	        
+
 	        JPanel panel = new JPanel();
-	        panel.setLayout(new GridLayout(3, 3, 10, 10)); // Espaciado entre componentes
+	        panel.setLayout(new GridLayout(3, 3, 10, 10)); 
 
 	        JButton inventarioButton = new JButton("Inventario");
-	        estilizarBoton( inventarioButton,"/Users/jonmendizabal/Downloads/warehouse_AdobeStock_294439367.jpeg", "Inventario");
+	        estilizarBoton( inventarioButton,"./imagenes/warehouse_AdobeStock_294439367.jpeg", "Inventario");
 	        inventarioButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
@@ -50,11 +50,11 @@ public class VentanaMenuTrabajador extends JFrame {
 	            }
 	        });
 	        panel.add( inventarioButton);
-	        
-	        
-	        
+
+
+
 	        JButton clientesButton = new JButton("Clientes");
-	        estilizarBoton(clientesButton,"/Users/jonmendizabal/Downloads/cliente-e1551799486636.jpg","Clientes") ;
+	        estilizarBoton(clientesButton,"./imagenes/cliente-e1551799486636.jpg","Clientes") ;
 	        clientesButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
@@ -63,21 +63,21 @@ public class VentanaMenuTrabajador extends JFrame {
 	        });
 	        panel.add(clientesButton);
 	        JButton anadirVentaButton = new JButton("Añadir venta");
-	        estilizarBoton(anadirVentaButton,"/Users/jonmendizabal/Downloads/cash-Ennio-Leanza.jpg" ,"Añadir Venta");
+	        estilizarBoton(anadirVentaButton,"./imagenes/cash-Ennio-Leanza.jpg" ,"Añadir Venta");
 	        anadirVentaButton.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					new VentanaAñadirVenta(dao);
-					
+
 				}
-	        	
+
 	        });
 	        panel.add(anadirVentaButton);
-	       
-        	
+
+
 	        JButton citasButton = new JButton("Citas");
-	        estilizarBoton(citasButton,"/Users/jonmendizabal/Downloads/reunion.jpg","Citas") ;
+	        estilizarBoton(citasButton,"./imagenes/reunion.jpg","Citas") ;
 	        citasButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
@@ -87,7 +87,7 @@ public class VentanaMenuTrabajador extends JFrame {
 	        panel.add(citasButton);
 
 	        JButton informeButton = new JButton("Informe");
-	        estilizarBoton(informeButton,"/Users/jonmendizabal/Downloads/informe.jpg", "Informe");
+	        estilizarBoton(informeButton,"./imagenes/informe.jpg", "Informe");
 	       informeButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
@@ -95,25 +95,25 @@ public class VentanaMenuTrabajador extends JFrame {
 	            }
 	        });
 	        panel.add(informeButton);
-	        
+
 	        JButton miPerfilButton = new JButton("Mi perfil");
-	        estilizarBoton( miPerfilButton,"/Users/jonmendizabal/Downloads/1366_2000.jpg", "Mi perfil");
+	        estilizarBoton( miPerfilButton,"./imagenes/1366_2000.jpg", "Mi perfil");
 	        miPerfilButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	new VentanaMiPerfil(dao);
-	            	
+
 	            }
 	        });
         	panel.add( miPerfilButton);
-	        
+
 	        JButton administracionButton = new JButton("Administración");
-	        estilizarBoton( administracionButton,"/Users/jonmendizabal/Downloads/mejores-portátiles-para-profesores.jpeg", "Administración");
+	        estilizarBoton( administracionButton,"./imagenes/mejores-portátiles-para-profesores.jpeg", "Administración");
 	        administracionButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	new VentanaAdministracion(dao);
-	            	
+
 	            }
 	        });
         	panel.add( administracionButton);
@@ -122,9 +122,9 @@ public class VentanaMenuTrabajador extends JFrame {
         	if (dao.trabajador.esAdmin()){
         		administracionButton.setVisible(true);
         	}
-	       
+
 	        JButton cerrarSesionButton = new JButton("Inventario");
-	        estilizarBoton( cerrarSesionButton,"/Users/jonmendizabal/Downloads/El-arte-de-perderse.jpg", "Cerrar Sesión");
+	        estilizarBoton( cerrarSesionButton,"./imagenes/El-arte-de-perderse.jpg", "Cerrar Sesión");
 	        cerrarSesionButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
@@ -133,17 +133,16 @@ public class VentanaMenuTrabajador extends JFrame {
 	            	dao.trabajador.setLogin("");
 	            	dao.esAdmin = false;
 	            	dispose();
-	            	
+
 	            }
 	        });
 	        panel.add( cerrarSesionButton);
-	        
-	        
-	        
-	        
-	       
-	        
-	        // Espaciado entre panel y ventana
+
+
+
+
+
+
 	        JPanel wrapperPanel = new JPanel(new BorderLayout());
 	        wrapperPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Borde
 
@@ -189,10 +188,10 @@ public class VentanaMenuTrabajador extends JFrame {
 		            button.setBackground(Color.decode("#3F51B5"));
 		        }
 		    });
-	        
+
 	 }
 	 private Image createBlackLayer(Image originalImage) {
-	        // Crear una BufferedImage para la imagen original
+	  
 		  BufferedImage bufferedImage = new BufferedImage(
 		            originalImage.getWidth(null),
 		            originalImage.getHeight(null),
@@ -202,7 +201,7 @@ public class VentanaMenuTrabajador extends JFrame {
 		    Graphics2D g = bufferedImage.createGraphics();
 		    g.drawImage(originalImage, 0, 0, null);
 
-		    Color transparentBlack = new Color(0, 0, 0, 128); // 128 para una opacidad del 50%
+		    Color transparentBlack = new Color(0, 0, 0, 128); 
 		    g.setColor(transparentBlack);
 		    g.fillRect(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
 
@@ -210,7 +209,7 @@ public class VentanaMenuTrabajador extends JFrame {
 
 		    return bufferedImage;
 	    }
-	 
+
 }
 
 

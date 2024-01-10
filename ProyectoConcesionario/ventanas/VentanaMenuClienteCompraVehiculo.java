@@ -1,10 +1,7 @@
 package ventanas;
-import clases.Venta;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,24 +22,26 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
+import clases.Venta;
+
 public class VentanaMenuClienteCompraVehiculo extends JFrame {
 
 	JTable inventarioTable;
     private DefaultTableModel tableModel;
-  
+
     public VentanaMenuClienteCompraVehiculo(DAO dao) {
         setTitle("Inventario de Vehículos");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(1000, 800);
         setLocationRelativeTo(null);
-        
+
         JPanel filterPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // Espacios entre componentes
+        gbc.insets = new Insets(5, 5, 5, 5);
         JPanel buttonPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc2 = new GridBagConstraints();
-        gbc2.insets = new Insets(5, 5, 5, 5); // Espacios entre componentes
-        
+        gbc2.insets = new Insets(5, 5, 5, 5);
+
         JTextField marcaField = new JTextField(10);
         JTextField modeloField = new JTextField(10);
         JTextField colorField = new JTextField(10);
@@ -59,56 +58,56 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-       
+
         });
         gbc.gridx = 0;
         gbc.gridy = 0;
         filterPanel.add(new JLabel("Marca:"), gbc);
         JButton cocheButton = new JButton("Coche");
         cocheButton.addActionListener(e -> {
-        	try {	
+        	try {
             	Connection connection = DriverManager.getConnection(dao.url);
             	tableModel.setRowCount(0);
                 cargarDatosVehiculos(connection,"coche",dao);
             }catch (SQLException e1) {
-            	
+
             }
             });
 
         JButton cocheSegundaManoButton = new JButton("Coche de Segunda Mano");
         cocheSegundaManoButton.addActionListener(e -> {
-        	try {	
+        	try {
             	Connection connection = DriverManager.getConnection(dao.url);
             	tableModel.setRowCount(0);
                 cargarDatosVehiculos(connection,"cocheSegundaMano",dao);
             }catch (SQLException e1) {
-            	
+
             }
             });
 
         JButton motoButton = new JButton("Moto");
         motoButton.addActionListener(e -> {
-        	try {	
+        	try {
             	Connection connection = DriverManager.getConnection(dao.url);
             	tableModel.setRowCount(0);
                 cargarDatosVehiculos(connection,"moto",dao);
             }catch (SQLException e1) {
-            	
+
             }
             });
 
         JButton motoSegundaManoButton = new JButton("Moto de Segunda Mano");
         motoSegundaManoButton.addActionListener(e -> {
-        try {	
+        try {
         	Connection connection = DriverManager.getConnection(dao.url);
         	tableModel.setRowCount(0);
             cargarDatosVehiculos(connection,"motoSegundaMano",dao);
         }catch (SQLException e1) {
-        	
+
         }
         });
 
-        // Añadir los botones al panel de filtros
+
         gbc2.gridx = 7;
         buttonPanel.add(cocheButton, gbc2);
 
@@ -147,7 +146,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         tableModel = new DefaultTableModel();
         inventarioTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(inventarioTable);
-        
+
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(filterPanel, BorderLayout.NORTH);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -159,7 +158,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
              }else {
             	 JOptionPane.showMessageDialog(null, "Seleccione un vehiculo");
              }
-        	
+
         });
        hacerOfertaButton.addActionListener(e -> {
     	   int row = inventarioTable.getSelectedRow();
@@ -170,22 +169,22 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         setVisible(true);
     }
    public void cargarInventario(DAO dao) {
-        // Asegúrate de tener la conexión con tu base de datos
+
         try {
             Connection connection = DriverManager.getConnection(dao.url);
             String[] columnas = {"ID", "Combustible", "Marca","Modelo", "Color","Tipo","Potencia","Numero de plazas", "Precio","Cuota","Matriculacion","Peso (Motos)","Baul (Motos)","Kilometraje (Segunda Mano","Propietario"};
             tableModel.setColumnIdentifiers(columnas);
-         
-            // Obtener datos de coches
+
+
             cargarDatosVehiculos(connection, "coche",dao);
 
-            // Obtener datos de coches de segunda mano
+
             cargarDatosVehiculos(connection, "cocheSegundaMano",dao);
 
-            // Obtener datos de motos
+
             cargarDatosVehiculos(connection, "moto",dao);
 
-            // Obtener datos de motos de segunda mano
+
             cargarDatosVehiculos(connection, "motoSegundaMano",dao);
 
             connection.close();
@@ -199,7 +198,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
         String sql = "SELECT * FROM " + tabla;
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
-        
+
         while (resultSet.next()) {
             int id = resultSet.getInt("idVehiculo");
             String combustible = resultSet.getString("combustible");
@@ -218,9 +217,9 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
 				if (matriculacionString!=null) {
 					matriculacion = dao.stringToDate(resultSet.getString("matriculacion"),dao.format);
 				}
-				
+
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
             int kilometraje =0;
@@ -230,14 +229,14 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
             try {
                kilometraje = resultSet.getInt("kilometraje");
             } catch (SQLException e) {
-                // La columna "kilometraje" no existe o no se puede obtener, se asigna el valor predeterminado (0 en este caso)
+
             }try{
             	 peso = resultSet.getInt("peso");
             }catch (SQLException e) {
-            	
+
             }try {
             	  baul = resultSet.getInt("baul");
-                 
+
             }catch (SQLException e) {
             }
            String baulString= "";
@@ -246,13 +245,11 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
             }else {
             	baulString = "No";
             }
-           
-        	
-           
+
             Object[] fila = {id,combustible, marca, modelo,color, tipo,potencia,numPlazas, precio,cuota,matriculacion,peso,baulString,kilometraje,propietario};
             tableModel.addRow(fila);
         }
-       
+
         resultSet.close();
         statement.close();
     }
@@ -295,19 +292,16 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
     private void filtrarCoche(String marca, String modelo, String color,DAO dao) throws ParseException {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
-           
-            String sql = "SELECT * FROM coche WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";;;
+
+            String sql = "SELECT * FROM coche WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-           
+
                 statement.setString(1, "%" + marca + "%");
                 statement.setString(2, "%" + modelo + "%");
                 statement.setString(3, "%" + color + "%");
-              
-            
-            
 
             ResultSet resultSet = statement.executeQuery();
-           
+
             while (resultSet.next()) {
                 int id = resultSet.getInt("idVehiculo");
                 String combustible = resultSet.getString("combustible");
@@ -319,28 +313,25 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
                 int numPlazas = resultSet.getInt("numPlazas");
                 int precio = resultSet.getInt("precio");
                 int cuota = resultSet.getInt("cuota");
-            
+
                 String propietario = resultSet.getString("propietario");
                 Date matriculacionDate = null;
                 try {
                 	 matriculacionDate = dao.stringToDate( resultSet.getString("matriculacion"), dao.format);
                 }catch (SQLException e){
-                	
+
                 }
-               
-               
-                
-                
-                // Resto del código para obtener los valores del vehículo
+
+
 
                 Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,propietario};
                 tableModel.addRow(fila);
             }
-           
+
             resultSet.close();
             statement.close();
             connection.close();
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al filtrar el inventario: " + ex.getMessage());
@@ -350,20 +341,18 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
     private void filtrarCocheSegundaMano(String marca, String modelo, String color, DAO dao) {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
-           
 
-            String sql = "SELECT * FROM cocheSegundaMano WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";;;
+
+            String sql = "SELECT * FROM cocheSegundaMano WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-           
+
                 statement.setString(1, "%" + marca + "%");
                 statement.setString(2, "%" + modelo + "%");
                 statement.setString(3, "%" + color + "%");
-              
-            
-            
+
 
             ResultSet resultSet = statement.executeQuery();
-           
+
             while (resultSet.next()) {
                 int id = resultSet.getInt("idVehiculo");
                 String combustible = resultSet.getString("combustible");
@@ -381,41 +370,37 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
                 String propietario = resultSet.getString("propietario");
                 matriculacionDate = dao.stringToDate(matriculacion, dao.format);
                 kilometraje = getIntOrNull(resultSet,"kilometraje");
-                
-                // Resto del código para obtener los valores del vehículo
+
+
 
                 Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,0,0,kilometraje,propietario};
                 tableModel.addRow(fila);
             }
-            
+
             resultSet.close();
             statement.close();
             connection.close();
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al filtrar el inventario: " + ex.getMessage());
         }
         inventarioTable.repaint();
-       
+
     }
     private void filtrarMoto(String marca, String modelo, String color, DAO dao) {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
-           
 
-            String sql = "SELECT * FROM moto WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";;;
+
+            String sql = "SELECT * FROM moto WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-           
+
                 statement.setString(1, "%" + marca + "%");
                 statement.setString(2, "%" + modelo + "%");
                 statement.setString(3, "%" + color + "%");
-              
-            
-            
-
             ResultSet resultSet = statement.executeQuery();
-           
+
             while (resultSet.next()) {
                 int id = resultSet.getInt("idVehiculo");
                 String combustible = resultSet.getString("combustible");
@@ -439,40 +424,37 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
                 if (baul==1) {
                 	baulString = "Si";
                 }
-                // Resto del código para obtener los valores del vehículo
+
 
                 Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,peso,baulString,propietario};
                 tableModel.addRow(fila);
             }
-            
+
             resultSet.close();
             statement.close();
             connection.close();
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al filtrar el inventario: " + ex.getMessage());
         }
         inventarioTable.repaint();
-       
+
         }
     private void filtrarMotoSegundaMano(String marca, String modelo, String color, DAO dao) {
         try {
             Connection connection = DriverManager.getConnection(dao.url);
-           
 
-            String sql = "SELECT * FROM moto WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";;;
+
+            String sql = "SELECT * FROM moto WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-           
+
                 statement.setString(1, "%" + marca + "%");
                 statement.setString(2, "%" + modelo + "%");
                 statement.setString(3, "%" + color + "%");
-              
-            
-            
 
             ResultSet resultSet = statement.executeQuery();
-           
+
             while (resultSet.next()) {
                 int id = resultSet.getInt("idVehiculo");
                 String combustible = resultSet.getString("combustible");
@@ -498,33 +480,32 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
                 if (baul==1) {
                 	baulString = "Si";
                 }
-                // Resto del código para obtener los valores del vehículo
+
 
                 Object[] fila = {id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio, cuota, matriculacionDate,peso,baulString,kilometraje,propietario};
                 tableModel.addRow(fila);
             }
-            
+
             resultSet.close();
             statement.close();
             connection.close();
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al filtrar el inventario: " + ex.getMessage());
         }
         inventarioTable.repaint();
-       
+
     }
     private int getIntOrNull(ResultSet resultSet, String column) {
-        int valor = 0; // Valor por defecto si la columna no existe
+        int valor = 0;
         try {
             valor = resultSet.getInt(column);
         } catch (SQLException e) {
-            // La columna no existe o no se puede obtener
-            // Se mantiene el valor por defecto
+
         }
         return valor;
     }
-    
+
 }
 

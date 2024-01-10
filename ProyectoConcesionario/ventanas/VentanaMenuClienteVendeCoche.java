@@ -1,8 +1,6 @@
 package ventanas;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,11 +16,10 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import clases.Cliente;
-import clases.Coche;
 import clases.CocheSegundaMano;
 
 public class VentanaMenuClienteVendeCoche extends JFrame {
-	
+
     private JTextField combustibleField;
     private JTextField marcaField;
     private JTextField modeloField;
@@ -37,7 +34,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
     public DAO dao = new DAO();
     public VentanaMenuClienteVendeCoche() {
         setTitle("Datos del Coche");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 
@@ -45,7 +42,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
         panel.setLayout(new GridLayout(13, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-       
+
         combustibleField = new JTextField();
         marcaField = new JTextField();
         modeloField = new JTextField();
@@ -57,7 +54,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
         kilometrajeField = new JTextField();
         matriculacionField = new JTextField();
 
-       
+
         panel.add(new JLabel("Combustible:"));
         panel.add(combustibleField);
         panel.add(new JLabel("Marca:"));
@@ -85,7 +82,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
             	 CocheSegundaMano cocheSegundaMano = obtenerCocheSegundaMano();
             	 Cliente cliente = dao.obtenerClientePorLogin(dao.cliente.getLogin());
                  dao.agregarCocheVendidoPorCliente(cocheSegundaMano, cliente);
-               
+
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Error: Ingresa valores numéricos válidos");
             } catch (SQLException e1) {
@@ -93,7 +90,7 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
 				e1.printStackTrace();
 			}
         });
-        
+
         panel.add(new JLabel());
         panel.add(enviarButton);
 
@@ -121,12 +118,12 @@ public class VentanaMenuClienteVendeCoche extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-       
-       
-       
+
+
+
         JOptionPane.showMessageDialog(null, "Datos del coche recibidos correctamente");
          CocheSegundaMano cocheSegundaMano = new CocheSegundaMano(idVehiculo, combustible, marca, modelo, color, tipo, potencia, numPlazas, precio, cuota, matriculacion, kilometraje,null,dao.cliente.getLogin());
     return cocheSegundaMano;
 
-};
+}
 }

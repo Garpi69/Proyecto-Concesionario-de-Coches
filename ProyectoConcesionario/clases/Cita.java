@@ -1,11 +1,11 @@
 package clases;
 
 public class Cita {
-	
+
 	public String fecha;
 	public String usuario;
 	public String nombreVehiculo;
-	
+
 	public String getFecha() {
 		return fecha;
 	}
@@ -33,5 +33,5 @@ public class Cita {
 	public Cita() {
 		super();
 	}
-	
+
 }

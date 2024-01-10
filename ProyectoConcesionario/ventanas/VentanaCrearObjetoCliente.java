@@ -27,7 +27,7 @@ public class VentanaCrearObjetoCliente extends JFrame {
 
     public VentanaCrearObjetoCliente() {
         setTitle("Datos del Cliente");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(400, 400);
         setLocationRelativeTo(null);
 

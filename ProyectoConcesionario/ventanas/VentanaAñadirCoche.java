@@ -1,9 +1,17 @@
 package ventanas;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.sql.SQLException;
 import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
 import clases.Coche;
-import javax.swing.*;
 public class VentanaAñadirCoche extends JFrame {
 	 	private JTextField campoID;
 	    private JTextField campoCombustible;
@@ -18,7 +26,7 @@ public class VentanaAñadirCoche extends JFrame {
 	    private JTextField campoMatriculacion;
 
 	    public VentanaAñadirCoche(DAO dao) {
-	        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	        setTitle("Datos del Vehículo");
 
 	        JPanel panel = new JPanel();

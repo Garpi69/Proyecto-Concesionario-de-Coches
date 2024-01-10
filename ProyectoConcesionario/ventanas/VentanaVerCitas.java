@@ -1,8 +1,16 @@
 package ventanas;
-import javax.swing.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.sql.*;
 
 public class VentanaVerCitas extends JFrame {
 
@@ -16,15 +24,15 @@ public class VentanaVerCitas extends JFrame {
         tablaCitas = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(tablaCitas);
 
-        // Configurar la ventana
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+       
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(980	, 400);
         setLocationRelativeTo(null);
 
-        // Agregar la tabla a la ventana
+       
         add(scrollPane);
 
-        // Obtener los datos de la tabla "citas" y cargarlos en la tabla
+     
         obtenerDatosCitas(dao);
         setVisible(true);
     }
@@ -40,18 +48,15 @@ public class VentanaVerCitas extends JFrame {
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
 
-            // Obtener metadatos de las columnas
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();
 
-            // Crear columnas para la tabla
-            
+      
+
             model.addColumn("Fecha");
             model.addColumn("Usuario");
             model.addColumn("Vehiculo");
-            
 
-            // Agregar filas a la tabla
             while (rs.next()) {
                 Object[] row = new Object[columnCount];
                 for (int i = 1; i <= columnCount; i++) {
@@ -62,7 +67,7 @@ public class VentanaVerCitas extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            // Cerrar recursos
+         
             try {
                 if (rs != null) {
                     rs.close();
@@ -79,5 +84,5 @@ public class VentanaVerCitas extends JFrame {
         }
     }
 
-   
+
 }

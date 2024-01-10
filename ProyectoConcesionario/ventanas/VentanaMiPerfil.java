@@ -1,15 +1,23 @@
 package ventanas;
-import clases.Cliente;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.*;
-import javax.swing.*;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
+import clases.Cliente;
 
 public class VentanaMiPerfil extends JFrame{
 	 private JLabel loginLabel;
@@ -17,10 +25,10 @@ public class VentanaMiPerfil extends JFrame{
 	    private JButton guardarButton, editarButton;
 	    private JTextField loginField, emailField, contraField, dniField, nombreField, apellidoField, fechaNacimientoField, numTarjetaField;
 	    private DAO dao = new DAO();
-	    // Otros JLabel para mostrar los datos del cliente
+	
 	    public VentanaMiPerfil(DAO dao2) {
 	        setTitle("Mi Perfil");
-	        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	        setSize(500,600);
 	        setLocationRelativeTo(null);
 
@@ -35,7 +43,7 @@ public class VentanaMiPerfil extends JFrame{
 	        apellidoField = new JTextField(20);
 	        fechaNacimientoField = new JTextField(20);
 	        numTarjetaField = new JTextField(20);
-	        // Otros JTextField para los datos editables del cliente
+	   
 	        editarButton = new JButton("Editar");
 	        editarButton.addActionListener(new ActionListener() {
 
@@ -44,32 +52,33 @@ public class VentanaMiPerfil extends JFrame{
 					// TODO Auto-generated method stub
 					hacerEditable(panel);
 				}
-	        	
+
 	        });
 	        guardarButton = new JButton("Guardar");
 	        guardarButton.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
+	            @Override
+				public void actionPerformed(ActionEvent e) {
 	                guardarCambios(dao2);
 	                hacerNoEditable(panel);
 	                dispose();
-	               
+
 	            }
 	        });
 
 	        panel.add(loginLabel = new JLabel("Login:"));
-	       
+
 	        panel.add(emailLabel = new JLabel("Email:"));
-	       
+
 	        panel.add(contraLabel = new JLabel("Contraseña:"));
-	       
+
 	        panel.add(dniLabel = new JLabel("DNI:"));
-	       
+
 	        panel.add(nombreLabel = new JLabel("Nombre:"));
-	       
+
 	        panel.add(apellidoLabel = new JLabel("Apellido:"));
-	   
+
 	        panel.add(numTarjetaLabel = new JLabel("Número de tarjeta:"));
-	     
+
 	        panel.add(fechaNacimientoLabel = new JLabel("Fecha de nacimiento:"));
 	        panel.add(loginLabel);
 	        panel.add(loginField);
@@ -88,8 +97,8 @@ public class VentanaMiPerfil extends JFrame{
 	        panel.add(numTarjetaLabel);
 	        panel.add(numTarjetaField);
 	        panel.add(guardarButton);
+
 	   
-	        // Agregar otros JLabel y JTextField para los datos editables del cliente
 	        panel.add(guardarButton);
 	        panel.add(editarButton);
 	        hacerNoEditable(panel);
@@ -97,13 +106,13 @@ public class VentanaMiPerfil extends JFrame{
 	        setVisible(true);
 
 	        cargarDatosCliente(dao2.cliente.getLogin());
-	      
+
 	    }
 
 
 	 private void cargarDatosCliente(String login) {
 		 System.out.print(login);
-	        // Realizar la conexión a la base de datos y obtener los datos del cliente
+	
 	        try {
 	            Connection conn = DriverManager.getConnection(dao.url);
 	            String query = "SELECT * FROM cliente WHERE login = ?";
@@ -124,8 +133,7 @@ public class VentanaMiPerfil extends JFrame{
 	                        Long.parseLong(resultSet.getString("numTarjeta")),
 	                        resultSet.getString("ofertasEnviadas")
 	                );
-	                
-	                // Mostrar los datos del cliente en los JLabel correspondientes
+
 	                loginField.setText(cliente.getLogin());
 	                emailField.setText(cliente.getEmail());
 	                dniField.setText(cliente.getdNI());
@@ -134,9 +142,7 @@ public class VentanaMiPerfil extends JFrame{
 	                apellidoField.setText(cliente.getApellidos());
 	                fechaNacimientoField.setText(dao.dateToString(cliente.getFechaNacimiento(),dao.format));
 	                numTarjetaField.setText(""+cliente.getNumTarjeta());
-	                // Actualizar otros JLabel con los datos del cliente
-
-	                // Cerrar la conexión y liberar recursos
+	    
 	                resultSet.close();
 	                statement.close();
 	                conn.close();
@@ -162,9 +168,9 @@ public class VentanaMiPerfil extends JFrame{
 	            statement.setString(6, apellidoField.getText());
 	            statement.setString(7, fechaNacimientoField.getText());
 	            statement.setString(8,numTarjetaField.getText());
-	            // Establecer otros campos actualizables en la sentencia SQL
-	          
-	            statement.setString(9, dao2.cliente.getLogin()); // El login original
+	        
+
+	            statement.setString(9, dao2.cliente.getLogin()); 
 	            dao2.cliente.setLogin(loginField.getText());
 	            int rowsUpdated = statement.executeUpdate();
 

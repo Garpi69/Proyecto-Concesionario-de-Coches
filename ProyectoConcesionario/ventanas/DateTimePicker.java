@@ -1,11 +1,21 @@
 package ventanas;
 
-import javax.swing.*;
-import clases.Cita;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.WindowConstants;
+
+import clases.Cita;
 
 public class DateTimePicker {
     private JSpinner yearSpinner;
@@ -19,7 +29,7 @@ public class DateTimePicker {
         dialog.setTitle("Seleccione fecha y hora para concertar una cita:");
         dialog.setLayout(new GridBagLayout());
         dialog.setSize(450, 400);
-        dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dialog.setLocationRelativeTo(null);
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -92,5 +102,5 @@ public class DateTimePicker {
         return calendar.getTime();
     }
 
-   
+
 }

@@ -2,9 +2,14 @@ package ventanas;
 
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import java.util.Date;
 
-import javax.swing.*;
-import java.util.*;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import clases.Trabajador;
 
@@ -15,10 +20,9 @@ public class VentanaAgregarTrabajador extends JFrame{
 
 	    public VentanaAgregarTrabajador(DAO dao) {
 	        frame = new JFrame("Agregar Trabajador");
-	        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	        frame.setLayout(new GridLayout(0, 2, 10, 10)); // 2 columnas
 
-	        // Labels
 	        frame.add(new JLabel("Login:"));
 	        loginField = new JTextField();
 	        frame.add(loginField);
@@ -79,7 +83,7 @@ public class VentanaAgregarTrabajador extends JFrame{
 	        String puesto = puestoField.getText();
 	        boolean esAdmin = esAdminCheckBox.isSelected();
 	        Date fechaNacimiento = dao.stringToDate(fechaNacimientoStr, dao.format);
-	        
+
 	        Trabajador trabajador = new Trabajador(login,contra,email,dni,nombre,apellidos,fechaNacimiento,sueldo,esAdmin,puesto);
 	        try {
 				dao.agregarTrabajador(trabajador);
@@ -87,6 +91,6 @@ public class VentanaAgregarTrabajador extends JFrame{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	      
+
 	    }
 }

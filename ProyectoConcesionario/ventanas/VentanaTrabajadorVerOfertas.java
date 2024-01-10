@@ -11,14 +11,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 public class VentanaTrabajadorVerOfertas extends JFrame{
 	private DAO dao = new DAO();
 	public  VentanaTrabajadorVerOfertas() {
-		
+
 		setTitle("Ofertas");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(600, 400);
         setLocationRelativeTo(null);
         DefaultTableModel tableModel = new DefaultTableModel();
@@ -28,7 +29,7 @@ public class VentanaTrabajadorVerOfertas extends JFrame{
         JButton enviadasButton = new JButton("Ofertas enviadas");
 
         JButton recibidasButton = new JButton("Ofertas recibidas");
-        
+
         recibidasButton.addActionListener( e->{
         	try {
         		dao.cargarOfertasRecibidas("coche",tableModel,"concesionario");
@@ -36,9 +37,9 @@ public class VentanaTrabajadorVerOfertas extends JFrame{
         		dao.cargarOfertasRecibidas("moto",tableModel,"concesionario");
         		dao.cargarOfertasRecibidas("motoSegundaMano",tableModel,"concesionario");
         	}catch (AWTException e1) {
-        		
+
         	}
-        	
+
         });
         enviadasButton.addActionListener(e->{
         	dao.cargarOfertasEnviadas("coche",tableModel,"concesionario");
@@ -47,11 +48,11 @@ public class VentanaTrabajadorVerOfertas extends JFrame{
         	dao.cargarOfertasEnviadas("motoSegundaMano", tableModel,"concesionario");
         });
         JScrollPane scrollPane = new JScrollPane(ofertasTable);
-       
+
         JPanel buttonPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc2 = new GridBagConstraints();
-        gbc2.insets = new Insets(5, 5, 5, 5); // Espacios entre componentes
-        
+        gbc2.insets = new Insets(5, 5, 5, 5); 
+
         gbc2.gridx = 7;
         buttonPanel.add(enviadasButton, gbc2);
 
@@ -59,8 +60,8 @@ public class VentanaTrabajadorVerOfertas extends JFrame{
         buttonPanel.add(recibidasButton, gbc2);
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(buttonPanel, BorderLayout.NORTH );
-        
-       
+
+
         getContentPane().add(scrollPane, BorderLayout.CENTER);
         setVisible(true);
 	}
