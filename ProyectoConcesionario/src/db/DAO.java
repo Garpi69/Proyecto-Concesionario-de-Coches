@@ -1030,7 +1030,7 @@ public class DAO {
 			DefaultTableModel tableModel) {
 		try {
 
-			String sql = "SELECT * FROM coche WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";
+			String sql = "SELECT * FROM "+categoria+" WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";
 			PreparedStatement statement = conn.prepareStatement(sql);
 
 			statement.setString(1, "%" + marca + "%");

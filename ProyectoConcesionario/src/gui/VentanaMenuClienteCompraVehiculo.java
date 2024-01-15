@@ -9,8 +9,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
+
 import java.util.Date;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
 import src.db.DAO;
 import src.domain.GeneradorNumeroSerie;
 import src.domain.Venta;
+
 
 public class VentanaMenuClienteCompraVehiculo extends JFrame {
 	private static final long serialVersionUID = GeneradorNumeroSerie.generarSiguienteNumeroDeSerie();
@@ -53,15 +55,10 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
 		JButton filtrarButton = new JButton("Filtrar");
 		filtrarButton.addActionListener(e -> {
 			tableModel.setRowCount(0);
-			try {
-				filtrarCoche(marcaField.getText(), modeloField.getText(), colorField.getText(), dao);
-				filtrarCocheSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText(), dao);
-				filtrarMoto(marcaField.getText(), modeloField.getText(), colorField.getText(), dao);
-				filtrarMotoSegundaMano(marcaField.getText(), modeloField.getText(), colorField.getText(), dao);
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			dao.filtrarVehiculo("coche",marcaField.getText(), modeloField.getText(), colorField.getText(), tableModel);
+			dao.filtrarVehiculo("cocheSegundaMano",marcaField.getText(), modeloField.getText(), colorField.getText(),tableModel);
+			dao.filtrarVehiculo("moto",marcaField.getText(), modeloField.getText(), colorField.getText(),tableModel);
+			dao.filtrarVehiculo("motoSegundaMano",marcaField.getText(), modeloField.getText(), colorField.getText(),tableModel);
 
 		});
 		gbc.gridx = 0;
@@ -295,220 +292,6 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
 		}
 	}
 
-	private void filtrarCoche(String marca, String modelo, String color, DAO dao) throws ParseException {
-		try {
-			Connection connection = DriverManager.getConnection(dao.url);
-
-			String sql = "SELECT * FROM coche WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";
-			PreparedStatement statement = connection.prepareStatement(sql);
-
-			statement.setString(1, "%" + marca + "%");
-			statement.setString(2, "%" + modelo + "%");
-			statement.setString(3, "%" + color + "%");
-
-			ResultSet resultSet = statement.executeQuery();
-
-			while (resultSet.next()) {
-				int id = resultSet.getInt("idVehiculo");
-				String combustible = resultSet.getString("combustible");
-				String tipo = resultSet.getString("tipo");
-				String marcaReal = resultSet.getString("marca");
-				String modeloReal = resultSet.getString("modelo");
-				String colorReal = resultSet.getString("color");
-				int potencia = resultSet.getInt("potencia");
-				int numPlazas = resultSet.getInt("numPlazas");
-				int precio = resultSet.getInt("precio");
-				int cuota = resultSet.getInt("cuota");
-
-				String propietario = resultSet.getString("dniPropietario");
-				Date matriculacionDate = null;
-				try {
-					matriculacionDate = dao.stringToDate(resultSet.getString("matriculacion"), dao.format);
-				} catch (SQLException e) {
-
-				}
-
-				Object[] fila = { id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio,
-						cuota, matriculacionDate, propietario };
-				tableModel.addRow(fila);
-			}
-
-			resultSet.close();
-			statement.close();
-			connection.close();
-
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Error al filtrar el inventario: " + ex.getMessage());
-		}
-		inventarioTable.repaint();
-	}
-
-	private void filtrarCocheSegundaMano(String marca, String modelo, String color, DAO dao) {
-		try {
-			Connection connection = DriverManager.getConnection(dao.url);
-
-			String sql = "SELECT * FROM cocheSegundaMano WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";
-			PreparedStatement statement = connection.prepareStatement(sql);
-
-			statement.setString(1, "%" + marca + "%");
-			statement.setString(2, "%" + modelo + "%");
-			statement.setString(3, "%" + color + "%");
-
-			ResultSet resultSet = statement.executeQuery();
-
-			while (resultSet.next()) {
-				int id = resultSet.getInt("idVehiculo");
-				String combustible = resultSet.getString("combustible");
-				String tipo = resultSet.getString("tipo");
-				String marcaReal = resultSet.getString("marca");
-				String modeloReal = resultSet.getString("modelo");
-				String colorReal = resultSet.getString("color");
-				int potencia = resultSet.getInt("potencia");
-				int numPlazas = resultSet.getInt("numPlazas");
-				int precio = resultSet.getInt("precio");
-				int cuota = resultSet.getInt("cuota");
-				String matriculacion = resultSet.getString("matriculacion");
-				int kilometraje = 0;
-				Date matriculacionDate = null;
-				String propietario = resultSet.getString("dniPropietario");
-				matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				kilometraje = getIntOrNull(resultSet, "kilometraje");
-
-				Object[] fila = { id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio,
-						cuota, matriculacionDate, 0, 0, kilometraje, propietario };
-				tableModel.addRow(fila);
-			}
-
-			resultSet.close();
-			statement.close();
-			connection.close();
-
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Error al filtrar el inventario: " + ex.getMessage());
-		}
-		inventarioTable.repaint();
-
-	}
-
-	private void filtrarMoto(String marca, String modelo, String color, DAO dao) {
-		try {
-			Connection connection = DriverManager.getConnection(dao.url);
-
-			String sql = "SELECT * FROM moto WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";
-			PreparedStatement statement = connection.prepareStatement(sql);
-
-			statement.setString(1, "%" + marca + "%");
-			statement.setString(2, "%" + modelo + "%");
-			statement.setString(3, "%" + color + "%");
-			ResultSet resultSet = statement.executeQuery();
-
-			while (resultSet.next()) {
-				int id = resultSet.getInt("idVehiculo");
-				String combustible = resultSet.getString("combustible");
-				String marcaReal = resultSet.getString("marca");
-				String modeloReal = resultSet.getString("modelo");
-				String colorReal = resultSet.getString("color");
-				String tipo = resultSet.getString("tipo");
-				int potencia = resultSet.getInt("potencia");
-				int numPlazas = resultSet.getInt("numPlazas");
-				int precio = resultSet.getInt("precio");
-				int cuota = resultSet.getInt("cuota");
-				String matriculacion = resultSet.getString("matriculacion");
-				String propietario = resultSet.getString("dniPropietario");
-				int baul = 0;
-				int peso = 0;
-				Date matriculacionDate = null;
-				matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				String baulString = "No";
-				baul = getIntOrNull(resultSet, "baul");
-				peso = getIntOrNull(resultSet, "peso");
-				if (baul == 1) {
-					baulString = "Si";
-				}
-
-				Object[] fila = { id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio,
-						cuota, matriculacionDate, peso, baulString, propietario };
-				tableModel.addRow(fila);
-			}
-
-			resultSet.close();
-			statement.close();
-			connection.close();
-
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Error al filtrar el inventario: " + ex.getMessage());
-		}
-		inventarioTable.repaint();
-
-	}
-
-	private void filtrarMotoSegundaMano(String marca, String modelo, String color, DAO dao) {
-		try {
-			Connection connection = DriverManager.getConnection(dao.url);
-
-			String sql = "SELECT * FROM moto WHERE marca LIKE ? AND modelo LIKE ? AND color LIKE ?";
-			PreparedStatement statement = connection.prepareStatement(sql);
-
-			statement.setString(1, "%" + marca + "%");
-			statement.setString(2, "%" + modelo + "%");
-			statement.setString(3, "%" + color + "%");
-
-			ResultSet resultSet = statement.executeQuery();
-
-			while (resultSet.next()) {
-				int id = resultSet.getInt("idVehiculo");
-				String combustible = resultSet.getString("combustible");
-				String marcaReal = resultSet.getString("marca");
-				String modeloReal = resultSet.getString("modelo");
-				String colorReal = resultSet.getString("color");
-				String tipo = resultSet.getString("tipo");
-				int potencia = resultSet.getInt("potencia");
-				int numPlazas = resultSet.getInt("numPlazas");
-				int precio = resultSet.getInt("precio");
-				int cuota = resultSet.getInt("cuota");
-				String matriculacion = resultSet.getString("matriculacion");
-				String propietario = resultSet.getString("dniPropietario");
-				int baul = 0;
-				int peso = 0;
-				int kilometraje = 0;
-				Date matriculacionDate = null;
-				matriculacionDate = dao.stringToDate(matriculacion, dao.format);
-				baul = getIntOrNull(resultSet, "baul");
-				peso = getIntOrNull(resultSet, "peso");
-				kilometraje = getIntOrNull(resultSet, "kilometraje");
-				String baulString = "No";
-				if (baul == 1) {
-					baulString = "Si";
-				}
-
-				Object[] fila = { id, combustible, marcaReal, modeloReal, colorReal, tipo, potencia, numPlazas, precio,
-						cuota, matriculacionDate, peso, baulString, kilometraje, propietario };
-				tableModel.addRow(fila);
-			}
-
-			resultSet.close();
-			statement.close();
-			connection.close();
-
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Error al filtrar el inventario: " + ex.getMessage());
-		}
-		inventarioTable.repaint();
-
-	}
-
-	private int getIntOrNull(ResultSet resultSet, String column) {
-		int valor = 0;
-		try {
-			valor = resultSet.getInt(column);
-		} catch (SQLException e) {
-
-		}
-		return valor;
-	}
+	
 
 }

@@ -45,9 +45,9 @@ public class FicheroActividad {
 		}
 	}
 
-	public static List<String> cargarActividad() {
-		List<String> actividad = new ArrayList<>();
-
+	public static List<String> cargarActividad() {									//Esta función ha sido creada con ayuda de IAG, al igual que la del FicheroCitas. Ha sido modificado 
+		List<String> actividad = new ArrayList<>();									// ya que la IAG solo ofrecía un ejemplo de como leer desde un archivo de texto.
+																					// -Jon
 		Path projectPath = FileSystems.getDefault().getPath("").toAbsolutePath();
 		String filePath = projectPath.toString() + "/resources/data/activity/activity-log.txt";
 

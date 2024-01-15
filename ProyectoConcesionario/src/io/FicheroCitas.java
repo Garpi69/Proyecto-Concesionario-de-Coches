@@ -12,10 +12,10 @@ import src.domain.Cita;
 
 public class FicheroCitas {
 	public static void añadirCita(Cita cita) {
-		// Verificar si el fichero existe, y crearlo si no
+		
 		crearFicheroSiNoExiste();
 
-		// Escribir la cita en el fichero
+		
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter("./resources/data/appointments/appointment-log.txt", true))) {
 			writer.write(cita.toString());
 			writer.newLine();
@@ -24,11 +24,11 @@ public class FicheroCitas {
 		}
 	}
 
-	public static ArrayList<Cita> leerCitas() {
-		// Verificar si el fichero existe, y crearlo si no
-		crearFicheroSiNoExiste();
+	public static ArrayList<Cita> leerCitas() {				// Esta función ha sido creada con ayuda de IAG, pero se ha tenido que modificar para adapartla a
+															// este programa. Ha servido para entender como hacer una buena lectura teniendo en cuenta el formato de las citas
+		crearFicheroSiNoExiste();							// -Jon
 		ArrayList<Cita> arrayCitas = new ArrayList<>();
-		// Leer citas desde el fichero
+		
 		try (BufferedReader reader = new BufferedReader(new FileReader("./resources/data/appointments/appointment-log.txt"))) {
 			String linea;
 			while ((linea = reader.readLine()) != null) {
@@ -55,12 +55,11 @@ public class FicheroCitas {
 	public static Cita construirCitaDesdeString(String cadenaCita) {
 		String[] partes = cadenaCita.split(", ");
 
-		// Extraer valores de las partes
 		String fecha = partes[0].substring(partes[0].indexOf("=") + 1);
 		String usuario = partes[1].substring(partes[1].indexOf("=") + 1);
 		String nombreVehiculo = partes[2].substring(partes[2].indexOf("=") + 1, partes[2].length() - 1);
 
-		// Construir la instancia de Cita
+	
 		return new Cita(fecha, usuario, nombreVehiculo);
 	}
 }

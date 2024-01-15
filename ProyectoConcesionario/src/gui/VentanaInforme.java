@@ -109,9 +109,9 @@ public class VentanaInforme extends JFrame {
 
 	}
 
-	private void exportarAPDF(JTable table, DefaultTableModel tableModel) {
-		Document document = new Document();
-		try {
+	private void exportarAPDF(JTable table, DefaultTableModel tableModel) {				//Esta funcion ha sido desarrollada con ayuda de IAG, ya que no tenía conocimientos
+		Document document = new Document();												// de como exportar a pdf y me parecia una buena implementación para el programa 
+		try {																			//-Jon
 			PdfWriter.getInstance(document,
 					new FileOutputStream("./resources/data/informs/" + LocalDate.now() + "-informe-ventas.pdf"));
 			document.open();

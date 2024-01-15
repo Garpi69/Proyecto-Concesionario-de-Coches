@@ -1,0 +1,2 @@
+Jan 15, 2024 12:11:48 PM src.io.LoggerDeusto log
+SEVERE: Error al guardar la actividad: [SQLITE_ERROR] SQL error or missing database (no such table: actividad)

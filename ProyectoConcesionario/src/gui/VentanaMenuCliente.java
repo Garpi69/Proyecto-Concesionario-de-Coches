@@ -116,9 +116,9 @@ public class VentanaMenuCliente extends JFrame {
 		setVisible(true);
 	}
 
-	private void estilizarBoton(JButton button, String imagePath, String buttonName) {
-		button.setPreferredSize(new Dimension(250, 80));
-		button.setBackground(Color.decode("#3F51B5"));
+	private void estilizarBoton(JButton button, String imagePath, String buttonName) {					//Esta función ha sido creada con ayuda de IAG, ya que no tenía
+		button.setPreferredSize(new Dimension(250, 80));												//conocimientos sobre como usar una imagen correctamente para un botón
+		button.setBackground(Color.decode("#3F51B5"));													//-Jon	
 		button.setForeground(Color.WHITE);
 		button.setFont(new Font("Arial", Font.BOLD, 16));
 		button.setFocusPainted(false);
@@ -156,15 +156,15 @@ public class VentanaMenuCliente extends JFrame {
 
 	}
 
-	private Image createBlackLayer(Image originalImage) {
-
-		BufferedImage bufferedImage = new BufferedImage(originalImage.getWidth(null), originalImage.getHeight(null),
+	private Image createBlackLayer(Image originalImage) {																//Esta función ha sido creada con ayuda de IAG
+																														//ya que no sabía como desarrollarla
+		BufferedImage bufferedImage = new BufferedImage(originalImage.getWidth(null), originalImage.getHeight(null),	//-Jon
 				BufferedImage.TYPE_INT_ARGB);
 
 		Graphics2D g = bufferedImage.createGraphics();
 		g.drawImage(originalImage, 0, 0, null);
 
-		Color transparentBlack = new Color(0, 0, 0, 128); // 128 para una opacidad del 50%
+		Color transparentBlack = new Color(0, 0, 0, 128); 
 		g.setColor(transparentBlack);
 		g.fillRect(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
 

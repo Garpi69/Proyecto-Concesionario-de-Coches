@@ -1,0 +1,2 @@
+Jan 15, 2024 5:01:37 PM src.io.LoggerDeusto log
+SEVERE: No se cargan los clientes: [SQLITE_ERROR] SQL error or missing database (near "=": syntax error)
