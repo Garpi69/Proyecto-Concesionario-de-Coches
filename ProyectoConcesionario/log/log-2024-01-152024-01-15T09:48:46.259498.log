@@ -1,0 +1,12 @@
+Jan 15, 2024 9:48:46 AM src.io.LoggerDeusto log
+SEVERE: No se han podido cargar las ofertas recibidas: [SQLITE_ERROR] SQL error or missing database (no such column: propietario)
+Jan 15, 2024 9:48:47 AM src.io.LoggerDeusto log
+SEVERE: No se han podido cargar las ofertas recibidas: [SQLITE_ERROR] SQL error or missing database (no such column: propietario)
+Jan 15, 2024 9:48:48 AM src.io.LoggerDeusto log
+SEVERE: No se han podido cargar las ofertas recibidas: [SQLITE_ERROR] SQL error or missing database (no such column: propietario)
+Jan 15, 2024 9:48:48 AM src.io.LoggerDeusto log
+SEVERE: No se han podido cargar las ofertas recibidas: [SQLITE_ERROR] SQL error or missing database (no such column: propietario)
+Jan 15, 2024 9:49:00 AM src.io.LoggerDeusto log
+SEVERE: Error al guardar la actividad: [SQLITE_ERROR] SQL error or missing database (no such table: actividad)
+Jan 15, 2024 9:50:57 AM src.io.LoggerDeusto log
+SEVERE: Error al guardar la actividad: [SQLITE_ERROR] SQL error or missing database (no such table: actividad)

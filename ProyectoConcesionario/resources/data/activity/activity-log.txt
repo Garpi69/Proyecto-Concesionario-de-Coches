@@ -1,0 +1,72 @@
+[2024-01-15 11:57:31] admin1: Trabajador admin1 logeado
+[2024-01-15 12:01:18] worker1: Trabajador worker1 logeado
+[2024-01-15 12:01:31] worker1: usuario worker1 cerró sesión
+[2024-01-15 12:01:38] user1: Cliente user1 logeado
+[2024-01-15 12:01:44] : Venta de XC90 Grispor 75000€ añadida
+[2024-01-15 12:01:44] : Vehiculo XC90 Gris eliminado
+[2024-01-15 12:02:37] : moto con id:801358 añadida a la venta
+[2024-01-15 12:04:30] user1: Cliente user1 logeado
+[2024-01-15 12:06:12] user1: Cliente user1 logeado
+[2024-01-15 12:07:08] user1: Cliente user1 logeado
+[2024-01-15 12:07:53] user1: Cliente user1 logeado
+[2024-01-15 12:08:27] : moto con id:631670 añadida a la venta
+[2024-01-15 12:09:01] user1: Cliente user1 logeado
+[2024-01-15 12:09:21] : moto con id:237532 añadida a la venta
+[2024-01-15 12:11:18] Trabajador:  cerró sesión
+[2024-01-15 12:11:23] Trabajador:  cerró sesión
+[2024-01-15 12:11:28] Trabajador:  cerró sesión
+[2024-01-15 12:11:32] Trabajador:  cerró sesión
+[2024-01-15 12:11:37] Trabajador:  cerró sesión
+[2024-01-15 12:11:42] Trabajador:  cerró sesión
+[2024-01-15 12:12:01] user1: Cliente user1 logeado
+[2024-01-15 12:12:17] : moto con id:399521 añadida a la venta
+[2024-01-15 12:12:34] Trabajador:  cerró sesión
+[2024-01-15 12:12:39] worker1: Trabajador worker1 logeado
+[2024-01-15 12:12:55] worker1: usuario worker1 cerró sesión
+[2024-01-15 12:15:05] worker1: Trabajador worker1 logeado
+[2024-01-15 12:15:42] worker1: usuario worker1 cerró sesión
+[2024-01-15 12:17:55] worker1: Trabajador worker1 logeado
+[2024-01-15 12:18:03] worker1: Vehiculo asf asf eliminado
+[2024-01-15 12:18:03] worker1: Vehiculo asf asf eliminado
+[2024-01-15 12:18:03] worker1: Vehiculo asf asf eliminado
+[2024-01-15 12:18:03] worker1: Vehiculo asf asf eliminado
+[2024-01-15 12:18:07] worker1: usuario worker1 cerró sesión
+[2024-01-15 12:20:11] worker1: Trabajador worker1 logeado
+[2024-01-15 12:20:56] worker1: usuario worker1 cerró sesión
+[2024-01-15 12:25:12] worker1: Trabajador worker1 logeado
+[2024-01-15 12:25:16] worker1: usuario worker1 cerró sesión
+[2024-01-15 12:25:21] user1: Cliente user1 logeado
+[2024-01-15 12:25:26] Trabajador:  cerró sesión
+[2024-01-15 12:27:25] worker1: Trabajador worker1 logeado
+[2024-01-15 12:28:22] worker1: Trabajador worker1 logeado
+[2024-01-15 17:01:33] worker1: Trabajador worker1 logeado
+[2024-01-15 17:02:00] worker1: usuario worker1 cerró sesión
+[2024-01-15 17:02:03] worker1: usuario worker1 cerró sesión
+[2024-01-15 17:02:11] worker1: usuario worker1 cerró sesión
+[2024-01-15 17:02:14] worker1: Trabajador worker1 logeado
+[2024-01-15 17:09:49] worker1: Trabajador worker1 logeado
+[2024-01-15 17:18:24] worker1: Trabajador worker1 logeado
+[2024-01-15 17:35:09] worker2: Trabajador worker2 logeado
+[2024-01-15 17:37:21] worker1: Trabajador worker1 logeado
+[2024-01-15 17:38:48] worker1: Trabajador worker1 logeado
+[2024-01-15 17:39:38] worker1: Trabajador worker1 logeado
+[2024-01-15 17:39:45] worker1: usuario worker1 cerró sesión
+[2024-01-15 17:42:20] worker1: Trabajador worker1 logeado
+[2024-01-15 17:43:48] worker1: Trabajador worker1 logeado
+[2024-01-15 17:45:43] worker2: Trabajador worker2 logeado
+[2024-01-15 17:47:47] worker1: Trabajador worker1 logeado
+[2024-01-15 17:48:47] worker1: Trabajador worker1 logeado
+[2024-01-15 17:50:00] worker1: Trabajador worker1 logeado
+[2024-01-15 17:50:28] worker1: usuario worker1 cerró sesión
+[2024-01-15 17:54:15] worker1: Trabajador worker1 logeado
+[2024-01-15 17:55:33] worker1: Trabajador worker1 logeado
+[2024-01-15 17:58:39] worker1: Trabajador worker1 logeado
+[2024-01-15 17:59:21] worker1: Trabajador worker1 logeado
+[2024-01-15 18:00:01] worker1: Trabajador worker1 logeado
+[2024-01-15 18:00:10] worker1: usuario worker1 cerró sesión
+[2024-01-15 18:50:08] worker1: Trabajador worker1 logeado
+[2024-01-15 18:53:03] worker1: Trabajador worker1 logeado
+[2024-01-15 18:56:58] worker1: Trabajador worker1 logeado
+[2024-01-15 18:57:08] worker1: usuario worker1 cerró sesión
+[2024-01-15 18:58:06] worker1: Trabajador worker1 logeado
+[2024-01-15 18:58:11] worker1: usuario worker1 cerró sesión

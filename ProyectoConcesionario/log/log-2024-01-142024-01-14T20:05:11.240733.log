@@ -1,0 +1,2 @@
+Jan 14, 2024 8:05:11 PM src.io.LoggerDeusto log
+SEVERE: No se pudo conectar con la base de datos: No suitable driver found for ./resources/db/database.sqlite

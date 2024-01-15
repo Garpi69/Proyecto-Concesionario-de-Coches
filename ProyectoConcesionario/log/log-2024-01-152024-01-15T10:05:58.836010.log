@@ -1,0 +1,10 @@
+Jan 15, 2024 10:05:58 AM src.io.LoggerDeusto log
+SEVERE: No se ha podido añadir la cita: [SQLITE_ERROR] SQL error or missing database (no such table: citas)
+Jan 15, 2024 10:06:41 AM src.io.LoggerDeusto log
+SEVERE: No se pudo cargar el inventario: no such column: 'kilometraje'
+Jan 15, 2024 10:06:54 AM src.io.LoggerDeusto log
+SEVERE: No se pudo cargar el inventario: no such column: 'kilometraje'
+Jan 15, 2024 10:07:00 AM src.io.LoggerDeusto log
+SEVERE: No se pudo cargar el inventario: no such column: 'peso'
+Jan 15, 2024 10:07:02 AM src.io.LoggerDeusto log
+SEVERE: No se pudo cargar el inventario: no such column: 'kilometraje'
