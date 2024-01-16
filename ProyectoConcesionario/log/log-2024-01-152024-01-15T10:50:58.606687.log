@@ -1,2 +1,0 @@
-Jan 15, 2024 10:50:58 AM src.io.LoggerDeusto log
-SEVERE: No se pudo agregar el coche vendido por el cliente: [SQLITE_ERROR] SQL error or missing database (15 values for 14 columns)

@@ -1,4 +1,0 @@
-Jan 15, 2024 9:42:57 AM src.io.LoggerDeusto log
-SEVERE: No se encontró la clase org.sqlite.JBDC: org.sqlite.JDBC4
-Jan 15, 2024 9:42:59 AM src.io.LoggerDeusto log
-SEVERE: No se pudo conectar con la base de datos: No suitable driver found for ./resources/db/database.sqlite

@@ -1,2 +1,0 @@
-Jan 15, 2024 10:04:00 AM src.io.LoggerDeusto log
-SEVERE: No se ha podido eliminar el vehiculo: [SQLITE_ERROR] SQL error or missing database (no such column: propietario)
