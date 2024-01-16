@@ -1,0 +1,2 @@
+Jan 15, 2024 11:40:38 PM src.io.LoggerDeusto log
+SEVERE: No se pudo conectar con la base de datos: path to 'data/database.sqlite': '/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/data' does not exist

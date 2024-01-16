@@ -1,6 +1,7 @@
 package src.db;
 
 import java.awt.AWTException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -35,7 +36,7 @@ public class DAO {
 	public boolean esAdmin = false;
 	public SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
-	public final String url = "jdbc:sqlite:./resources/db/database.sqlite";
+	public final String url = "/resources/db/database.sqlite";
 	public Connection conn;
 	public Cliente cliente = new Cliente();
 	public Trabajador trabajador = new Trabajador();
@@ -47,6 +48,7 @@ public class DAO {
 	}
 
 	public void conectar() {
+		
 		try {
 			Class.forName("org.sqlite.JDBC");
 
@@ -55,15 +57,26 @@ public class DAO {
 			JOptionPane.showMessageDialog(null, "No se encontró la clase org.sqlite.JBDC: " + e.getMessage());
 			LoggerDeusto.log(Level.SEVERE, "No se encontró la clase org.sqlite.JBDC: " + e.getMessage());
 		}
-		try {
-			conn = DriverManager.getConnection(url);
+		try {	
+			
+			
+			System.out.print(System.getProperty("user.dir"));
+		
+			
+		    conn = DriverManager.getConnection("jdbc:sqlite:"+System.getProperty("user.dir")+"/resources/db/database.sqlite");
+		    if (conn!=null){
+		        System.out.println("Conexión establecida");
+		   }
+		          
+		        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "No se pudo conectar con la base de datos: " + e.getMessage());
 			LoggerDeusto.log(Level.SEVERE, "No se pudo conectar con la base de datos: " + e.getMessage());
 		}
-		System.out.println("Conexión establecida");
-	}
+		
+	
+}
 
 	public void desconectar() {
 		if (conn != null) {

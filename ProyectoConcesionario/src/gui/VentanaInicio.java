@@ -38,8 +38,8 @@ public class VentanaInicio extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		setVisible(false);
-		imagenFondo = new ImageIcon("./resources/images/Bilbao_-_Universidad_de_Deusto_01.png").getImage();
-
+		imagenFondo = new ImageIcon(getClass().getResource("/resources/images/Bilbao_-_Universidad_de_Deusto_01.png")).getImage();
+		
 		panelGeneral = new JPanel() {
 
 			private static final long serialVersionUID = GeneradorNumeroSerie.generarSiguienteNumeroDeSerie();

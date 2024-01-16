@@ -14,5 +14,12 @@
 	<classpathentry kind="lib" path="/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/lib/itextpdf-5.5.9.jar"/>
 	<classpathentry kind="lib" path="/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/lib/logback.jar"/>
 	<classpathentry kind="lib" path="/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/lib/sqlite-jdbc-3.39.4.0.jar"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/resources/images"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/config"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/resources/data/activity"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/resources/data/appointments"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/resources/data/informs"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/log"/>
+	<classpathentry kind="lib" path="/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/lib/jarsplice-0.40.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

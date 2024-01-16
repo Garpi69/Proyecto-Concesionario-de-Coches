@@ -4,8 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,9 +66,13 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
 		JButton cocheButton = new JButton("Coche");
 		cocheButton.addActionListener(e -> {
 			try {
-				Connection connection = DriverManager.getConnection(dao.url);
+				
 				tableModel.setRowCount(0);
-				cargarDatosVehiculos(connection, "coche", dao);
+		
+				dao.conectar();
+				cargarDatosVehiculos( "coche", dao);
+				dao.desconectar();
+				repaint();
 			} catch (SQLException e1) {
 
 			}
@@ -78,9 +81,12 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
 		JButton cocheSegundaManoButton = new JButton("Coche de Segunda Mano");
 		cocheSegundaManoButton.addActionListener(e -> {
 			try {
-				Connection connection = DriverManager.getConnection(dao.url);
+			
 				tableModel.setRowCount(0);
-				cargarDatosVehiculos(connection, "cocheSegundaMano", dao);
+				dao.conectar();
+				cargarDatosVehiculos( "cocheSegundaMano", dao);
+				dao.desconectar();
+				repaint();
 			} catch (SQLException e1) {
 
 			}
@@ -89,9 +95,12 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
 		JButton motoButton = new JButton("Moto");
 		motoButton.addActionListener(e -> {
 			try {
-				Connection connection = DriverManager.getConnection(dao.url);
+				
 				tableModel.setRowCount(0);
-				cargarDatosVehiculos(connection, "moto", dao);
+				dao.conectar();
+				cargarDatosVehiculos("moto", dao);
+				dao.desconectar();
+				repaint();
 			} catch (SQLException e1) {
 
 			}
@@ -100,9 +109,12 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
 		JButton motoSegundaManoButton = new JButton("Moto de Segunda Mano");
 		motoSegundaManoButton.addActionListener(e -> {
 			try {
-				Connection connection = DriverManager.getConnection(dao.url);
+			
 				tableModel.setRowCount(0);
-				cargarDatosVehiculos(connection, "motoSegundaMano", dao);
+				dao.conectar();
+				cargarDatosVehiculos( "motoSegundaMano", dao);
+				dao.desconectar();
+				repaint();
 			} catch (SQLException e1) {
 
 			}
@@ -171,30 +183,30 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
 	public void cargarInventario(DAO dao) {
 
 		try {
-			Connection connection = DriverManager.getConnection(dao.url);
+			dao.conectar();
 			String[] columnas = { "ID", "Combustible", "Marca", "Modelo", "Color", "Tipo", "Potencia",
 					"Numero de plazas", "Precio", "Cuota", "Matriculacion", "Peso (Motos)", "Baul (Motos)",
 					"Kilometraje (Segunda Mano", "dniPropietario" };
 			tableModel.setColumnIdentifiers(columnas);
 
-			cargarDatosVehiculos(connection, "coche", dao);
+			cargarDatosVehiculos( "coche", dao);
 
-			cargarDatosVehiculos(connection, "cocheSegundaMano", dao);
+			cargarDatosVehiculos( "cocheSegundaMano", dao);
 
-			cargarDatosVehiculos(connection, "moto", dao);
+			cargarDatosVehiculos( "moto", dao);
 
-			cargarDatosVehiculos(connection, "motoSegundaMano", dao);
+			cargarDatosVehiculos("motoSegundaMano", dao);
 
-			connection.close();
+			dao.desconectar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(this, "Error al cargar el inventario: " + ex.getMessage());
 		}
 	}
 
-	private void cargarDatosVehiculos(Connection connection, String tabla, DAO dao) throws SQLException {
+	private void cargarDatosVehiculos( String tabla, DAO dao) throws SQLException {
 		String sql = "SELECT * FROM " + tabla;
-		PreparedStatement statement = connection.prepareStatement(sql);
+		PreparedStatement statement = dao.conn.prepareStatement(sql);
 		ResultSet resultSet = statement.executeQuery();
 
 		while (resultSet.next()) {
@@ -251,8 +263,7 @@ public class VentanaMenuClienteCompraVehiculo extends JFrame {
 			tableModel.addRow(fila);
 		}
 
-		resultSet.close();
-		statement.close();
+	
 	}
 
 	private void confirmarCompra(DAO dao) {

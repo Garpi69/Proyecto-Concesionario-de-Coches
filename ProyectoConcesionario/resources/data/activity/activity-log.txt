@@ -70,3 +70,31 @@
 [2024-01-15 18:57:08] worker1: usuario worker1 cerró sesión
 [2024-01-15 18:58:06] worker1: Trabajador worker1 logeado
 [2024-01-15 18:58:11] worker1: usuario worker1 cerró sesión
+[2024-01-15 20:13:43] user1: Cliente user1 logeado
+[2024-01-15 20:41:27] user1: Cliente user1 logeado
+[2024-01-15 20:44:14] user1: Cliente user1 logeado
+[2024-01-15 20:46:15] user1: Cliente user1 logeado
+[2024-01-15 20:49:32] user1: Cliente user1 logeado
+[2024-01-15 20:51:21] Trabajador:  cerró sesión
+[2024-01-15 20:58:35] user1: Cliente user1 logeado
+[2024-01-15 20:58:43] Trabajador:  cerró sesión
+[2024-01-15 21:01:10] user1: Cliente user1 logeado
+[2024-01-15 21:02:52] user1: Cliente user1 logeado
+[2024-01-15 21:03:03] Trabajador:  cerró sesión
+[2024-01-15 21:03:45] user1: Cliente user1 logeado
+[2024-01-15 21:03:54] Trabajador:  cerró sesión
+[2024-01-15 21:05:12] user1: Cliente user1 logeado
+[2024-01-15 21:05:21] : Venta de Golf Grispor 19000€ añadida
+[2024-01-15 21:05:21] : Vehiculo Golf Gris eliminado
+[2024-01-15 21:05:40] Trabajador:  cerró sesión
+[2024-01-15 21:05:45] worker1: Trabajador worker1 logeado
+[2024-01-15 21:06:42] worker1: Trabajador worker1 logeado
+[2024-01-15 21:07:20] worker1: usuario worker1 cerró sesión
+[2024-01-15 21:21:12] user1: Cliente user1 logeado
+[2024-01-15 21:21:20] Trabajador:  cerró sesión
+[2024-01-15 21:22:54] user1: Cliente user1 logeado
+[2024-01-15 21:22:58] Trabajador:  cerró sesión
+[2024-01-15 22:34:13] user2: Cliente user2 logeado
+[2024-01-15 22:34:21] Trabajador:  cerró sesión
+[2024-01-16 22:59:32] user1: Cliente user1 logeado
+[2024-01-16 22:59:35] Trabajador:  cerró sesión

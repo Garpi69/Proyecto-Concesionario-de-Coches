@@ -48,7 +48,7 @@ public class VentanaMenuTrabajador extends JFrame {
 		panel.setLayout(new GridLayout(3, 3, 10, 10));
 
 		JButton inventarioButton = new JButton("Inventario");
-		estilizarBoton(inventarioButton, "./resources/images/warehouse_AdobeStock_294439367.jpeg", "Inventario");
+		estilizarBoton(inventarioButton, "/resources/images/warehouse_AdobeStock_294439367.jpeg", "Inventario");
 		inventarioButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -58,7 +58,7 @@ public class VentanaMenuTrabajador extends JFrame {
 		panel.add(inventarioButton);
 
 		JButton clientesButton = new JButton("Clientes");
-		estilizarBoton(clientesButton, "./resources/images/cliente-e1551799486636.jpg", "Clientes");
+		estilizarBoton(clientesButton,  "/resources/images/cliente-e1551799486636.jpg", "Clientes");
 		clientesButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -67,7 +67,7 @@ public class VentanaMenuTrabajador extends JFrame {
 		});
 		panel.add(clientesButton);
 		JButton anadirVentaButton = new JButton("Añadir venta");
-		estilizarBoton(anadirVentaButton, "./resources/images/cash-Ennio-Leanza.jpg", "Añadir Venta");
+		estilizarBoton(anadirVentaButton, "/resources/images/cash-Ennio-Leanza.jpg", "Añadir Venta");
 		anadirVentaButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -80,7 +80,7 @@ public class VentanaMenuTrabajador extends JFrame {
 		panel.add(anadirVentaButton);
 
 		JButton citasButton = new JButton("Citas");
-		estilizarBoton(citasButton, "./resources/images/reunion.jpg", "Citas");
+		estilizarBoton(citasButton,  "/resources/images/reunion.jpg", "Citas");
 		citasButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -90,7 +90,7 @@ public class VentanaMenuTrabajador extends JFrame {
 		panel.add(citasButton);
 
 		JButton informeButton = new JButton("Informe");
-		estilizarBoton(informeButton, "./resources/images/informe.jpg", "Informe");
+		estilizarBoton(informeButton,  "/resources/images/informe.jpg", "Informe");
 		informeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -100,7 +100,7 @@ public class VentanaMenuTrabajador extends JFrame {
 		panel.add(informeButton);
 
 		JButton miPerfilButton = new JButton("Mi perfil");
-		estilizarBoton(miPerfilButton, "./resources/images/1366_2000.jpg", "Mi perfil");
+		estilizarBoton(miPerfilButton,  "/resources/images/1366_2000.jpg", "Mi perfil");
 		miPerfilButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -111,7 +111,7 @@ public class VentanaMenuTrabajador extends JFrame {
 		panel.add(miPerfilButton);
 
 		JButton administracionButton = new JButton("Administración");
-		estilizarBoton(administracionButton, "./resources/images/mejores-portátiles-para-profesores.jpeg",
+		estilizarBoton(administracionButton,  "/resources/images/mejores-portátiles-para-profesores.jpeg",
 				"Administración");
 		administracionButton.addActionListener(new ActionListener() {
 			@Override
@@ -128,7 +128,7 @@ public class VentanaMenuTrabajador extends JFrame {
 		}
 
 		JButton cerrarSesionButton = new JButton("Cerrar Sesion");
-		estilizarBoton(cerrarSesionButton, "./resources/images/El-arte-de-perderse.jpg", "Cerrar Sesión");
+		estilizarBoton(cerrarSesionButton,  "/resources/images/El-arte-de-perderse.jpg", "Cerrar Sesión");
 		cerrarSesionButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -150,9 +150,9 @@ public class VentanaMenuTrabajador extends JFrame {
 		setVisible(true);
 	}
 
-	private void estilizarBoton(JButton button, String imagePath, String buttonName) {
-		button.setPreferredSize(new Dimension(250, 80));
-		button.setBackground(Color.decode("#3F51B5"));
+	private void estilizarBoton(JButton button, String imagePath, String buttonName) {					//Esta función ha sido creada con ayuda de IAG, ya que no tenía
+		button.setPreferredSize(new Dimension(250, 80));												//conocimientos sobre como usar una imagen correctamente para un botón
+		button.setBackground(Color.decode("#3F51B5"));													//-Jon	
 		button.setForeground(Color.WHITE);
 		button.setFont(new Font("Arial", Font.BOLD, 16));
 		button.setFocusPainted(false);
@@ -160,8 +160,9 @@ public class VentanaMenuTrabajador extends JFrame {
 		button.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		button.setOpaque(true);
 
-		ImageIcon originalIcon = new ImageIcon(imagePath);
-		Image originalImage = originalIcon.getImage();
+		ImageIcon originalIcon = new ImageIcon(getClass().getResource(imagePath));
+
+		Image originalImage = new ImageIcon(getClass().getResource(imagePath)).getImage();
 		Image blackLayer = createBlackLayer(originalImage);
 		ImageIcon newIcon = new ImageIcon(blackLayer);
 

@@ -39,7 +39,7 @@ public class VentanaMenuClienteVendeVehiculo extends JFrame {
 		panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
 
 		JButton venderCocheButton = new JButton("Vender Coche");
-		estilizarBoton(venderCocheButton, "./resources/images/coche-stock-ford-fiesta.jpg", "Vender Coche");
+		estilizarBoton(venderCocheButton, "/resources/images/coche-stock-ford-fiesta.jpg", "Vender Coche");
 		venderCocheButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -50,7 +50,7 @@ public class VentanaMenuClienteVendeVehiculo extends JFrame {
 		panel.add(venderCocheButton);
 
 		JButton venderMotoButton = new JButton("Vender Moto");
-		estilizarBoton(venderMotoButton, "./resources/images/moto-naked-un-modelo-de-moto-de-carretera.jpeg",
+		estilizarBoton(venderMotoButton, "/resources/images/moto-naked-un-modelo-de-moto-de-carretera.jpeg",
 				"Vender Moto");
 		venderMotoButton.addActionListener(new ActionListener() {
 			@Override
@@ -66,7 +66,7 @@ public class VentanaMenuClienteVendeVehiculo extends JFrame {
 	}
 
 	private Image createBlackLayer(Image originalImage) {
-		// Crear una BufferedImage para la imagen original
+		
 		BufferedImage bufferedImage = new BufferedImage(originalImage.getWidth(null), originalImage.getHeight(null),
 				BufferedImage.TYPE_INT_ARGB);
 
@@ -82,7 +82,7 @@ public class VentanaMenuClienteVendeVehiculo extends JFrame {
 		return bufferedImage;
 	}
 
-	private void estilizarBoton(JButton button, String imagePath, String buttonName) {
+	public void estilizarBoton(JButton button, String imagePath, String buttonName) {
 		button.setPreferredSize(new Dimension(250, 80));
 		button.setBackground(Color.decode("#3F51B5"));
 		button.setForeground(Color.WHITE);
@@ -92,7 +92,7 @@ public class VentanaMenuClienteVendeVehiculo extends JFrame {
 		button.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		button.setOpaque(true);
 
-		ImageIcon originalIcon = new ImageIcon(imagePath);
+		ImageIcon originalIcon = new ImageIcon(getClass().getResource(imagePath));
 		Image originalImage = originalIcon.getImage();
 		Image blackLayer = createBlackLayer(originalImage);
 		ImageIcon newIcon = new ImageIcon(blackLayer);

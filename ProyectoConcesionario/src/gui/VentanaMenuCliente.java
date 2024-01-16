@@ -48,7 +48,7 @@ public class VentanaMenuCliente extends JFrame {
 		panel.setLayout(new GridLayout(2, 1, 10, 10));
 
 		JButton comprarButton = new JButton("Comprar");
-		estilizarBoton(comprarButton, "./resources/images/DSC09923-scaled.jpg", "Comprar");
+		estilizarBoton(comprarButton, "/resources/images/DSC09923-scaled.jpg", "Comprar");
 		comprarButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -61,7 +61,7 @@ public class VentanaMenuCliente extends JFrame {
 
 		JButton venderButton = new JButton("Vender");
 		estilizarBoton(venderButton,
-				"./resources/images/beautiful-modern-cars-at-luxury-dealership-salon-2021-09-04-04-53-23-utc-scaled.jpg",
+				"/resources/images/beautiful-modern-cars-at-luxury-dealership-salon-2021-09-04-04-53-23-utc-scaled.jpg",
 				"Vender");
 		venderButton.addActionListener(new ActionListener() {
 			@Override
@@ -72,7 +72,7 @@ public class VentanaMenuCliente extends JFrame {
 		panel.add(venderButton);
 
 		JButton verOfertasButton = new JButton("Mis ofertas");
-		estilizarBoton(verOfertasButton, "./resources/images/stock-car-2022-np-20220517.jpg", "Mis Ofertas");
+		estilizarBoton(verOfertasButton, "/resources/images/stock-car-2022-np-20220517.jpg", "Mis Ofertas");
 		verOfertasButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -82,7 +82,7 @@ public class VentanaMenuCliente extends JFrame {
 		panel.add(verOfertasButton);
 
 		JButton miPerfil = new JButton("Mi Perfil");
-		estilizarBoton(miPerfil, "./resources/images/1366_2000.jpg", "Mi Perfil");
+		estilizarBoton(miPerfil, "/resources/images/1366_2000.jpg", "Mi Perfil");
 		miPerfil.addActionListener(new ActionListener() {
 
 			@Override
@@ -95,7 +95,7 @@ public class VentanaMenuCliente extends JFrame {
 		panel.add(miPerfil);
 
 		JButton cerrarSesionButton = new JButton("Cerrar Sesión");
-		estilizarBoton(cerrarSesionButton, "./resources/images/El-arte-de-perderse.jpg", "Cerrar Sesión");
+		estilizarBoton(cerrarSesionButton, "/resources/images/El-arte-de-perderse.jpg", "Cerrar Sesión");
 		cerrarSesionButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -126,7 +126,7 @@ public class VentanaMenuCliente extends JFrame {
 		button.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		button.setOpaque(true);
 
-		ImageIcon originalIcon = new ImageIcon(imagePath);
+		ImageIcon originalIcon = new ImageIcon(getClass().getResource(imagePath));
 		Image originalImage = originalIcon.getImage();
 		Image blackLayer = createBlackLayer(originalImage);
 		ImageIcon newIcon = new ImageIcon(blackLayer);

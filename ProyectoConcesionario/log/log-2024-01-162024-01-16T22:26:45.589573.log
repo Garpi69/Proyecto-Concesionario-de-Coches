@@ -1,0 +1,2 @@
+Jan 16, 2024 10:26:45 PM src.io.LoggerDeusto log
+SEVERE: No se pudo conectar con la base de datos: No suitable driver found for jdbc: file:/Users/jonmendizabal/git/Proyecto-Concesionario-de-Coches-Final/ProyectoConcesionario/bin/resources/db/database.sqlite
